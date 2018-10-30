@@ -38,4 +38,4 @@ class EspacoInexistente {   // exception for function RemoveEspaco
 public:
     EspacoInexistente(size_t idEspaco) { num_ID = idEspaco; }
     int getNumID() { return num_ID; }
-}
+};
