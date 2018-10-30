@@ -17,12 +17,12 @@ vector<Funcionario *> Hotel::getFuncionarios() const
 
 double Hotel::nEspacosDisponiveis()
 {
-	return this->getEspacosDisponiveis.size();
+	return this->espacosDisponiveis.size();
 }
 
 double Hotel::lotacao()
 {
-	return (this->nEspacosDisponiveis / this->todosEspacos.size()) * 100;
+	return (this->nEspacosDisponiveis() / this->todosEspacos.size()) * 100;
 }
 
 void Hotel::adicionaEspacoOcupado(Espaco * espaco)
