@@ -1,4 +1,4 @@
-# AEDA-Project
+# AEDA - 2018/2019
+#### FEUP - MIEIC - 2nd Year - 1st Semester - [Algorithms and Data Structures | Algoritmos e Estruturas de Dados (AEDA)](https://sigarra.up.pt/feup/pt/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=368697)
 
-This is the repository of a project for AEDA class.
-Class page: https://sigarra.up.pt/feup/pt/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=419991
+First group project assigned in the class.
