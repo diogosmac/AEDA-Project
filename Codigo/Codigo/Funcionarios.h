@@ -5,6 +5,8 @@
 
 #include "EspacosReserva.h"
 
+using namespace std;
+
 class Funcionario {
 
     string nome;
