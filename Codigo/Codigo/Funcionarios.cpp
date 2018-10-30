@@ -36,6 +36,6 @@ void Supervisor::RemoveEspaco(size_t idEspaco) {
 	throw EspacoInexistente(idEspaco);
 }
 
-vector <Espaco *> supervisor::getLocaisResponsavel() const {
-	return this->locaisResponsavel;
+vector <Espaco *> Supervisor::getLocaisResponsavel() const {
+	return this->Espacos;
 }
