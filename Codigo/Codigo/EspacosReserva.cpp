@@ -1,58 +1,56 @@
 #include "EspacosReserva.h"
 
-//----------------------------------------------------------Espaço-------------------------------------------------------------//
+//-----------------------------------------------------------Espaco------------------------------------------------------------//
 
-
-double espaco::getPrecoReservaDiario() const
-{
-	return 50; //TO DO
+size_t Espaco::getNumID() const {
+	return numID;
 }
 
 //-----------------------------------------------------------Quarto------------------------------------------------------------//
 
 
-quarto::quarto(bool quartoDuplo, bool frente)
-{
-	this->quartoDuplo = quartoDuplo;
+Quarto::Quarto(bool QuartoDuplo, bool frente) {
+
+	this->QuartoDuplo = QuartoDuplo;
 	this->frente = frente;
 }
 
-double quarto::getPrecoReservaDiario() const
-{
+double Quarto::getPrecoReservaDiario() const {
+
 	return 50; //TO DO
 }
 
-bool quarto::getQuartoDuplo()const
-{
-	return this->quartoDuplo;
+bool Quarto::getQuartoDuplo() const {
+
+	return this->QuartoDuplo;
 }
 
 //---------------------------------------------------------Sala Reunioes-------------------------------------------------------//
 
-salaReunioes::salaReunioes(int capacidade, bool equipamentoVideo, bool equipamentoAudio)
-{
+SalaDeReunioes::SalaDeReunioes(int capacidade, bool equipamentoVideo, bool equipamentoAudio) {
+
 	this->capacidade = capacidade;
 	this->equipamentoVideo = equipamentoVideo;
 	this->equipamentoAudio = equipamentoAudio;
 }
 
 
-double salaReunioes::getPrecoReservaDiario() const
-{
+double SalaDeReunioes::getPrecoReservaDiario() const {
+
 	return 50; // TO DO
 }
 
-int salaReunioes::getCapacidade() const
-{
+int SalaDeReunioes::getCapacidade() const {
+
 	return this->capacidade;
 }
 
-bool salaReunioes::getEquipamentoVideo() const
-{
+bool SalaDeReunioes::getEquipamentoVideo() const {
+
 	return this->equipamentoVideo;
 }
 
-bool salaReunioes::getEquipamentoAudio() const
-{
+bool SalaDeReunioes::getEquipamentoAudio() const {
+    
 	return this->equipamentoAudio;
 }

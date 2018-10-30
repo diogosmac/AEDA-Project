@@ -1,31 +1,36 @@
 #pragma once
 
-class espaco
-{
-	virtual double getPrecoReservaDiario() const;
+class Espaco {
+
+    size_t numID;
+
+public:
+
+    size_t getNumID() const;
+	virtual double getPrecoReservaDiario() const = 0;
 };
 
-class quarto : public espaco
-{
-	bool quartoDuplo;
+class Quarto : public Espaco {
+
+	bool QuartoDuplo;
 	bool frente;
 
 public:
 
-	quarto(bool quartoDuplo, bool frente);
+	Quarto(bool QuartoDuplo, bool frente);
 	double getPrecoReservaDiario() const;
 	bool getQuartoDuplo()const;
 };
 
-class salaReunioes : public espaco
-{
+class SalaDeReunioes : public Espaco {
+
 	int capacidade;
 	bool equipamentoVideo;
 	bool equipamentoAudio;
 
 public:
 
-	salaReunioes(int capacidade, bool equipamentoVideo, bool equipamentoAudio);
+	SalaDeReunioes(int capacidade, bool equipamentoVideo, bool equipamentoAudio);
 	double getPrecoReservaDiario() const;
 	int getCapacidade() const;
 	bool getEquipamentoVideo() const;
