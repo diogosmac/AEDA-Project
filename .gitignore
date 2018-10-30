@@ -330,3 +330,8 @@ ASALocalRun/
 .mfractor/
 /AEDA-Project/AEDA-Project/pch.h
 /AEDA-Project/AEDA-Project/pch.cpp
+/Codigo/Codigo.sln
+/Codigo/Codigo/pch.h
+/Codigo/Codigo/pch.cpp
+/Codigo/Codigo/Codigo.vcxproj.filters
+/Codigo/Codigo/Codigo.vcxproj

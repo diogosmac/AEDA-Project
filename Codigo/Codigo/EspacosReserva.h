@@ -8,10 +8,11 @@ class espaco
 class quarto : public espaco
 {
 	bool quartoDuplo;
+	bool frente;
 
 public:
 
-	quarto(bool quartoDuplo);
+	quarto(bool quartoDuplo, bool frente);
 	double getPrecoReservaDiario() const;
 	bool getQuartoDuplo()const;
 };

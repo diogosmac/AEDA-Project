@@ -11,9 +11,10 @@ double espaco::getPrecoReservaDiario() const
 //-----------------------------------------------------------Quarto------------------------------------------------------------//
 
 
-quarto::quarto(bool quartoDuplo)
+quarto::quarto(bool quartoDuplo, bool frente)
 {
 	this->quartoDuplo = quartoDuplo;
+	this->frente = frente;
 }
 
 double quarto::getPrecoReservaDiario() const
