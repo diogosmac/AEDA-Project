@@ -2,25 +2,40 @@
 
 //---------------------------------------------------------Funcionario--------------------------------------------------------//
 
-funcionario::funcionario(string nome, int idade)
+Funcionario::Funcionario(string nome, size_t ID_Code)
 {
 	this->nome = nome;
-	this->idade = idade;
+	this->ID_Code = ID_Code;
 }
 
-string funcionario::getNome() const
-{
+string Funcionario::getNome() const {
 	return this->nome;
 }
 
-int funcionario::getIdade() const
-{
-	return this->idade;
+size_t Funcionario::getID_Code() const {
+	return this->ID_Code;
 }
 
 //----------------------------------------------------------Supervisor--------------------------------------------------------//
 
-vector <espaco *> supervisor::getLocaisResponsavel() const
-{
+Supervisor::Supervisor(string nome, size_t ID_Code) : Funcionario(nome, ID_Code) {
+
+}
+
+void Supervisor::AcrescentaEspaco(size_t idEspaco) {
+	// a implementar
+	// vai ao objeto da class Hotel, à lista de espaços
+}
+
+void Supervisor::RemoveEspaco(size_t idEspaco) {
+	for (size_t i = 0; i < this->Espacos.size(); i++) {
+		if (this->Espacos.at(i)->getNumID() == idEspaco) {
+			this->Espacos.erase(this->Espacos.begin() + i);
+		}
+	}
+	throw EspacoInexistente(idEspaco);
+}
+
+vector <Espaco *> supervisor::getLocaisResponsavel() const {
 	return this->locaisResponsavel;
 }

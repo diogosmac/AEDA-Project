@@ -335,3 +335,5 @@ ASALocalRun/
 /Codigo/Codigo/pch.cpp
 /Codigo/Codigo/Codigo.vcxproj.filters
 /Codigo/Codigo/Codigo.vcxproj
+/Codigo/Codigo/stdafx.h
+/Codigo/Codigo/stdafx.cpp

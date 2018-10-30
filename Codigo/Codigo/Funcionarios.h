@@ -1,29 +1,39 @@
 #pragma once
 
-#include <iostream>
+#include <string>
 #include <vector>
+
 #include "EspacosReserva.h"
 
-using namespace std;
+class Funcionario {
 
-class funcionario
-{
-	string nome;
-	int idade;
+    string nome;
+    size_t ID_Code;
 
 public:
 
-	funcionario(string nome, int idade);
-	string getNome() const;
-	int getIdade() const;
+    Funcionario(string nome, size_t ID_Code);
+    string getNome() const;
+    size_t getID_Code() const;
+
 };
 
-class supervisor : public funcionario
-{
-	vector <espaco *> locaisResponsavel;
+class Supervisor : public Funcionario {
+
+    vector<Espaco *> Espacos;
 
 public:
 
-	vector <espaco *> getLocaisResponsavel() const;
+    Supervisor(string nome, size_t ID_Code);
+    void AcrescentaEspaco(size_t idEspaco);
+    void RemoveEspaco(size_t idEspaco);
+	vector<Espaco *> getLocaisResponsavel() const;
 
 };
+
+class EspacoInexistente {   // exception for function RemoveEspaco
+    size_t num_ID;
+public:
+    EspacoInexistente(size_t idEspaco) { num_ID = idEspaco; }
+    int getNumID() { return num_ID; }
+}
