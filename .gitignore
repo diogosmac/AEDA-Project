@@ -328,3 +328,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/AEDA-Project/AEDA-Project/pch.h
+/AEDA-Project/AEDA-Project/pch.cpp
