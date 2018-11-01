@@ -1,6 +1,6 @@
 #include "Cliente.h"
 
-Cliente::Cliente(string nome, int idade) : idCliente(proximoID++)
+Cliente::Cliente(string nome, int idade) : idCliente(nextClientID++)
 {
 	this->nome = nome;
 	this->idade = idade;

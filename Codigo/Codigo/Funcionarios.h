@@ -9,7 +9,7 @@ using namespace std;
 
 class Funcionario {
 	
-	static size_t nextID;
+	static size_t nextWorkerID;
     string nome;
     size_t ID_Code;
 
@@ -21,7 +21,7 @@ public:
 
 };
 
-size_t Funcionario::nextID = 0;
+size_t Funcionario::nextWorkerID = 0;
 
 class Supervisor : public Funcionario {
 

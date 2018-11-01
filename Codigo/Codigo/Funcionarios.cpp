@@ -2,7 +2,7 @@
 
 //---------------------------------------------------------Funcionario--------------------------------------------------------//
 
-Funcionario::Funcionario(string nome) : ID_Code(nextID++)
+Funcionario::Funcionario(string nome) : ID_Code(nextWorkerID++)
 {
 	this->nome = nome;
 }

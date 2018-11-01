@@ -9,7 +9,7 @@ using namespace std;
 
 class Cliente
 {
-	static int proximoID;
+	static int nextClientID;
 	int idCliente;
 	string nome;
 	int idade;
@@ -24,4 +24,4 @@ public:
 	
 };
 
-int Cliente::proximoID = 0;
+int Cliente::nextClientID = 0;

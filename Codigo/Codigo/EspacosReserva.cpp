@@ -2,7 +2,7 @@
 
 //-----------------------------------------------------------Espaco------------------------------------------------------------//
 
-Espaco::Espaco() : numID(nextID++) {}
+Espaco::Espaco() : numID(nextSpaceID++) {}
 
 size_t Espaco::getNumID() const {
 	return numID;
