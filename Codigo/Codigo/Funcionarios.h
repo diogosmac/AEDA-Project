@@ -9,7 +9,6 @@ using namespace std;
 
 class Funcionario {
 	
-	static size_t nextWorkerID;
     string nome;
     size_t ID_Code;
 
@@ -19,9 +18,10 @@ public:
     string getNome() const;
     size_t getID_Code() const;
 
-};
+private:
+	static size_t nextWorkerID;
 
-size_t Funcionario::nextWorkerID = 0;
+};
 
 class Supervisor : public Funcionario {
 

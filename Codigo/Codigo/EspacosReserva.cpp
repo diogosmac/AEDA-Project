@@ -1,5 +1,7 @@
 #include "EspacosReserva.h"
 
+size_t Espaco::nextSpaceID = 0;
+
 //-----------------------------------------------------------Espaco------------------------------------------------------------//
 
 Espaco::Espaco() : numID(nextSpaceID++) {}

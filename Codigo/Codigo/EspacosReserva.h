@@ -1,16 +1,18 @@
 #pragma once
 
 class Espaco {
-	static size_t nextSpaceID;
+	
     size_t numID;
 
 public:
 	Espaco();
     size_t getNumID() const;
 	virtual double getPrecoReservaDiario() const = 0;
-};
 
-size_t Espaco::nextSpaceID = 0;
+private:
+	static size_t nextSpaceID;
+
+};
 
 class Quarto : public Espaco {
 

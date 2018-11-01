@@ -7,9 +7,8 @@
 
 using namespace std;
 
-class Cliente
-{
-	static int nextClientID;
+class Cliente {
+
 	int idCliente;
 	string nome;
 	int idade;
@@ -21,7 +20,8 @@ public:
 	int getIdade() const;
 	void adicionaEspacoReservado(Espaco * espaco);
 	int getIDCliente() const;
-	
-};
 
-int Cliente::nextClientID = 0;
+private:
+	static int nextClientID;
+
+};

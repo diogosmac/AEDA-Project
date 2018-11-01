@@ -1,5 +1,7 @@
 #include "Cliente.h"
 
+int Cliente::nextClientID = 0;
+
 Cliente::Cliente(string nome, int idade) : idCliente(nextClientID++)
 {
 	this->nome = nome;

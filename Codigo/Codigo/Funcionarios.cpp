@@ -1,5 +1,7 @@
 #include "Funcionarios.h"
 
+size_t Funcionario::nextWorkerID = 0;
+
 //---------------------------------------------------------Funcionario--------------------------------------------------------//
 
 Funcionario::Funcionario(string nome) : ID_Code(nextWorkerID++)
