@@ -21,8 +21,8 @@ public:
     size_t getID_Code() const;
 	void makeSupervisor();
 	bool isSupervisor() const;
-	virtual void AcrescentaEspaco(Espaco* espaco) = 0;
-	virtual void RemoveEspacos() = 0;
+	virtual void AcrescentaEspaco(Espaco* espaco) = 0;	// temporary
+	virtual void RemoveEspacos() = 0;					// solutions
 
 private:
 	static size_t nextWorkerID;
