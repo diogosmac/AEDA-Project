@@ -7,6 +7,7 @@ size_t Funcionario::nextWorkerID = 0;
 Funcionario::Funcionario(string nome) : ID_Code(nextWorkerID++)
 {
 	this->nome = nome;
+	supervisor_status = false;
 }
 
 string Funcionario::getNome() const {
@@ -17,15 +18,22 @@ size_t Funcionario::getID_Code() const {
 	return this->ID_Code;
 }
 
+void Funcionario::makeSupervisor() {
+	supervisor_status = true;
+}
+
+bool Funcionario::isSupervisor() const {
+	return supervisor_status;
+}
+
 //----------------------------------------------------------Supervisor--------------------------------------------------------//
 
 Supervisor::Supervisor(string nome) : Funcionario(nome) {
-
+	this->makeSupervisor();
 }
 
-void Supervisor::AcrescentaEspaco(size_t idEspaco) {
-	// a implementar
-	// vai ao objeto da class Hotel, à lista de espaços
+void Supervisor::AcrescentaEspaco(Espaco* espaco) {
+	Espacos.push_back(espaco);
 }
 
 void Supervisor::RemoveEspaco(size_t idEspaco) {
@@ -35,6 +43,10 @@ void Supervisor::RemoveEspaco(size_t idEspaco) {
 		}
 	}
 	throw EspacoInexistente(idEspaco);
+}
+
+void Supervisor::RemoveTodosEspacos() {
+	this->Espacos.clear();
 }
 
 vector <Espaco *> Supervisor::getLocaisResponsavel() const {

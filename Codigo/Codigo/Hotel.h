@@ -14,6 +14,7 @@ class Hotel
 	vector<Espaco *> todosEspacos; // Contem todos os espacos que pertencem ao hotel
 	vector<Espaco *> espacosDisponiveis; // Contem todos os espacos que se encontram disponiveis
 	vector<Funcionario *> funcionarios; // Contem todos os funcionarios do hotel
+	vector<Supervisor *> supervisores; // Contem todos os supervisores do hotel
 	vector<Cliente *> clientesHotel; // Contem todos os clientes do hotel
 
 public: 
@@ -36,7 +37,7 @@ public:
 	bool verificaCliente(string nome); // Retorna true se encontrar o cliente de nome = parametro, caso contratio, false
 	void efetuaReserva(Cliente * cliente, Espaco * espaco); // Pretty obvious *-*; idade cliente >= 18, senao -> erro
 	void reservaEspaco(Espaco * espaco); // Nao deve ser usado, n faz verificacoes nenhumas; É chamado por efetuaReserva (apos verificaoes)
-	// Distribuir Supervisores pelos espacos
+	void alocaSupervisores();
 	// Funcao atende cliente?
 };
 

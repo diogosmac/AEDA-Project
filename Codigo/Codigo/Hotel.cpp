@@ -52,6 +52,8 @@ bool Hotel::verificaEspaco(Espaco * espaco)
 void Hotel::adicionaFuncionario(Funcionario * func)
 {
 	this->funcionarios.push_back(func);
+	if (func->isSupervisor())
+		this->supervisores.push_back(func);
 }
 
 void Hotel::removeEspaco(size_t numID)
@@ -200,5 +202,18 @@ void Hotel::efetuaReserva(Cliente * cliente, Espaco * espaco)
 	else
 	{
 		throw ClienteDemasiadoNovoReserva(cliente);
+	}
+}
+
+void Hotel::alocaSupervisores() {
+	for (size_t i = 0; i < supervisores.size(); i++) {
+		supervisores.at(i)->RemoveTodosEspacos();
+	}
+
+	for (size_t i = 0, j = 0; i < todosEspacos.size(); i++, j++) {
+		if (j == supervisores.size()) { 
+			j = 0; 
+		}
+		supervisores.at(j)->AcrescentaEspaco(todosEspacos.at(i));
 	}
 }
