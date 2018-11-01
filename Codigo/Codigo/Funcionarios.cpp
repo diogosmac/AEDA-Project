@@ -36,6 +36,7 @@ void Supervisor::AcrescentaEspaco(Espaco* espaco) {
 	Espacos.push_back(espaco);
 }
 
+/*
 void Supervisor::RemoveEspaco(size_t idEspaco) {
 	for (size_t i = 0; i < this->Espacos.size(); i++) {
 		if (this->Espacos.at(i)->getNumID() == idEspaco) {
@@ -44,8 +45,9 @@ void Supervisor::RemoveEspaco(size_t idEspaco) {
 	}
 	throw EspacoInexistente(idEspaco);
 }
+*/
 
-void Supervisor::RemoveTodosEspacos() {
+void Supervisor::RemoveEspacos() {
 	this->Espacos.clear();
 }
 

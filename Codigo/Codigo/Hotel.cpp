@@ -207,7 +207,7 @@ void Hotel::efetuaReserva(Cliente * cliente, Espaco * espaco)
 
 void Hotel::alocaSupervisores() {
 	for (size_t i = 0; i < supervisores.size(); i++) {
-		supervisores.at(i)->RemoveTodosEspacos();
+		supervisores.at(i)->RemoveEspacos();
 	}
 
 	for (size_t i = 0, j = 0; i < todosEspacos.size(); i++, j++) {

@@ -14,7 +14,7 @@ class Hotel
 	vector<Espaco *> todosEspacos; // Contem todos os espacos que pertencem ao hotel
 	vector<Espaco *> espacosDisponiveis; // Contem todos os espacos que se encontram disponiveis
 	vector<Funcionario *> funcionarios; // Contem todos os funcionarios do hotel
-	vector<Supervisor *> supervisores; // Contem todos os supervisores do hotel
+	vector<Funcionario *> supervisores; // Contem todos os supervisores do hotel
 	vector<Cliente *> clientesHotel; // Contem todos os clientes do hotel
 
 public: 

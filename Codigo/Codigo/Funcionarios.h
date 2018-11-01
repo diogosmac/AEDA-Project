@@ -16,10 +16,13 @@ class Funcionario {
 public:
 
     Funcionario(string nome);
+	virtual ~Funcionario() {}
     string getNome() const;
     size_t getID_Code() const;
 	void makeSupervisor();
-	bool isSupervisor() const { return isSupervisor; }
+	bool isSupervisor() const;
+	virtual void AcrescentaEspaco(Espaco* espaco) = 0;
+	virtual void RemoveEspacos() = 0;
 
 private:
 	static size_t nextWorkerID;
@@ -34,8 +37,8 @@ public:
 
     Supervisor(string nome);
     void AcrescentaEspaco(Espaco* espaco);
-    void RemoveEspaco(size_t idEspaco);
-	void RemoveTodosEspacos();
+    // void RemoveEspaco(size_t idEspaco);
+	void RemoveEspacos();
 	vector<Espaco *> getLocaisResponsavel() const;
 
 };
