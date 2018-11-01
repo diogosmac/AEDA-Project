@@ -1,14 +1,9 @@
 #include "Cliente.h"
 
-int proximoID = 1;
-
-Cliente::Cliente(string nome, int idade)
+Cliente::Cliente(string nome, int idade) : idCliente(proximoID++)
 {
 	this->nome = nome;
 	this->idade = idade;
-
-	//this->idCliente = proximoID;
-	//proximoID++;
 }
 
 string Cliente::getNome() const
@@ -27,9 +22,7 @@ void Cliente::adicionaEspacoReservado(Espaco * espaco)
 }
 
 
-/*
 int Cliente::getIDCliente() const
 {
 	return this->idCliente;
 }
-*/

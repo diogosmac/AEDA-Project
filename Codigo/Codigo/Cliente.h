@@ -9,10 +9,10 @@ using namespace std;
 
 class Cliente
 {
-	//static int proximoID; 
+	static int proximoID;
+	int idCliente;
 	string nome;
 	int idade;
-	//int idCliente;
 	vector<Espaco *> espacosReservados;
 
 public:
@@ -20,6 +20,8 @@ public:
 	string getNome() const;
 	int getIdade() const;
 	void adicionaEspacoReservado(Espaco * espaco);
-	//int getIDCliente() const;
+	int getIDCliente() const;
 	
 };
+
+int Cliente::proximoID = 0;

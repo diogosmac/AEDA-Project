@@ -1,7 +1,7 @@
 #pragma once
 
 class Espaco {
-
+	static size_t nextID;
     size_t numID;
 
 public:
@@ -10,16 +10,19 @@ public:
 	virtual double getPrecoReservaDiario() const = 0;
 };
 
+size_t Espaco::nextID = 0;
+
 class Quarto : public Espaco {
 
-	bool QuartoDuplo;
+	bool duplo;
 	bool frente;
 
 public:
 
 	Quarto(bool QuartoDuplo, bool frente);
 	double getPrecoReservaDiario() const;
-	bool getQuartoDuplo()const;
+	bool isDuplo() const;
+	bool isFrente() const;
 };
 
 class SalaDeReunioes : public Espaco {

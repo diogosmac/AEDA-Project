@@ -8,17 +8,20 @@
 using namespace std;
 
 class Funcionario {
-
+	
+	static size_t nextID;
     string nome;
     size_t ID_Code;
 
 public:
 
-    Funcionario(string nome, size_t ID_Code);
+    Funcionario(string nome);
     string getNome() const;
     size_t getID_Code() const;
 
 };
+
+size_t Funcionario::nextID = 0;
 
 class Supervisor : public Funcionario {
 
@@ -26,7 +29,7 @@ class Supervisor : public Funcionario {
 
 public:
 
-    Supervisor(string nome, size_t ID_Code);
+    Supervisor(string nome);
     void AcrescentaEspaco(size_t idEspaco);
     void RemoveEspaco(size_t idEspaco);
 	vector<Espaco *> getLocaisResponsavel() const;

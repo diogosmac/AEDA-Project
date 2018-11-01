@@ -2,10 +2,9 @@
 
 //---------------------------------------------------------Funcionario--------------------------------------------------------//
 
-Funcionario::Funcionario(string nome, size_t ID_Code)
+Funcionario::Funcionario(string nome) : ID_Code(nextID++)
 {
 	this->nome = nome;
-	this->ID_Code = ID_Code;
 }
 
 string Funcionario::getNome() const {
@@ -18,7 +17,7 @@ size_t Funcionario::getID_Code() const {
 
 //----------------------------------------------------------Supervisor--------------------------------------------------------//
 
-Supervisor::Supervisor(string nome, size_t ID_Code) : Funcionario(nome, ID_Code) {
+Supervisor::Supervisor(string nome) : Funcionario(nome) {
 
 }
 
