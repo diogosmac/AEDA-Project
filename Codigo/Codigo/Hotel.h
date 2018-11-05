@@ -6,6 +6,7 @@
 #include "Cliente.h"
 #include <vector>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -38,7 +39,9 @@ public:
 	void efetuaReserva(Cliente * cliente, Espaco * espaco); // Pretty obvious *-*; idade cliente >= 18, senao -> erro
 	void reservaEspaco(Espaco * espaco); // Nao deve ser usado, n faz verificacoes nenhumas; É chamado por efetuaReserva (apos verificacoes)
 	void alocaSupervisores();
-	// Funcao atende cliente?
+	void atendeCliente();
+	void importInfo();
+	void exportInfo();
 };
 
 // -----------------------------------------------------------Exceptions--------------------------------------------------------// 

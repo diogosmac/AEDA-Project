@@ -28,3 +28,9 @@ int Cliente::getIDCliente() const
 {
 	return this->idCliente;
 }
+
+ostream& operator << (ostream& ofs, const Cliente *cliente)
+{
+	ofs << "*" << cliente->nome << ';' << cliente->idade << ';' << cliente->idCliente << ";" << endl;
+	return ofs;
+}

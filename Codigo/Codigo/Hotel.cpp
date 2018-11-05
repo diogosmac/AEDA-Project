@@ -182,8 +182,8 @@ void Hotel::efetuaReserva(Cliente * cliente, Espaco * espaco)
 	if (cliente->getIdade() >= 18)
 	{
 
-		if (!verificaCliente(cliente->getNome()))	// Caso o cliente ainda nao esteja na
-		{											// lista de clientes do hotel -> adicionado
+		if (!verificaCliente(cliente->getNome(), cliente->getIDCliente()))	// Caso o cliente ainda nao esteja na
+		{																	// lista de clientes do hotel -> adicionado
 			this->adicionaCliente(cliente);
 		}
 
@@ -220,4 +220,74 @@ void Hotel::alocaSupervisores()
 		}
 		supervisores.at(j)->AcrescentaEspaco(todosEspacos.at(i));
 	}
+}
+
+void Hotel::atendeCliente()
+{
+
+}
+
+void Hotel::importInfo()
+{
+	/*
+
+	ifstream ficheiro;
+	string nomeFicheiro;
+
+	cout << "Escreva o nome do ficheiro de onde pretende importar os dados" << endl;
+
+	do
+	{
+		cin >> nomeFicheiro;
+		ficheiro.open(nomeFicheiro);
+
+		if (!ficheiro.is_open())
+		{
+			cerr << "Erro ao abrir o ficheiro, escreva novamente o nome do mesmo" << endl;
+			cin.ignore(9999999, '\n');
+			cin.clear();
+		}
+
+	}while(!ficheiro.is_open())
+	
+	*/
+}
+
+void Hotel::exportInfo()
+{
+	ofstream ficheiro;
+
+	string nomeFicheiro;
+
+	cout << "Escreva o nome do ficheiro onde pretende guardar os dados" << endl;
+	cout << "Nota: Caso o ficheiro com nome inserido ja existir, o mesmo sera substituido pelo novo" << endl;
+
+	
+	cin >> nomeFicheiro;
+	ficheiro.open(nomeFicheiro + ".txt");
+
+	cin.ignore(9999999, '\n');
+	cin.clear();
+
+	if (!ficheiro.is_open())
+	{
+		cerr << "Erro opening file!" << endl;
+		return;
+	}
+
+	//Escreve todos os clientes
+	for (size_t i = 0; i < this->clientesHotel.size(); i++)
+	{
+		if (i == this->clientesHotel.size() - 1)
+		{
+			ficheiro << clientesHotel.at(i);
+			ficheiro << '\n';
+			cout << "Toda a informacao relativa aos clientes foi guardada com sucesso!" << endl;
+		}
+		else
+		{
+			ficheiro << clientesHotel.at(i);
+		}
+	}
+
 }

@@ -20,6 +20,7 @@ public:
 	int getIdade() const;
 	void adicionaEspacoReservado(Espaco * espaco);
 	int getIDCliente() const;
+	friend ostream& operator << (ostream& ofs, const Cliente *cliente);
 
 private:
 	static int nextClientID;
