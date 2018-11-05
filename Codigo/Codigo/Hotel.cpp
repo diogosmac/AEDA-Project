@@ -119,13 +119,13 @@ void Hotel::adicionaCliente(Cliente * cliente)
 	this->clientesHotel.push_back(cliente);
 }
 
-void Hotel::removeCliente(string nome)
+void Hotel::removeCliente(string nome, size_t idCliente)
 {
 	bool encontrado = false;
 
 	for (size_t i = 0; i < this->clientesHotel.size(); i++)
 	{
-		if (this->clientesHotel.at(i)->getNome() == nome)
+		if ((this->clientesHotel.at(i)->getNome() == nome) && (this->clientesHotel.at(i)->getIDCliente() == idCliente))
 		{
 			encontrado = true;
 			this->clientesHotel.erase(this->clientesHotel.begin() + i);
@@ -153,11 +153,11 @@ Cliente * Hotel::encontraCliente(string nome)
 	
 }
 
-bool Hotel::verificaCliente(string nome)
+bool Hotel::verificaCliente(string nome, size_t idCliente)
 {
 	for (size_t i = 0; i < this->clientesHotel.size(); i++)
 	{
-		if (this->clientesHotel.at(i)->getNome() == nome)
+		if ((this->clientesHotel.at(i)->getNome() == nome) && (this->clientesHotel.at(i)->getIDCliente() == idCliente))
 		{
 			return true;
 		}

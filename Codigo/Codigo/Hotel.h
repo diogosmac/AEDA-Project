@@ -32,11 +32,11 @@ public:
 	void removeFuncionario(size_t ID_Code);
 	double nClientes() const;
 	void adicionaCliente(Cliente * cliente);
-	void removeCliente(string nome /* Possivel de se adicionar tbm iD_Cliente */);
-	Cliente * encontraCliente(string nome); // Retorna o objeto * objeto clinete com nome = parametro, se nao encontrar dá erro
-	bool verificaCliente(string nome); // Retorna true se encontrar o cliente de nome = parametro, caso contratio, false
+	void removeCliente(string nome, size_t idCliente);
+	Cliente * encontraCliente(string nome); // Retorna o objeto * objeto cliente com nome = parametro, se nao encontrar dá erro
+	bool verificaCliente(string nome, size_t idCliente); // Retorna true se encontrar o cliente de nome = parametro, caso contratio, false
 	void efetuaReserva(Cliente * cliente, Espaco * espaco); // Pretty obvious *-*; idade cliente >= 18, senao -> erro
-	void reservaEspaco(Espaco * espaco); // Nao deve ser usado, n faz verificacoes nenhumas; É chamado por efetuaReserva (apos verificaoes)
+	void reservaEspaco(Espaco * espaco); // Nao deve ser usado, n faz verificacoes nenhumas; É chamado por efetuaReserva (apos verificacoes)
 	void alocaSupervisores();
 	// Funcao atende cliente?
 };
