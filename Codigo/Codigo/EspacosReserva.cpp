@@ -11,6 +11,14 @@ size_t Espaco::getNumID() const
 	return numID;
 }
 
+/*
+ostream Espaco::getInfo()
+{
+	ostream out;
+	out << numID << endl;
+	return out;
+}
+*/
 //-----------------------------------------------------------Quarto------------------------------------------------------------//
 
 

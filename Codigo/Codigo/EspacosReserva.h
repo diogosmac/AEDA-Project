@@ -1,5 +1,9 @@
 #pragma once
 
+#include <iostream>
+
+using namespace std;
+
 class Espaco 
 {
 	
@@ -9,6 +13,7 @@ public:
 	Espaco();
     size_t getNumID() const;
 	virtual double getPrecoReservaDiario() const = 0;
+	//virtual ostream getInfo(); //Used for export / import of data to / from files.
 
 private:
 	static size_t nextSpaceID;
@@ -27,6 +32,7 @@ public:
 	double getPrecoReservaDiario() const;
 	bool isDuplo() const;
 	bool isFrente() const;
+	//virtual ostream getInfo();
 };
 
 class SalaDeReunioes : public Espaco 

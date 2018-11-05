@@ -24,6 +24,7 @@ public:
 	bool isSupervisor() const;
 	virtual void AcrescentaEspaco(Espaco* espaco) = 0;	// temporary
 	virtual void RemoveEspacos() = 0;					// solutions
+	
 
 private:
 	static size_t nextWorkerID;
@@ -42,6 +43,7 @@ public:
     // void RemoveEspaco(size_t idEspaco);
 	void RemoveEspacos();
 	vector<Espaco *> getLocaisResponsavel() const;
+	
 
 };
 
