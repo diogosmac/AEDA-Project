@@ -7,7 +7,8 @@
 
 using namespace std;
 
-class Funcionario {
+class Funcionario 
+{
 	
     string nome;
     size_t ID_Code;
@@ -29,7 +30,8 @@ private:
 
 };
 
-class Supervisor : public Funcionario {
+class Supervisor : public Funcionario 
+{
 
     vector<Espaco *> Espacos;
 
@@ -43,7 +45,8 @@ public:
 
 };
 
-class EspacoInexistente {   // exception for function RemoveEspaco
+class EspacoInexistente    // exception for function RemoveEspaco
+{
     size_t num_ID;
 public:
     EspacoInexistente(size_t idEspaco) { num_ID = idEspaco; }

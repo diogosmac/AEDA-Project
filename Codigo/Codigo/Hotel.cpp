@@ -205,13 +205,17 @@ void Hotel::efetuaReserva(Cliente * cliente, Espaco * espaco)
 	}
 }
 
-void Hotel::alocaSupervisores() {
-	for (size_t i = 0; i < supervisores.size(); i++) {
+void Hotel::alocaSupervisores() 
+{
+	for (size_t i = 0; i < supervisores.size(); i++) 
+	{
 		supervisores.at(i)->RemoveEspacos();
 	}
 
-	for (size_t i = 0, j = 0; i < todosEspacos.size(); i++, j++) {
-		if (j == supervisores.size()) { 
+	for (size_t i = 0, j = 0; i < todosEspacos.size(); i++, j++) 
+	{
+		if (j == supervisores.size()) 
+		{ 
 			j = 0; 
 		}
 		supervisores.at(j)->AcrescentaEspaco(todosEspacos.at(i));

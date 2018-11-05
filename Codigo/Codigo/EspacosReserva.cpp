@@ -6,34 +6,40 @@ size_t Espaco::nextSpaceID = 0;
 
 Espaco::Espaco() : numID(nextSpaceID++) {}
 
-size_t Espaco::getNumID() const {
+size_t Espaco::getNumID() const 
+{
 	return numID;
 }
 
 //-----------------------------------------------------------Quarto------------------------------------------------------------//
 
 
-Quarto::Quarto(bool duplo, bool frente) : Espaco() {
+Quarto::Quarto(bool duplo, bool frente) : Espaco() 
+{
 	this->duplo = duplo;
 	this->frente = frente;
 }
 
-double Quarto::getPrecoReservaDiario() const {
+double Quarto::getPrecoReservaDiario() const 
+{
 
 	return 50; //TO DO
 }
 
-bool Quarto::isDuplo() const {
+bool Quarto::isDuplo() const 
+{
 	return this->duplo;
 }
 
-bool Quarto::isFrente() const {
+bool Quarto::isFrente() const 
+{
 	return this->frente;
 }
 
 //---------------------------------------------------------Sala Reunioes-------------------------------------------------------//
 
-SalaDeReunioes::SalaDeReunioes(int capacidade, bool equipamentoVideo, bool equipamentoAudio) : Espaco() {
+SalaDeReunioes::SalaDeReunioes(int capacidade, bool equipamentoVideo, bool equipamentoAudio) : Espaco() 
+{
 
 	this->capacidade = capacidade;
 	this->equipamentoVideo = equipamentoVideo;
@@ -41,18 +47,22 @@ SalaDeReunioes::SalaDeReunioes(int capacidade, bool equipamentoVideo, bool equip
 }
 
 
-double SalaDeReunioes::getPrecoReservaDiario() const {
+double SalaDeReunioes::getPrecoReservaDiario() const 
+{
 	return 50; // TO DO
 }
 
-int SalaDeReunioes::getCapacidade() const {
+int SalaDeReunioes::getCapacidade() const 
+{
 	return this->capacidade;
 }
 
-bool SalaDeReunioes::getEquipamentoVideo() const {
+bool SalaDeReunioes::getEquipamentoVideo() const 
+{
 	return this->equipamentoVideo;
 }
 
-bool SalaDeReunioes::getEquipamentoAudio() const {  
+bool SalaDeReunioes::getEquipamentoAudio() const 
+{  
 	return this->equipamentoAudio;
 }

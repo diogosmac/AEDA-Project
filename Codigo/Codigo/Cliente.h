@@ -23,5 +23,4 @@ public:
 
 private:
 	static int nextClientID;
-
 };

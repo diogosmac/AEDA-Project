@@ -1,6 +1,7 @@
 #pragma once
 
-class Espaco {
+class Espaco 
+{
 	
     size_t numID;
 
@@ -14,7 +15,8 @@ private:
 
 };
 
-class Quarto : public Espaco {
+class Quarto : public Espaco 
+{
 
 	bool duplo;
 	bool frente;
@@ -27,7 +29,8 @@ public:
 	bool isFrente() const;
 };
 
-class SalaDeReunioes : public Espaco {
+class SalaDeReunioes : public Espaco 
+{
 
 	int capacidade;
 	bool equipamentoVideo;
