@@ -2,6 +2,8 @@
 
 int Cliente::nextClientID = 0;
 
+//teste
+
 Cliente::Cliente(string nome, int idade) : idCliente(nextClientID++)
 {
 	this->nome = nome;
