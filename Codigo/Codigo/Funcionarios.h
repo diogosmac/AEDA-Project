@@ -24,7 +24,7 @@ public:
 	bool isSupervisor() const;
 	virtual void AcrescentaEspaco(Espaco* espaco) = 0;	// temporary
 	virtual void RemoveEspacos() = 0;					// solutions
-	
+	//friend ostream& operator << (ostream& ofs, const Funcionario *funcionario);
 
 private:
 	static size_t nextWorkerID;

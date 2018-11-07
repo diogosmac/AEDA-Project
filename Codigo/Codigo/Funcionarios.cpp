@@ -30,6 +30,21 @@ bool Funcionario::isSupervisor() const
 	return supervisor_status;
 }
 
+/* Needs to be comnpleted
+
+ostream& operator << (ostream& ofs, const Funcionario *funcionario)
+{
+	if (funcionario->supervisor_status)
+	{
+		ofs << funcionario->getNome() << ";" << funcionario->getID_Code() << ";" << funcionario->supervisor_status << endl;//DOTHIS
+	}
+	else
+	{
+		ofs << funcionario->getNome() << ";" << funcionario->getID_Code() << ";" << funcionario->supervisor_status << endl;
+	}
+}
+*/
+
 //----------------------------------------------------------Supervisor--------------------------------------------------------//
 
 Supervisor::Supervisor(string nome) : Funcionario(nome) 
@@ -63,3 +78,4 @@ vector <Espaco *> Supervisor::getLocaisResponsavel() const
 {
 	return this->Espacos;
 }
+
