@@ -17,7 +17,7 @@ public:
 
 private:
 	static size_t nextSpaceID;
-
+	//Teste Commit
 };
 
 class Quarto : public Espaco 
