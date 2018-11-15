@@ -13,7 +13,7 @@ using namespace std;
 class Hotel
 {
 	vector<Espaco *> todosEspacos; // Contem todos os espacos que pertencem ao hotel
-	vector<Espaco *> espacosDisponiveis; // Contem todos os espacos que se encontram disponiveis
+	// vector<Espaco *> espacosDisponiveis; // Contem todos os espacos que se encontram disponiveis
 	vector<Funcionario *> funcionarios; // Contem todos os funcionarios do hotel
 	vector<Funcionario *> supervisores; // Contem todos os supervisores do hotel
 	vector<Cliente *> clientesHotel; // Contem todos os clientes do hotel
@@ -21,23 +21,25 @@ class Hotel
 public: 
 
 	vector<Espaco *> getTodosEspacos() const;
-	vector<Espaco *> getEspacosDisponiveis() const;
+	// vector<Espaco *> getEspacosDisponiveis() const;
 	vector<Funcionario *> getFuncionarios() const;
-	double nEspacosDisponiveis();
-	double lotacao(); // Em percentagem
-	void adicionaEspacoOcupado(Espaco * espaco); // Adiciona um espaco ao hotel (nao disponivel)
+	double nEspacosDisponiveis(Date data);
+	double lotacao(Date data); // Em percentagem
+	// void adicionaEspacoOcupado(Espaco * espaco); // Adiciona um espaco ao hotel (nao disponivel)
 	void adicionaEspaco(Espaco * espaco); // Adiciona um espaco ao hotel
-	bool verificaEspaco(Espaco * espaco); // Retorna true se encontrar um espaco disponivel = parametro, caso contratio, false
+	bool verificaEspaco(Espaco * espaco, Date data); // Verifica disponibilidade de um espaço, numa certa data
+	bool verificaEspaco(Espaco * espaco, Date data_inicio, Date data_fim); // Verifica disponibilidade de um espaço, num intervalo de dias
 	void adicionaFuncionario(Funcionario * func); // Adiciona um funcionario ao vetor de funcionarios que trabalham no hotel
+	bool espacoTemReservas(Espaco * espaco); // Retorna true se o espaço tiver alguma reserva agendada
 	void removeEspaco(size_t numID);
 	void removeFuncionario(size_t ID_Code);
 	double nClientes() const;
-	void adicionaCliente(Cliente * cliente);
+	bool verificaCliente(string nome, size_t idade); // Retorna true se encontrar o cliente de nome = parametro, caso contrario, false
+	void adicionaCliente(string nome, size_t idade);
 	void removeCliente(string nome, size_t idCliente);
-	Cliente * encontraCliente(string nome); // Retorna o objeto * objeto cliente com nome = parametro, se nao encontrar dá erro
-	bool verificaCliente(string nome, size_t idCliente); // Retorna true se encontrar o cliente de nome = parametro, caso contratio, false
-	void efetuaReserva(Cliente * cliente, Espaco * espaco); // Pretty obvious *-*; idade cliente >= 18, senao -> erro
-	void reservaEspaco(Espaco * espaco); // Nao deve ser usado, n faz verificacoes nenhumas; É chamado por efetuaReserva (apos verificacoes)
+	Cliente * encontraCliente(string nome); // Retorna o objeto * objeto clinete com nome = parametro, se nao encontrar dá erro
+	// void efetuaReserva(Cliente * cliente, Espaco * espaco); // Pretty obvious *-*; idade cliente >= 18, senao -> erro
+	// void reservaEspaco(Espaco * espaco); // Nao deve ser usado, n faz verificacoes nenhumas; É chamado por efetuaReserva (apos verificaoes)
 	void alocaSupervisores();
 	void atendeCliente();
 	void importInfo();

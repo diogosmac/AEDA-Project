@@ -1,5 +1,15 @@
 #include "EspacosReserva.h"
 
+Date::Date(size_t d, size_t m, size_t y) : day(d), month(m), year(y) {}
+
+string Date::getDate() const {
+	ostringstream oss;
+	oss << getDay() << '/' << getMonth() << '/' << getYear();
+	return oss.str();
+}
+
+// ----------------------------------------------------------
+
 size_t Espaco::nextSpaceID = 0;
 
 //-----------------------------------------------------------Espaco------------------------------------------------------------//

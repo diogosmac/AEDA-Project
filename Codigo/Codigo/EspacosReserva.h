@@ -1,8 +1,26 @@
 #pragma once
 
 #include <iostream>
+#include <string>
+#include <sstream>
 
 using namespace std;
+
+class Date
+{
+	size_t day;
+	size_t month;
+	size_t year;
+
+public:
+
+	Date(size_t d, size_t m, size_t y);
+	size_t getDay() const { return day; }
+	size_t getMonth() const { return month; }
+	size_t getYear() const { return year; }
+	string getDate() const;
+};
+
 
 class Espaco 
 {

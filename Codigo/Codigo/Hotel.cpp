@@ -5,48 +5,47 @@ vector<Espaco *> Hotel::getTodosEspacos() const
 	return this->todosEspacos;
 }
 
-vector<Espaco *> Hotel::getEspacosDisponiveis() const
-{
-	return this->espacosDisponiveis;
-}
+// vector<Espaco *> Hotel::getEspacosDisponiveis() const
+// {
+// 	return this->espacosDisponiveis;
+// }
 
 vector<Funcionario *> Hotel::getFuncionarios() const
 {
 	return this->funcionarios;
 }
 
-double Hotel::nEspacosDisponiveis()
+double Hotel::nEspacosDisponiveis(Date data)
 {
-	return this->espacosDisponiveis.size();
+	// implementar depois da classe Reserva
+	return 0;
 }
 
-double Hotel::lotacao()
+double Hotel::lotacao(Date data)
 {
-	return (this->nEspacosDisponiveis() / this->todosEspacos.size()) * 100;
+	return (this->nEspacosDisponiveis(data) / this->todosEspacos.size()) * 100;
 }
 
-void Hotel::adicionaEspacoOcupado(Espaco * espaco)
-{
-	this->todosEspacos.push_back(espaco);
-}
+// void Hotel::adicionaEspacoOcupado(Espaco * espaco)
+// {
+// 	this->todosEspacos.push_back(espaco);
+// }
 
 void Hotel::adicionaEspaco(Espaco * espaco)
 {
 	this->todosEspacos.push_back(espaco);
-	this->espacosDisponiveis.push_back(espaco);
 }
 
-bool Hotel::verificaEspaco(Espaco * espaco)
+bool Hotel::verificaEspaco(Espaco * espaco, Date data)
 {
-	for (size_t i = 0; i < this->espacosDisponiveis.size(); i++)
-	{
-		if (this->espacosDisponiveis.at(i)->getNumID() == espaco->getNumID())
-		{
-			return true;
-		}
-	}
+	// implementar depois da classe Reserva
+	return true;
+}
 
-	return false;
+bool Hotel::verificaEspaco(Espaco * espaco, Date data_inicio, Date data_fim)
+{
+	// implementar depois da classe Reserva
+	return true;
 }
 
 void Hotel::adicionaFuncionario(Funcionario * func)
@@ -54,6 +53,12 @@ void Hotel::adicionaFuncionario(Funcionario * func)
 	this->funcionarios.push_back(func);
 	if (func->isSupervisor())
 		this->supervisores.push_back(func);
+}
+
+bool Hotel::espacoTemReservas(Espaco * espaco)
+{
+	// implementar depois da classe Reserva
+	return true;
 }
 
 void Hotel::removeEspaco(size_t numID)
@@ -65,9 +70,12 @@ void Hotel::removeEspaco(size_t numID)
 	{
 		if (todosEspacos.at(i)->getNumID() == numID)
 		{
-			todosEspacos.erase(todosEspacos.begin() + i);
-			encontrado = true;
-			break;
+			if (!espacoTemReservas(todosEspacos.at(i))) 
+			{
+				todosEspacos.erase(todosEspacos.begin() + i);
+				encontrado = true;
+				break;
+			}
 		}
 	}
 
@@ -75,17 +83,6 @@ void Hotel::removeEspaco(size_t numID)
 	{
 		throw EspacoNaoPertenceHotel(numID);
 	}
-
-	// Remove do vetor espacosDisponiveis, caso encontre.
-	for (size_t i = 0; i < this->espacosDisponiveis.size(); i++)
-	{
-		if (espacosDisponiveis.at(i)->getNumID() == numID)
-		{
-			espacosDisponiveis.erase(espacosDisponiveis.begin() + i);
-			break;
-		}
-	}
-
 }
 
 void Hotel::removeFuncionario(size_t ID_Code)
@@ -114,11 +111,6 @@ double Hotel::nClientes() const
 	return this->clientesHotel.size();
 }
 
-void Hotel::adicionaCliente(Cliente * cliente)
-{
-	this->clientesHotel.push_back(cliente);
-}
-
 void Hotel::removeCliente(string nome, size_t idCliente)
 {
 	bool encontrado = false;
@@ -138,26 +130,11 @@ void Hotel::removeCliente(string nome, size_t idCliente)
 	}
 }
 
-Cliente * Hotel::encontraCliente(string nome)
-{
-
-	for (size_t i = 0; i < this->clientesHotel.size(); i++)
-	{
-		if (this->clientesHotel.at(i)->getNome() == nome)
-		{
-			return this->clientesHotel.at(i);
-		}
-	}
-
-	throw ClienteNaoEncontrado(nome);
-	
-}
-
-bool Hotel::verificaCliente(string nome, size_t idCliente)
+bool Hotel::verificaCliente(string nome, size_t idade)
 {
 	for (size_t i = 0; i < this->clientesHotel.size(); i++)
 	{
-		if ((this->clientesHotel.at(i)->getNome() == nome) && (this->clientesHotel.at(i)->getIDCliente() == idCliente))
+		if (this->clientesHotel.at(i)->getNome() == nome && this->clientesHotel.at(i)->getIdade() == idade)
 		{
 			return true;
 		}
@@ -166,61 +143,76 @@ bool Hotel::verificaCliente(string nome, size_t idCliente)
 	return false;
 }
 
-void Hotel::reservaEspaco(Espaco * espaco)
+void Hotel::adicionaCliente(string nome, size_t idade)
 {
-	for (size_t i = 0; i < this->espacosDisponiveis.size(); i++)
+	if (!verificaCliente(nome, idade))
 	{
-		if (espaco->getNumID() == this->espacosDisponiveis.at(i)->getNumID())
-		{
-			espacosDisponiveis.erase(espacosDisponiveis.begin() + i);
-		}
+		Cliente *c1 = new Cliente(nome, idade);
+		this->clientesHotel.push_back(c1);
 	}
 }
 
-void Hotel::efetuaReserva(Cliente * cliente, Espaco * espaco)
-{
-	if (cliente->getIdade() >= 18)
-	{
-
-		if (!verificaCliente(cliente->getNome(), cliente->getIDCliente()))	// Caso o cliente ainda nao esteja na
-		{																	// lista de clientes do hotel -> adicionado
-			this->adicionaCliente(cliente);
+Cliente * Hotel::encontraCliente(string nome) {
+	for (size_t i = 0; i < clientesHotel.size(); i++) {
+		if (clientesHotel.at(i)->getNome() == nome) {
+			return clientesHotel.at(i);
 		}
-
-		if (this->verificaEspaco(espaco))			// Verifica se o espaco está disponivel,
-		{											// caso contrario dá erro
-			this->reservaEspaco(espaco);
-		}
-		else
-		{
-			throw EspacoNaoDisponivel(espaco->getNumID());
-		}
-
-		cliente->adicionaEspacoReservado(espaco);	// Guarda no objeto cliente o respetivo espaço reservado
-				
 	}
-	else
-	{
-		throw ClienteDemasiadoNovoReserva(cliente);
-	}
+	throw ClienteNaoEncontrado(nome);
 }
 
-void Hotel::alocaSupervisores() 
-{
-	for (size_t i = 0; i < supervisores.size(); i++) 
-	{
+// void Hotel::efetuaReserva(Cliente * cliente, Espaco * espaco)
+// {
+// 	if (cliente->getIdade() >= 18)
+// 	{
+// 
+// 		if (!verificaCliente(cliente->getNome()))	// Caso o cliente ainda nao esteja na
+// 		{											// lista de clientes do hotel -> adicionado
+// 			this->adicionaCliente(cliente);
+// 		}
+// 
+// 		if (this->verificaEspaco(espaco))			// Verifica se o espaco está disponivel,
+// 		{											// caso contrario dá erro
+// 			this->reservaEspaco(espaco);
+// 		}
+// 		else
+// 		{
+// 			throw EspacoNaoDisponivel(espaco->getNumID());
+// 		}
+// 
+// 		cliente->adicionaEspacoReservado(espaco);	// Guarda no objeto cliente o respetivo espaço reservado
+// 				
+// 	}
+// 	else
+// 	{
+// 		throw ClienteDemasiadoNovoReserva(cliente);
+// 	}
+// }
+//
+// void Hotel::reservaEspaco(Espaco * espaco)
+// {
+// 	for (size_t i = 0; i < this->espacosDisponiveis.size(); i++)
+// 	{
+// 		if (espaco->getNumID() == this->espacosDisponiveis.at(i)->getNumID())
+// 		{
+// 			espacosDisponiveis.erase(espacosDisponiveis.begin() + i);
+// 		}
+// 	}
+// }
+
+void Hotel::alocaSupervisores() {
+	for (size_t i = 0; i < supervisores.size(); i++) {
 		supervisores.at(i)->RemoveEspacos();
 	}
 
-	for (size_t i = 0, j = 0; i < todosEspacos.size(); i++, j++) 
-	{
-		if (j == supervisores.size()) 
-		{ 
-			j = 0; 
+	for (size_t i = 0, j = 0; i < todosEspacos.size(); i++, j++) {
+		if (j == supervisores.size()) {
+			j = 0;
 		}
 		supervisores.at(j)->AcrescentaEspaco(todosEspacos.at(i));
 	}
 }
+
 
 void Hotel::atendeCliente()
 {
@@ -259,12 +251,17 @@ void Hotel::exportInfo()
 
 	string nomeFicheiro;
 
-	cout << "Escreva o nome do ficheiro onde pretende guardar os dados" << endl;
+	cout << "Escreva o nome do ficheiro de texto onde pretende guardar os dados" << endl;
 	cout << "Nota: Caso o ficheiro com nome inserido ja existir, o mesmo sera substituido pelo novo" << endl;
 
 	
 	cin >> nomeFicheiro;
-	ficheiro.open(nomeFicheiro + ".txt");
+
+	if (nomeFicheiro.length() < 4 || nomeFicheiro.substr(nomeFicheiro.length() - 4, 4) != ".txt") {
+		nomeFicheiro += ".txt";
+	}
+
+	ficheiro.open(nomeFicheiro);
 
 	cin.ignore(9999999, '\n');
 	cin.clear();
