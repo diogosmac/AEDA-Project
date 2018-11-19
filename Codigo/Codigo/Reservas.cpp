@@ -1,8 +1,8 @@
 #include "Reservas.h"
 
-Reserva::Reserva(int idCliente, Date inicio, Date fim) {
+Reserva::Reserva(int idCliente, Date &inicio, Date &fim) {
 
-	if (inicio < fim &&inicio.validDate()&&fim.validDate())
+	if (inicio < fim && inicio.validDate() && fim.validDate())
 	{
 		this->inicio = inicio;
 		this->fim = fim;
@@ -27,13 +27,13 @@ int Reserva::returnidCliente() {
 
 bool Reserva::operator - (Reserva& reserva2){
 
-	if (reserva2.returnFim() < this->inicio || this->fim < reserva2.returnInicio())
+	if (reserva2.returnFim() < this->inicio || reserva2.returnInicio() > this->fim)
 		return false;
 	return true;
 }
 
 bool Reserva::operator == (Reserva& reserva2){
-	return(this->inicio == reserva2.returnInicio() && this->fim == reserva2.returnFim() && this->idCliente == reserva2.returnidCliente());
+	return(reserva2.returnInicio() == this->inicio && reserva2.returnFim() == this->fim && reserva2.returnidCliente() == this->idCliente);
 }
 
 Reservas::Reservas(vector<Espaco *> espacos) {
@@ -171,7 +171,7 @@ bool Reservas::verificaEspaco(size_t numID, Date d1) {
 
 	for (size_t i = 0; i < reservas.size(); i++)
 	{
-		if (reservas[i].returnInicio() < d1 && d1 < reservas[i].returnFim())
+		if (reservas[i].returnInicio() < d1 &&  reservas[i].returnFim() > d1)
 			return true;
 		if (reservas[i].returnInicio() == d1 || reservas[i].returnFim() == d1)
 			return true;

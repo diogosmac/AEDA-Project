@@ -1,7 +1,6 @@
 #include "EspacosReserva.h"
 
-Date::Date(size_t d, size_t m, size_t y): year(y), month(m), day(d){
-}
+Date::Date(size_t d, size_t m, size_t y): year(y), month(m), day(d){}
 
 Date::Date(string yearMonthDay)
 {
@@ -56,7 +55,7 @@ void Date::increaseDay() {
 	day++;
 }
 
-bool Date::operator < (Date& date2){
+bool Date::operator < (Date& date2) const{
 
 	if (this->year < date2.getYear())
 		return true;
@@ -66,6 +65,22 @@ bool Date::operator < (Date& date2){
 			return true;
 		else if (this->month == date2.getMonth())
 			if (this->day < date2.getDay())
+				return true;
+	}
+
+	return false;
+}
+
+bool Date::operator > (Date& date2) const {
+
+	if (this->year > date2.getYear())
+		return true;
+	if (this->year == date2.getYear())
+	{
+		if (this->month > date2.getMonth())
+			return true;
+		else if (this->month == date2.getMonth())
+			if (this->day > date2.getDay())
 				return true;
 	}
 
@@ -107,10 +122,8 @@ bool Date::validDate (){
 	return false;
 }
 
-bool Date::operator == (Date& date2){
-	if (year == date2.getYear() && month == date2.getMonth() && day == date2.getDay())
-		return true;
-	return false;
+bool Date::operator == (Date& date2) const{
+	return (this->year == date2.getYear() && this->month == date2.getMonth() && this->day == date2.getDay());
 }
 
 size_t Date::numDaysOfMonth()

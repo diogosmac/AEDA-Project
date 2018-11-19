@@ -23,8 +23,9 @@ public:
 	void increaseDay();
 	size_t numDaysOfMonth();
 	size_t dayOfWeek();
-	bool operator < (Date& date2);
-	bool operator == (Date& date2);
+	bool  operator< (Date& date2) const;
+	bool operator > (Date& date2) const;
+	bool  operator== (Date& date2) const;
 	bool validDate ();
 	bool bissexto();
 };
@@ -32,7 +33,6 @@ public:
 
 class Espaco 
 {
-	
     size_t numID;
 
 public:

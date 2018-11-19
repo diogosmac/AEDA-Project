@@ -20,7 +20,7 @@ private:
 	int idCliente;
 
 public:
-	Reserva(int idCliente, Date inicio, Date fim);
+	Reserva(int idCliente, Date &inicio, Date &fim);
 	Date returnInicio();
 	Date returnFim();
 	int returnidCliente();
