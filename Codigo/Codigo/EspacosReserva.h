@@ -29,8 +29,21 @@ class Espaco
 
 public:
 	Espaco();
+
+	/**
+		Retorna id do espaço
+	*/
     size_t getNumID() const;
+
+	/**
+		Retorna PrecoReservaDiario = 0€ (Alterado nas classes derivadas)
+	*/
 	virtual double getPrecoReservaDiario() const = 0;
+
+	/**
+		Usado para exportar toda a informação do espaco para ficheiros
+		Objeto >> ostream
+	*/
 	virtual ostream& operator >> (ostream& ofs);
 
 private:
@@ -39,16 +52,37 @@ private:
 
 class Quarto : public Espaco 
 {
-	//Preço normal (por dia): 40€
-	bool duplo; //Duplica o preço normal
-	bool frente; //Acrescimo de 30% ao custo diario
+	bool duplo;
+	bool frente;
 
 public:
 
+	/**
+		Construtor da class Quarto
+	*/
 	Quarto(bool QuartoDuplo, bool frente);
+
+	/**
+		Preço normal (por dia): 40€
+		Se for quarto duplo: Duplica o preço normal
+		Se for quarto voltado para o lado da frente do hotel: Acrescimo de 30% ao custo diario
+	*/
 	double getPrecoReservaDiario() const;
+
+	/**
+		Retorna se o quarto é duplo ou não
+	*/
 	bool isDuplo() const;
+
+	/**
+		Retorna se o quarto é voltado para a frente do hotel ou nao
+	*/	
 	bool isFrente() const;
+
+	/**
+		Usado para exportar toda a informação do quarto para ficheiros
+		Objeto >> ostream
+	*/
 	ostream& operator >> (ostream& ofs);
 };
 
@@ -100,6 +134,7 @@ public:
 
 	/**
 		Usado para exportar toda a informação da sala de reunioes para ficheiros
+		Objeto >> ostream
 	*/
 	ostream& operator >> (ostream& ofs);
 };
