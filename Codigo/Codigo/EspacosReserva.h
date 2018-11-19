@@ -15,10 +15,18 @@ class Date
 public:
 
 	Date(size_t d, size_t m, size_t y);
+	Date(string yearMonthDay);
 	size_t getDay() const { return day; }
 	size_t getMonth() const { return month; }
 	size_t getYear() const { return year; }
 	string getDate() const;
+	void increaseDay();
+	size_t numDaysOfMonth();
+	size_t dayOfWeek();
+	bool operator < (Date& date2);
+	bool operator == (Date& date2);
+	bool validDate ();
+	bool bissexto();
 };
 
 

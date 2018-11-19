@@ -1,9 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
 #include <iostream>
 #include "Funcionarios.h"
 #include "EspacosReserva.h"
 #include "Cliente.h"
+#include "Reservas.h"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -17,29 +18,30 @@ class Hotel
 	vector<Funcionario *> funcionarios; // Contem todos os funcionarios do hotel
 	vector<Funcionario *> supervisores; // Contem todos os supervisores do hotel
 	vector<Cliente *> clientesHotel; // Contem todos os clientes do hotel
+	Reservas reservas;
 
-public: 
+public:
 
+	Hotel();
 	vector<Espaco *> getTodosEspacos() const;
-	// vector<Espaco *> getEspacosDisponiveis() const;
+	//vector<Espaco *> getEspacosDisponiveis() const;
+	vector<Cliente *> getClientes() const;
 	vector<Funcionario *> getFuncionarios() const;
 	double nEspacosDisponiveis(Date data);
 	double lotacao(Date data); // Em percentagem
 	// void adicionaEspacoOcupado(Espaco * espaco); // Adiciona um espaco ao hotel (nao disponivel)
 	void adicionaEspaco(Espaco * espaco); // Adiciona um espaco ao hotel
-	bool verificaEspaco(Espaco * espaco, Date data); // Verifica disponibilidade de um espaço, numa certa data
-	bool verificaEspaco(Espaco * espaco, Date data_inicio, Date data_fim); // Verifica disponibilidade de um espaço, num intervalo de dias
 	void adicionaFuncionario(Funcionario * func); // Adiciona um funcionario ao vetor de funcionarios que trabalham no hotel
-	bool espacoTemReservas(Espaco * espaco); // Retorna true se o espaço tiver alguma reserva agendada
 	void removeEspaco(size_t numID);
 	void removeFuncionario(size_t ID_Code);
 	double nClientes() const;
 	bool verificaCliente(string nome, size_t idade); // Retorna true se encontrar o cliente de nome = parametro, caso contrario, false
+	int idCliente(string nome, size_t idade);
 	void adicionaCliente(string nome, size_t idade);
 	void removeCliente(string nome, size_t idCliente);
-	Cliente * encontraCliente(string nome); // Retorna o objeto * objeto clinete com nome = parametro, se nao encontrar dá erro
+	Cliente * encontraCliente(string nome); // Retorna o objeto * objeto clinete com nome = parametro, se nao encontrar dï¿½ erro
 	// void efetuaReserva(Cliente * cliente, Espaco * espaco); // Pretty obvious *-*; idade cliente >= 18, senao -> erro
-	// void reservaEspaco(Espaco * espaco); // Nao deve ser usado, n faz verificacoes nenhumas; É chamado por efetuaReserva (apos verificaoes)
+	// void reservaEspaco(Espaco * espaco); // Nao deve ser usado, n faz verificacoes nenhumas; ï¿½ chamado por efetuaReserva (apos verificaoes)
 	void alocaSupervisores();
 	void atendeCliente();
 	void importInfo();
@@ -55,7 +57,7 @@ class EspacoNaoPertenceHotel
 public:
 
 	EspacoNaoPertenceHotel(size_t id) {
-		num_ID = id; 
+		num_ID = id;
 		cerr << "Espaco de ID:" << num_ID << " nao pertence ao hotel!" << endl;
 	}
 	size_t getNumID() const { return num_ID; }
@@ -80,7 +82,7 @@ class ClienteNaoEncontrado
 
 public:
 
-	ClienteNaoEncontrado(string nom) { 
+	ClienteNaoEncontrado(string nom) {
 		nome = nom;
 		cerr << "O cliente de nome " << this->nome << " nao consta da nossa lista de clientes!" << endl;
 	}
@@ -111,6 +113,32 @@ public:
 	EspacoNaoDisponivel(size_t id) {
 		numID = id;
 		cerr << "O espaco de id = " << this->numID << " nao esta disponivel!" << endl;
+	}
+	size_t getNum_ID() const { return numID; }
+};
+
+class ReservasCoincidem
+{
+	size_t numID;
+
+public:
+
+	ReservasCoincidem(size_t id) {
+		numID = id;
+		cerr << "O espaco de id = " << this->numID << " ja tem uma reserva nesta data" << endl;
+	}
+	size_t getNum_ID() const { return numID; }
+};
+
+class ReservaNaoExiste
+{
+	size_t numID;
+
+public:
+
+	ReservaNaoExiste(size_t id) {
+		numID = id;
+		cerr << "O espaco de id = " << this->numID << " nao tem uma reserva nesta data" << endl;
 	}
 	size_t getNum_ID() const { return numID; }
 };
