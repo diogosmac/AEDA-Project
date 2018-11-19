@@ -8,7 +8,7 @@ string Date::getDate() const {
 	return oss.str();
 }
 
-// ----------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------//
 
 size_t Espaco::nextSpaceID = 0;
 
@@ -21,14 +21,11 @@ size_t Espaco::getNumID() const
 	return numID;
 }
 
-/*
-ostream Espaco::getInfo()
+ostream& Espaco::operator >> (ostream& ofs)
 {
-	ostream out;
-	out << numID << endl;
-	return out;
+	ofs << "^" << this->getNumID() << ";" << endl;
+	return ofs;
 }
-*/
 //-----------------------------------------------------------Quarto------------------------------------------------------------//
 
 
@@ -40,8 +37,19 @@ Quarto::Quarto(bool duplo, bool frente) : Espaco()
 
 double Quarto::getPrecoReservaDiario() const 
 {
+	double precoDiario = 50;
 
-	return 50; //TO DO
+	if (isDuplo)
+	{
+		precoDiario *= 2;
+	}
+
+	if (isFrente)
+	{
+		precoDiario = precoDiario + (precoDiario * 0.30);
+	}
+
+	return precoDiario;
 }
 
 bool Quarto::isDuplo() const 
@@ -52,6 +60,12 @@ bool Quarto::isDuplo() const
 bool Quarto::isFrente() const 
 {
 	return this->frente;
+}
+
+ostream& Quarto::operator >> (ostream& ofs)
+{
+	ofs << "%" << this->getNumID() << ";" << this->isDuplo() << ";" << this->isFrente() << ";" << endl;
+	return ofs;
 }
 
 //---------------------------------------------------------Sala Reunioes-------------------------------------------------------//
@@ -67,7 +81,49 @@ SalaDeReunioes::SalaDeReunioes(int capacidade, bool equipamentoVideo, bool equip
 
 double SalaDeReunioes::getPrecoReservaDiario() const 
 {
-	return 50; // TO DO
+	double precoDiario = 0;
+	
+
+	if (capacidade < 30)
+	{
+		precoDiario = 20;
+	}
+	else if (capacidade < 50)
+	{
+		precoDiario = 35;
+	}
+	else if (capacidade < 80)
+	{
+		precoDiario = 50;
+	}
+	else if (capacidade < 120)
+	{
+		precoDiario = 85;
+	}
+	else if (capacidade < 200)
+	{
+		precoDiario = 140;
+	}
+	else if (capacidade < 500)
+	{
+		precoDiario = 250;
+	}
+	else if (capacidade > 500)
+	{
+		precoDiario = 480;
+	}
+
+	if (getEquipamentoVideo)
+	{
+		precoDiario = precoDiario + (precoDiario * 0.2);
+	}
+
+	if (getEquipamentoAudio)
+	{
+		precoDiario = precoDiario + (precoDiario * 0.1);
+	}
+
+	return precoDiario;
 }
 
 int SalaDeReunioes::getCapacidade() const 
@@ -83,4 +139,10 @@ bool SalaDeReunioes::getEquipamentoVideo() const
 bool SalaDeReunioes::getEquipamentoAudio() const 
 {  
 	return this->equipamentoAudio;
+}
+
+ostream& SalaDeReunioes::operator >> (ostream& ofs)
+{
+	ofs << "@" << this->getNumID() << ";" << this->getCapacidade() << ";" << this->getEquipamentoVideo() << ";" << this->getEquipamentoAudio() << ";" << endl;
+	return ofs;
 }
