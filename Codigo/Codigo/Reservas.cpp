@@ -1,6 +1,6 @@
 #include "Reservas.h"
 
-Reserva::Reserva(int idCliente, Date inicio, Date fim) {
+Reserva::Reserva(int idCliente, Date &inicio, Date &fim) {
 
 	if (inicio < fim && inicio.validDate() && fim.validDate())
 	{
@@ -8,16 +8,16 @@ Reserva::Reserva(int idCliente, Date inicio, Date fim) {
 		this->fim = fim;
 		this->idCliente = idCliente;
 	}
-
+		
 	else
 		throw invalid_argument("Data de inicio posterior à data do fim ou data invalida");
-}
+};
 
 
-Date Reserva::returnInicio() const {
+Date Reserva::returnInicio() {
 	return inicio;
 }
-Date Reserva::returnFim() const {
+Date Reserva::returnFim() {
 	return fim;
 }
 
@@ -25,25 +25,16 @@ int Reserva::returnidCliente() {
 	return idCliente;
 }
 
-bool Reserva::operator - (Reserva& reserva2) {
+bool Reserva::operator - (Reserva& reserva2){
 
-	if (reserva2.returnFim() < this->inicio || this->fim < reserva2.returnInicio())
+	if (reserva2.returnFim() < this->inicio || reserva2.returnInicio() > this->fim)
 		return false;
 	return true;
 }
 
-bool Reserva::operator == (Reserva& reserva2) {
-	return(this->inicio == reserva2.returnInicio() && this->fim == reserva2.returnFim() && this->idCliente == reserva2.returnidCliente());
+bool Reserva::operator == (Reserva& reserva2){
+	return(reserva2.returnInicio() == this->inicio && reserva2.returnFim() == this->fim && reserva2.returnidCliente() == this->idCliente);
 }
-
-ostream & operator << (ostream & out, const Reserva & r1) {
-	out << "Data de inicio: " << r1.returnInicio().getDate() << "\tData de fim: " << r1.returnFim().getDate();
-	return out;
-}
-
-// --------------------------------------------------------------------------------------------
-
-Reservas::Reservas() {}
 
 Reservas::Reservas(vector<Espaco *> espacos) {
 	vector<Reserva> constructor;
@@ -171,16 +162,16 @@ bool Reservas::temReservas(size_t numID) {
 
 }
 
-bool Reservas::verificaEspaco(size_t numID, Date d1) const {
+bool Reservas::verificaEspaco(size_t numID, Date d1) {
 	if (reservasHotel.find(numID) == reservasHotel.end())
 	{
 		throw EspacoNaoPertenceHotel(numID);
 	}
-	vector<Reserva> reservas = this->reservasHotel.at(numID);
+	vector<Reserva> reservas = reservasHotel[numID];
 
 	for (size_t i = 0; i < reservas.size(); i++)
 	{
-		if (reservas[i].returnInicio() < d1 && d1 < reservas[i].returnFim())
+		if (reservas[i].returnInicio() < d1 &&  reservas[i].returnFim() > d1)
 			return true;
 		if (reservas[i].returnInicio() == d1 || reservas[i].returnFim() == d1)
 			return true;
@@ -202,7 +193,7 @@ void Reservas::showMonth(size_t numId, size_t month, size_t year) {
 
 	for (int i = 1; i <= numSpaceBlocks; i++)
 		cout << "    ";
-	for (size_t i = 1; i <= d1.numDaysOfMonth(); i++)
+	for (int i = 1; i <= d1.numDaysOfMonth(); i++)
 	{
 		cout << setw(3) << i << " ";
 		d1.increaseDay();
