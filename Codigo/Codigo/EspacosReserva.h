@@ -13,7 +13,7 @@ class Date
 	size_t year;
 
 public:
-
+	Date();
 	Date(size_t d, size_t m, size_t y);
 	Date(string yearMonthDay);
 	size_t getDay() const { return day; }
@@ -23,8 +23,8 @@ public:
 	void increaseDay();
 	size_t numDaysOfMonth();
 	size_t dayOfWeek();
-	bool operator < (Date& date2);
-	bool operator == (Date& date2);
+	bool operator < (Date date2);
+	bool operator == (Date date2);
 	bool validDate ();
 	bool bissexto();
 };
@@ -92,6 +92,7 @@ public:
 		Objeto >> ostream
 	*/
 	ostream& operator >> (ostream& ofs);
+
 };
 
 
@@ -145,4 +146,5 @@ public:
 		Objeto >> ostream
 	*/
 	ostream& operator >> (ostream& ofs);
+
 };

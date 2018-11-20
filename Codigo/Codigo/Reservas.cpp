@@ -2,22 +2,22 @@
 
 Reserva::Reserva(int idCliente, Date inicio, Date fim) {
 
-	if (inicio < fim &&inicio.validDate()&&fim.validDate())
+	if (inicio < fim && inicio.validDate() && fim.validDate())
 	{
 		this->inicio = inicio;
 		this->fim = fim;
 		this->idCliente = idCliente;
 	}
-		
+
 	else
 		throw invalid_argument("Data de inicio posterior à data do fim ou data invalida");
-};
+}
 
 
-Date Reserva::returnInicio() {
+Date Reserva::returnInicio() const {
 	return inicio;
 }
-Date Reserva::returnFim() {
+Date Reserva::returnFim() const {
 	return fim;
 }
 
@@ -25,16 +25,25 @@ int Reserva::returnidCliente() {
 	return idCliente;
 }
 
-bool Reserva::operator - (Reserva& reserva2){
+bool Reserva::operator - (Reserva& reserva2) {
 
 	if (reserva2.returnFim() < this->inicio || this->fim < reserva2.returnInicio())
 		return false;
 	return true;
 }
 
-bool Reserva::operator == (Reserva& reserva2){
+bool Reserva::operator == (Reserva& reserva2) {
 	return(this->inicio == reserva2.returnInicio() && this->fim == reserva2.returnFim() && this->idCliente == reserva2.returnidCliente());
 }
+
+ostream & operator << (ostream & out, const Reserva & r1) {
+	out << "Data de inicio: " << r1.returnInicio().getDate() << "\tData de fim: " << r1.returnFim().getDate();
+	return out;
+}
+
+// --------------------------------------------------------------------------------------------
+
+Reservas::Reservas() {}
 
 Reservas::Reservas(vector<Espaco *> espacos) {
 	vector<Reserva> constructor;
@@ -162,12 +171,12 @@ bool Reservas::temReservas(size_t numID) {
 
 }
 
-bool Reservas::verificaEspaco(size_t numID, Date d1) {
+bool Reservas::verificaEspaco(size_t numID, Date d1) const {
 	if (reservasHotel.find(numID) == reservasHotel.end())
 	{
 		throw EspacoNaoPertenceHotel(numID);
 	}
-	vector<Reserva> reservas = reservasHotel[numID];
+	vector<Reserva> reservas = this->reservasHotel.at(numID);
 
 	for (size_t i = 0; i < reservas.size(); i++)
 	{
@@ -193,7 +202,7 @@ void Reservas::showMonth(size_t numId, size_t month, size_t year) {
 
 	for (int i = 1; i <= numSpaceBlocks; i++)
 		cout << "    ";
-	for (int i = 1; i <= d1.numDaysOfMonth(); i++)
+	for (size_t i = 1; i <= d1.numDaysOfMonth(); i++)
 	{
 		cout << setw(3) << i << " ";
 		d1.increaseDay();

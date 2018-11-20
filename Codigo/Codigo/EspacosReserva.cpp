@@ -1,5 +1,9 @@
 #include "EspacosReserva.h"
 
+Date::Date() {
+	day = month = year = 0;
+}
+
 Date::Date(size_t d, size_t m, size_t y): year(y), month(m), day(d){
 }
 
@@ -56,25 +60,9 @@ void Date::increaseDay() {
 	day++;
 }
 
-bool Date::operator < (Date& date2){
-
-	if (this->year < date2.getYear())
-		return true;
-	if (this->year == date2.getYear())
-	{
-		if (this->month < date2.getMonth())
-			return true;
-		else if (this->month == date2.getMonth())
-			if (this->day < date2.getDay())
-				return true;
-	}
-
-	return false;
-}
-
 bool Date::bissexto()
 {
-	return((year % 4 == 0 && year % 100 == !0) || (year % 400 == 0));
+	return((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0));
 }
 
 
@@ -82,12 +70,12 @@ bool Date::validDate (){
 	if(year>=2018){
 		if(month==1|| month==3||month==5||month==7||month==8||month==10||month==12)
 		{
-			if (day>0&& day<=31)
+			if (day>0 && day<=31)
 				return true;
 		}
-		if(month==4|| month==6||month==9||month==11)
+		if(month == 4 || month == 6 || month == 9 || month == 11)
 		{
-			if (month>0&& month<=30)
+			if (month > 0 && month <= 30)
 				return true;
 		}
 
@@ -104,12 +92,6 @@ bool Date::validDate (){
 		}
 
 	}
-	return false;
-}
-
-bool Date::operator == (Date& date2){
-	if (year == date2.getYear() && month == date2.getMonth() && day == date2.getDay())
-		return true;
 	return false;
 }
 
@@ -142,9 +124,26 @@ size_t Date::dayOfWeek()
 
 }
 
+bool Date::operator< (Date date2) {
+	if (this->getYear() < date2.getYear()) {
+		return true;
+	}
+	else if (this->getYear() == date2.getYear() && this->getMonth() < date2.getMonth()) {
+		return true;
+	}
+	else if (this->getYear() == date2.getYear() && this->getMonth() == date2.getMonth() && this->getDay() < date2.getDay()) {
+		return true;
+	}
+	else return false;
+}
+
+bool Date::operator== (Date date2) {
+	return (this->getDay() == date2.getDay() && this->getMonth() == date2.getMonth() && this->getYear() == date2.getYear());
+}
+
 // ----------------------------------------------------------------------------------------------------------------------------//
 
-size_t Espaco::nextSpaceID = 0;
+size_t Espaco::nextSpaceID = 1;
 
 //-----------------------------------------------------------Espaco------------------------------------------------------------//
 
@@ -173,12 +172,12 @@ double Quarto::getPrecoReservaDiario() const
 {
 	double precoDiario = 50;
 
-	if (isDuplo)
+	if (duplo)
 	{
 		precoDiario *= 2;
 	}
 
-	if (isFrente)
+	if (frente)
 	{
 		precoDiario = precoDiario + (precoDiario * 0.30);
 	}
@@ -247,12 +246,12 @@ double SalaDeReunioes::getPrecoReservaDiario() const
 		precoDiario = 480;
 	}
 
-	if (getEquipamentoVideo)
+	if (equipamentoVideo)
 	{
 		precoDiario = precoDiario + (precoDiario * 0.2);
 	}
 
-	if (getEquipamentoAudio)
+	if (equipamentoAudio)
 	{
 		precoDiario = precoDiario + (precoDiario * 0.1);
 	}
