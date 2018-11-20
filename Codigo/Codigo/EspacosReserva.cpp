@@ -141,6 +141,10 @@ bool Date::operator== (Date date2) {
 	return (this->getDay() == date2.getDay() && this->getMonth() == date2.getMonth() && this->getYear() == date2.getYear());
 }
 
+bool Date::operator> (Date date2) {
+	return !(*this < date2 || *this == date2);
+}
+
 // ----------------------------------------------------------------------------------------------------------------------------//
 
 size_t Espaco::nextSpaceID = 1;

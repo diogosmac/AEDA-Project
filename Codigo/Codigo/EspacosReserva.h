@@ -24,6 +24,7 @@ public:
 	size_t numDaysOfMonth();
 	size_t dayOfWeek();
 	bool operator < (Date date2);
+	bool operator > (Date date2);
 	bool operator == (Date date2);
 	bool validDate ();
 	bool bissexto();
