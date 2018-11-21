@@ -40,18 +40,18 @@ public:
 	Espaco();
 
 	/**
-		Retorna id do espaço
+	*	Retorna id do espaço
 	*/
     size_t getNumID() const;
 
 	/**
-		Retorna PrecoReservaDiario = 0€ (Alterado nas classes derivadas)
+	*	Retorna PrecoReservaDiario = 0€ (Alterado nas classes derivadas)
 	*/
 	virtual double getPrecoReservaDiario() const = 0;
 
 	/**
-		Usado para exportar toda a informação do espaco para ficheiros
-		Objeto >> ostream
+	*	Usado para exportar toda a informação do espaco para ficheiros
+	*	Objeto >> ostream
 	*/
 	virtual ostream& operator >> (ostream& ofs);
 
@@ -67,30 +67,30 @@ class Quarto : public Espaco
 public:
 
 	/**
-		Construtor da class Quarto
+	*	Construtor da class Quarto
 	*/
 	Quarto(bool QuartoDuplo, bool frente);
 
 	/**
-		Preço normal (por dia): 40€
-		Se for quarto duplo: Duplica o preço normal
-		Se for quarto voltado para o lado da frente do hotel: Acrescimo de 30% ao custo diario
+	*	Preço normal (por dia): 40€
+	*	Se for quarto duplo: Duplica o preço normal
+	*	Se for quarto voltado para o lado da frente do hotel: Acrescimo de 30% ao custo diario
 	*/
 	double getPrecoReservaDiario() const;
 
 	/**
-		Retorna se o quarto é duplo ou não
+	*	Retorna se o quarto é duplo ou não
 	*/
 	bool isDuplo() const;
 
 	/**
-		Retorna se o quarto é voltado para a frente do hotel ou nao
+	*	Retorna se o quarto é voltado para a frente do hotel ou nao
 	*/	
 	bool isFrente() const;
 
 	/**
-		Usado para exportar toda a informação do quarto para ficheiros
-		Objeto >> ostream
+	*	Usado para exportar toda a informação do quarto para ficheiros
+	*	Objeto >> ostream
 	*/
 	ostream& operator >> (ostream& ofs);
 
@@ -107,44 +107,44 @@ class SalaDeReunioes : public Espaco
 public:
 
 	/**
-		Construtor da class SalaDeReunioes
+	*	Construtor da class SalaDeReunioes
 	*/
 	SalaDeReunioes(int capacidade, bool equipamentoVideo, bool equipamentoAudio);
 
 
 	/**
-		Retorna o preco diario para aluguer da sala de reunioes em questao
-
-		Se capacidade < 30 preco diario (base) = 20€
-		Se capacidade < 50 preco diario (base) = 35€
-		Se capacidade < 80 preco diario (base) = 50€
-		Se capacidade < 120 preco diario (base) = 85€
-		Se capacidade < 200 preco diario (base) = 140€
-		Se capacidade < 500 preco diario (base) = 250€
-		Se capacidade > 500 preco diario (base) = 480€
-		Se tiver equipamento de video, o custo é aumentado em 20%
-		Se tiver equipamento de audio, o custo é aumentado em 10%
+	*	Retorna o preco diario para aluguer da sala de reunioes em questao
+	*
+	*	Se capacidade < 30 preco diario (base) = 20€
+	*	Se capacidade < 50 preco diario (base) = 35€
+	*	Se capacidade < 80 preco diario (base) = 50€
+	*	Se capacidade < 120 preco diario (base) = 85€
+	*	Se capacidade < 200 preco diario (base) = 140€
+	*	Se capacidade < 500 preco diario (base) = 250€
+	*	Se capacidade > 500 preco diario (base) = 480€
+	*	Se tiver equipamento de video, o custo é aumentado em 20%
+	*	Se tiver equipamento de audio, o custo é aumentado em 10%
 	*/
 	double getPrecoReservaDiario() const;
 
 	/**
-		Retorna a capacidade da sala de reunioes
+	*	Retorna a capacidade da sala de reunioes
 	*/
 	int getCapacidade() const;
 
 	/**
-		Retorna se a sala de reunioes tem ou não equipamento de video
+	*	Retorna se a sala de reunioes tem ou não equipamento de video
 	*/
 	bool getEquipamentoVideo() const;
 
 	/**
-		Retorna se a sala de reunioes tem ou não equipamento de audio
+	*	Retorna se a sala de reunioes tem ou não equipamento de audio
 	*/
 	bool getEquipamentoAudio() const;
 
 	/**
-		Usado para exportar toda a informação da sala de reunioes para ficheiros
-		Objeto >> ostream
+	*	Usado para exportar toda a informação da sala de reunioes para ficheiros
+	*	Objeto >> ostream
 	*/
 	ostream& operator >> (ostream& ofs);
 

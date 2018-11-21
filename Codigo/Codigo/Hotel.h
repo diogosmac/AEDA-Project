@@ -22,28 +22,125 @@ class Hotel
 
 public:
 
+	/**
+	*	Construtor da classe Hotel
+	*/
 	Hotel(istream &ficheiro);
+
+	/**
+	*	Retorna o número de espaços que pertencem ao hotel
+	*/
 	size_t nEspacos() const;
+
+	/**
+	*	Retorna um vetor com todos os espaços que pertencem ao hotel
+	*/
 	vector<Espaco *> getTodosEspacos() const;
+
+	/**
+	*	Retorna um vetor com todos os espaços disponiveis para a data passada como argumento
+	*/
 	vector<Espaco *> getEspacosDisponiveis(Date data) const;
+
+	/**
+	*	Retorna um vetor com todos os clientes do hotel
+	*/
 	vector<Cliente *> getClientes() const;
+
+	/**
+	*	Retorna um vetor com todos os funcionarios (e supervisores) do hotel
+	*/
 	vector<Funcionario *> getFuncionarios() const;
+
+	/**
+	*	Retorna o número de espaços disponíveis no hotel na data passada como argumento
+	*/
 	double nEspacosDisponiveis(Date data);
-	double lotacao(Date data); // Em percentagem
+
+	/**
+	*	Retorna a lotação do hotel (em percentagem) na data passada como argumento
+	*/
+	double lotacao(Date data);
+
+
 	// void adicionaEspacoOcupado(Espaco * espaco); // Adiciona um espaco ao hotel (nao disponivel)
-	void adicionaEspaco(Espaco * espaco); // Adiciona um espaco ao hotel
-	void adicionaFuncionario(Funcionario * func); // Adiciona um funcionario ao vetor de funcionarios que trabalham no hotel
+
+
+	/**
+	*	Adiciona um espaço ao vetor de espaços do hotel
+	*/
+	void adicionaEspaco(Espaco * espaco);
+
+	/**
+	*	Adiciona um funcionario ao vetor de funcionarios que trabalham no hotel
+	*/
+	void adicionaFuncionario(Funcionario * func);
+
+	/**
+	*	Remove um espaço do vetor de espaços do hotel
+	*/
 	void removeEspaco(size_t numID);
+
+	/**
+	*	Remove um funcionario do vetor de funcionarios do hotel
+	*/
 	void removeFuncionario(size_t ID_Code);
+
+	/**
+	*	Retorna o numero de clintes do hotel
+	*/
 	size_t nClientes() const;
-	bool verificaCliente(string nome, size_t idade); // Retorna true se encontrar o cliente de nome = parametro, caso contrario, false
+
+	/**
+	*	Procura pelo cliente de nome e idade passados por argumento no vetor clientes. 
+	*	Se o encontrar, retorna true, caso contrário, retorna false
+	*/
+	bool verificaCliente(string nome, size_t idade);
+
+	/**
+	*	Retorna o id do clinte
+	*/
 	int idCliente(string nome, size_t idade);
+
+	/**
+	*	Adiciona um cliente de nome e idade passados em argumento, caso este não exista no vetor clientes
+	*/
 	void adicionaCliente(string nome, size_t idade);
+
+	/**
+	*	Remove do vetor clientesHotel o cliente de nome e id passados por argumento.
+	*	Caso este não seja encontrado, lança a exceção ClienteNaoEncontrado
+	*/
 	void removeCliente(string nome, size_t idCliente);
-	Cliente * encontraCliente(string nome); // Retorna o objeto * objeto clinete com nome = parametro, se nao encontrar d� erro
-	void efetuaReserva(Cliente * cliente, size_t idEspaco, Date inicio, Date fim); // Pretty obvious *-*; idade cliente >= 18, senao -> erro
-	void reservaEspaco(size_t idEspaco, Reserva r1); // Nao deve ser usado, n faz verificacoes nenhumas; � chamado por efetuaReserva (apos verificaoes)
+
+	/**
+	*	Retorna o apontador para o objeto cliente com o nome que foi passado por parametro.
+	*	Se nao encontrar dá erro, lança a exceção ClienteNaoEncontrado
+	*/
+	Cliente * encontraCliente(string nome);
+
+	/**
+	*	Verifica a idade do cliente. Caso este seja menor de 18 anos, lança a exceção ClienteDemasiadoNovoReserva.
+	*	Verifica se o espaço se encontra no vetor de espacos do hotel. Caso isso não se verifique, lança a exceção EspacoNaoPertenceHotel
+	*	Se for maior de idade e o espaco pretendido pertencer ao hotel, verifica a disponibilidade do espaço pretendido nas datas pretendidas.
+	*	Se o espaco estiver disponivel nas datas pretendidas efetua a reserva, caso contrário lança a exceção EspacoNaoDisponivel.
+	*/
+	void efetuaReserva(Cliente * cliente, size_t idEspaco, Date inicio, Date fim);
+
+	/**
+	*	TODO
+	*/
+	void reservaEspaco(size_t idEspaco, Reserva r1);
+
+	/**
+	*	Distribui os supervisores pelos espaços do hotel
+	*/
 	void alocaSupervisores();
+
 	// void atendeCliente();
+
+	/**
+	*	Exporta a toda a informação do hotel para um ficheiro de texto
+	*/
 	void exportInfo();
 };
