@@ -81,10 +81,10 @@ string Supervisor::getOutputString()
 
 	for (size_t i = 0; i < this->getLocaisResponsavel().size() - 1; i++)
 	{
-		ofs << this->getLocaisResponsavel().at(i) << "//";
+		ofs << this->getLocaisResponsavel().at(i)->getNumID() << ",";
 	}
 	if (!this->getLocaisResponsavel().empty())
-		ofs << this->getLocaisResponsavel().at(this->getLocaisResponsavel().size() - 1);
+		ofs << this->getLocaisResponsavel().at(this->getLocaisResponsavel().size() - 1)->getNumID();
 
 	return ofs.str();
 }

@@ -303,3 +303,43 @@ public:
 	*/
 	size_t getNum_ID() const { return numID; }
 };
+
+class NaoHaSupervisores
+{
+	/**
+	*	Contém o nome do Hotel onde não existe qualquer Supervisor.
+	*/
+	string nomeHotel;
+
+public:
+
+	/**
+	*	Construtor da exceção
+	*/
+	NaoHaSupervisores(string nome) { nomeHotel = nome; }
+
+	/**
+	*	Retorna o nome do Hotel onde não existem Supervisores.
+	*/
+	string getNomeHotel() const { return nomeHotel; }
+};
+
+class DatasInvalidas
+{
+	/**
+	*	Contém o id do Cliente que tentou fazer uma reserva com datas inválidas.
+	*/
+	int idCliente;
+
+public:
+
+	/**
+	*	Construtor da exceção
+	*/
+	DatasInvalidas(int id_cli) { idCliente = id_cli; }
+
+	/**
+	*	Retorna o id do Cliente que tentou fazer a reserva inválida.
+	*/
+	int getIdCliente() const { return idCliente; }
+};

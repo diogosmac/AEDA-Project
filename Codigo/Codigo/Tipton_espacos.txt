@@ -1,9 +1,17 @@
 1;Quarto;duplo;frente
-2;SalaDeReunioes;200;video;audio
-3;SalaDeReunioes;100;video;audio
-4;SalaDeReunioes;12;video;audio
-5;SalaDeReunioes;6;video;audio
-6;Quarto;-duplo;-frente
-7;Quarto;duplo;frente
-8;Quarto;-duplo;-frente
+2;SalaDeReunioes;100;video;audio
+3;Quarto;duplo;-frente
+4;SalaDeReunioes;30;-video;audio
+5;Quarto;-duplo;frente
+6;SalaDeReunioes;12;video;audio
+7;Quarto;-duplo;-frente
+8;SalaDeReunioes;5;-video;audio
+9;Quarto;duplo;frente
+10;SalaDeReunioes;100;video;audio
+11;Quarto;duplo;-frente
+12;SalaDeReunioes;30;-video;audio
+13;Quarto;-duplo;frente
+14;SalaDeReunioes;12;video;audio
+15;Quarto;-duplo;-frente
+16;SalaDeReunioes;5;-video;audio
 

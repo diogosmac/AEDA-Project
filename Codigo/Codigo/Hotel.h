@@ -43,12 +43,18 @@ class Hotel
 public:
 
 	/**
-	*	Construtor da classe Hotel
-	*	Retira a informação necessária à inicialização do objeto de um ficheiro
+	*	Construtor da classe Hotel vazio
 	*	@param nome nome que vai ser dado ao hotel
-	*	@param ficheiro ficheiro de onde é retirada a informação
 	*/
-	Hotel(string nome, istream &ficheiro);
+	Hotel(string nome);
+
+	///**
+	//*	Construtor da classe Hotel
+	//*	Retira a informação necessária à inicialização do objeto de um ficheiro
+	//*	@param nome nome que vai ser dado ao hotel
+	//*	@param ficheiro ficheiro de onde é retirada a informação
+	//*/
+	//Hotel(string nome, istream &ficheiro);
 
 	/**
 	*	Retorna o número de espaços que pertencem ao hotel
@@ -90,10 +96,6 @@ public:
 	*	Retorna a lotação do hotel (em percentagem) na data passada como argumento
 	*/
 	double lotacao(Date data);
-
-
-	// void adicionaEspacoOcupado(Espaco * espaco); // Adiciona um espaco ao hotel (nao disponivel)
-
 
 	/**
 	*	Adiciona um espaço ao vetor de espaços do hotel
@@ -153,13 +155,19 @@ public:
 	*	Verifica se o espaço se encontra no vetor de espacos do hotel. Caso isso não se verifique, lança a exceção EspacoNaoPertenceHotel
 	*	Se for maior de idade e o espaco pretendido pertencer ao hotel, verifica a disponibilidade do espaço pretendido nas datas pretendidas.
 	*	Se o espaco estiver disponivel nas datas pretendidas efetua a reserva, caso contrário lança a exceção EspacoNaoDisponivel.
+	*	Retorna TRUE se tiver sucesso, e FALSE se isso não acontecer.
 	*/
-	void efetuaReserva(Cliente* cliente, size_t idEspaco, Date inicio, Date fim);
+	bool efetuaReserva(Cliente* cliente, size_t idEspaco, Date inicio, Date fim);
 
 	/**
 	*	Efetua reserva de espaco; É utilizada na pela função efutuaReserva; Não faz verificações de disponibilidade;
 	*/
 	void reservaEspaco(size_t idEspaco, Reserva r1);
+
+	/**
+	*	Retorna o numero de reservas efetuadas no Hotel.
+	*/
+	size_t nReservas();
 
 	/**
 	*	Distribui os supervisores pelos espaços do hotel
@@ -203,6 +211,12 @@ public:
 	*	Se conseguir, retorna TRUE. Se não, retorna FALSE.
 	*/
 	bool importInfoFuncionarios();
+
+	/**
+	*	Importa de um ficheiro de texto um conjunto de Espaços, que são acrescentados ao Hotel
+	*	Se conseguir, returna TRUE. Se não, retorna FALSE.
+	*/
+	bool importInfoEspacos();
 
 	/**
 	*	Exporta toda a informação relativa ao hotel, chamando as outras funções de exportação.

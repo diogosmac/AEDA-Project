@@ -8,9 +8,9 @@ Reserva::Reserva(int idCliente, Date &inicio, Date &fim) {
 		this->fim = fim;
 		this->idCliente = idCliente;
 	}
-		
+
 	else
-		throw invalid_argument("Data de inicio posterior à data do fim ou data invalida");
+		throw DatasInvalidas(idCliente);
 };
 
 
@@ -38,7 +38,7 @@ bool Reserva::operator == (Reserva& reserva2) {
 }
 
 ostream & operator << (ostream & out, const Reserva & r1) {
-	out << r1.returnidCliente() << ':' << r1.returnInicio().getDate() << '-' << r1.returnFim().getDate();
+	out << r1.returnidCliente() << " : " << r1.returnInicio().getDate() << " - " << r1.returnFim().getDate();
 	return out;
 }
 
