@@ -201,12 +201,12 @@ double Quarto::getPrecoReservaDiario(Date data) const
 		precoDiario = precoDiario + (precoDiario * 0.30);
 	}
 
-	if (data.isWeekend)
+	if (data.isWeekend())
 	{
 		precoDiario *= 1.05;
 	}
 
-	if (data.isEpocaAlta)
+	if (data.isEpocaAlta())
 	{
 		precoDiario *= 1.2;
 	}
@@ -292,12 +292,12 @@ double SalaDeReunioes::getPrecoReservaDiario(Date data) const
 		precoDiario = precoDiario + (precoDiario * 0.1);
 	}
 
-	if(data.isWeekend)
+	if(data.isWeekend())
 	{
 		precoDiario *= 1.05;
 	}
 
-	if(data.isEpocaAlta)
+	if(data.isEpocaAlta())
 	{
 		precoDiario *= 1.2;
 	}
