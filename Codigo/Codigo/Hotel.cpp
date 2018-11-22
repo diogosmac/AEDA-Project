@@ -76,6 +76,11 @@ vector<Funcionario *> Hotel::getFuncionarios() const
 	return this->funcionarios;
 }
 
+Reservas Hotel::getReservas() const
+{
+	return todasReservas;
+}
+
 double Hotel::nEspacosDisponiveis(Date data)
 {
 	double contador = 0;

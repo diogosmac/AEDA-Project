@@ -30,8 +30,6 @@ class Hotel
 	*/
 	vector<Funcionario *> funcionarios;
 	
-	//vector<Funcionario *> supervisores; // Contem todos os supervisores do hotel
-
 	/**
 	*	Contem todos os clientes do hotel
 	*/
@@ -76,6 +74,12 @@ public:
 	*	Retorna um vetor com todos os funcionarios (e supervisores) do hotel
 	*/
 	vector<Funcionario *> getFuncionarios() const;
+
+	/**
+	*	Retorna um objeto do tipo Reservas, com todas as reservas do hotel
+	*/
+	Reservas getReservas() const;
+
 
 	/**
 	*	Retorna o número de espaços disponíveis no hotel na data passada como argumento
