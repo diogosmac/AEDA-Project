@@ -81,7 +81,7 @@ double Hotel::nEspacosDisponiveis(Date data)
 	double contador = 0;
 	for (size_t i = 0; i < this->todosEspacos.size(); i++)
 	{
-		if ( !( this->todasReservas.verificaEspaco(todosEspacos[i]->getNumID(), data) ) )
+		if (!(this->todasReservas.verificaEspaco(todosEspacos[i]->getNumID(), data)))
 			contador++;
 	}
 	return contador;
@@ -267,7 +267,13 @@ void Hotel::reservaEspaco(size_t idEspaco, Reserva res)
 	}
 	else {
 		cout << "Reserva efetuada com sucesso!\n";
-		cout << "Espaco reservado: " << idEspaco << '\t' << res << '\n';
+		cout << "Espaco reservado: " << idEspaco << '\t' << res;
+		for (size_t i = 0; i < clientesHotel.size(); i++) {
+			if (clientesHotel.at(i)->getIDCliente() == res.returnidCliente()) {
+				cout << " - Reserva a nome de " << clientesHotel.at(i)->getNome() << " .\n";
+				break;
+			}
+		}
 	}
 }
 
@@ -295,29 +301,28 @@ void Hotel::exportInfoClientes()
 {
 	ofstream ficheiroCli;
 
-	//string nomeFicheiro;
-
-	//cout << "Escreva o nome do ficheiro de texto onde pretende guardar os dados" << endl;
-	//cout << "Nota: Caso o ficheiro com nome inserido ja existir, o mesmo sera substituido pelo novo" << endl;
-
-
-	//cin >> nomeFicheiro;
-
-	//if (nomeFicheiro.length() < 4 || nomeFicheiro.substr(nomeFicheiro.length() - 4, 4) != ".txt") {
-	//	nomeFicheiro += ".txt";
-	//}
-
-	string nomeFicheiro = nomeHotel + "_clientes.txt";
+	string nomeFicheiro = nomeHotel + "_espacos.txt";
 
 	ficheiroCli.open(nomeFicheiro);
 
-	cout << "\nPrima ENTER para guardar a informacao relativa aos clientes . . .";
-	cin.ignore(9999999, '\n');
-	cin.clear();
+	cout << "\nConfirma que deseja exportar a informacao dos Espacos? (s/n): ";
+	string confirm;
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n") {
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+
+	if (confirm == "n") {
+		cout << "Operacao cancelada a seu pedido.\n";
+		return;
+	}
 
 	if (!ficheiroCli.is_open())
 	{
-		cerr << "Error opening file!" << endl;
+		cerr << "Erro na abertura do ficheiro.\n" << endl;
 		return;
 	}
 
@@ -328,7 +333,7 @@ void Hotel::exportInfoClientes()
 		if (i == this->clientesHotel.size() - 1)
 		{
 			ficheiroCli << clientesHotel.at(i) << '\n';
-			cout << "Toda a informacao relativa aos clientes foi guardada com sucesso!" << endl;
+			cout << "Toda a informacao relativa aos clientes foi guardada com sucesso!\n\n";
 		}
 		else
 		{
@@ -340,7 +345,7 @@ void Hotel::exportInfoClientes()
 
 }
 
-void Hotel::exportInfoEspacos() 
+void Hotel::exportInfoEspacos()
 {
 	ofstream ficheiroEsp;
 
@@ -348,13 +353,24 @@ void Hotel::exportInfoEspacos()
 
 	ficheiroEsp.open(nomeFicheiro);
 
-	cout << "\nPrima ENTER para guardas a informacao relativa aos espacos . . .";
-	cin.ignore(9999999, '\n');
-	cin.clear();
+	cout << "\nConfirma que deseja exportar a informacao dos Espacos? (s/n): ";
+	string confirm;
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n") {
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+
+	if (confirm == "n") {
+		cout << "Operacao cancelada a seu pedido.\n";
+		return;
+	}
 
 	if (!ficheiroEsp.is_open())
 	{
-		cerr << "Error opening file!" << endl;
+		cerr << "Erro na abertura do ficheiro.\n" << endl;
 		return;
 	}
 
@@ -365,7 +381,7 @@ void Hotel::exportInfoEspacos()
 		ficheiroEsp << todosEspacos.at(i) << '\n';
 		if (i == this->todosEspacos.size() - 1) {
 			ficheiroEsp << '\n';
-			cout << "Toda a informacao relativa aos espacos foi guardada com sucesso!" << endl;
+			cout << "Toda a informacao relativa aos espacos foi guardada com sucesso!\n\n";
 		}
 	}
 
@@ -381,13 +397,24 @@ void Hotel::exportInfoReservas()
 
 	ficheiroRes.open(nomeFicheiro);
 
-	cout << "\nPrima ENTER para guardar a informacao relativa as reservas . . .";
-	cin.ignore(9999999, '\n');
-	cin.clear();
+	cout << "\nConfirma que deseja exportar a informacao das reservas? (s/n): ";
+	string confirm;
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n") {
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+
+	if (confirm == "n") {
+		cout << "Operacao cancelada a seu pedido.\n";
+		return;
+	}
 
 	if (!ficheiroRes.is_open())
 	{
-		cerr << "Error opening file!" << endl;
+		cerr << "Erro na abertura do ficheiro.\n" << endl;
 		return;
 	}
 
@@ -399,16 +426,17 @@ void Hotel::exportInfoReservas()
 		if (todasReservas.temReservas(id)) {
 			ficheiroRes << id << ';';
 			for (size_t i = 0; i < todasReservas.returnReservas()[id].size(); i++) {
-				ficheiroRes << todasReservas.returnReservas()[id].at(i) << ';';
+				ficheiroRes << todosEspacos.at(i)->getNumID() << '-' << todasReservas.returnReservas()[id].at(i) << ';';
 			}
 			ficheiroRes << '\n';
 		}
 		else {
-			ficheiroRes << id << ":SemReservas\n";
+			ficheiroRes << id << ";SemReservas\n";
 		}
-		if (i == this->todosEspacos.size() - 1) {
+		if (i == this->todosEspacos.size() - 1)
+		{
 			ficheiroRes << '\n';
-			cout << "Toda a informacao relativa as reservas foi guardada com sucesso!" << endl;
+			cout << "Toda a informacao relativa as reservas foi guardada com sucesso!\n\n";
 		}
 	}
 
@@ -423,16 +451,29 @@ void Hotel::exportInfoFuncionarios()
 
 	ficheiroFun.open(nomeFicheiro);
 
-	cout << "\nPrima ENTER para guardar a informacao relativa aos funcionarios . . .";
-	cin.ignore(9999999, '\n');
-	cin.clear();
+	cout << "\nConfirma que deseja exportar a informacao dos funcionarios? (s/n): ";
+	string confirm;
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n")
+	{
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+
+	if (confirm == "n")
+	{
+		cout << "Operacao cancelada a seu pedido.\n";
+		return;
+	}
 
 	if (!ficheiroFun.is_open())
 	{
-		cerr << "Error opening file!" << endl;
+		cerr << "Erro na abertura do ficheiro.\n" << endl;
 		return;
 	}
-	
+
 	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
 	//Escreve todas as reservas
 	for (size_t i = 0; i < funcionarios.size(); i++) {
@@ -443,4 +484,250 @@ void Hotel::exportInfoFuncionarios()
 	}
 
 	ficheiroFun.close();
+}
+
+bool Hotel::importInfoClientes()
+{
+	ifstream ficheiroCli;
+
+	string nomeFicheiro = nomeHotel + "_clientes.txt";
+
+	ficheiroCli.open(nomeFicheiro);
+
+	cout << "\nConfirma que deseja importar a informacao dos clientes? (s/n): ";
+	string confirm;
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n") {
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+
+	if (confirm == "n") {
+		cout << "Operacao cancelada a seu pedido.\n";
+		return false;
+	}
+
+	if (!ficheiroCli.is_open())
+	{
+		cerr << "Nao foi possivel obter a informacao relativa aos clientes do hotel " << nomeHotel << "!\n";
+		return false;
+	}
+
+	cout << "A importar a informacao dos clientes . . .\n";
+	string line;
+	while (getline(ficheiroCli, line))
+	{
+		/*
+			OUTPUT CLIENTE: idCliente;nomeCliente;idadeCliente
+		*/
+		int index = line.find_first_of(';');
+		string nome = line.substr(index + 1, line.find(';', index + 1) - index - 1);
+		index = line.find(';', index + 1) + 1;
+		string idade_str = line.substr(index);
+		int idade = stoi(idade_str);
+		adicionaCliente(nome, idade);
+	}
+	cout << "Clientes do hotel " << nomeHotel << " importados com sucesso!\n\n";
+
+	return true;
+}
+
+bool Hotel::importInfoReservas()
+{
+	ifstream ficheiroRes;
+
+	string nomeFicheiro = nomeHotel + "_reservas.txt";
+
+	ficheiroRes.open(nomeFicheiro);
+
+	cout << "\nConfirma que deseja importar a informacao dos clientes? (s/n): ";
+	string confirm;
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n")
+	{
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+
+	if (confirm == "n")
+	{
+		cout << "Operacao cancelada a seu pedido.\n";
+		return false;
+	}
+
+	if (!ficheiroRes.is_open())
+	{
+		cerr << "Nao foi possivel obter a informacao relativa as reservas do hotel " << nomeHotel << "!\n";
+		return false;
+	}
+
+	cout << "A importar a informacao das reservas . . .\n";
+	string line;
+	int failedExtracts = 0;
+	while (getline(ficheiroRes, line))
+	{
+		int index = line.find_first_of(';');
+		int index_brk = line.find(';', index + 1);
+		while (index_brk != line.npos)
+		{
+			/*
+				OUTPUT RESERVA: idReserva;idEspaço-idCliente:di/mi/yi-df/mf/yf;
+			*/
+			index = line.find('-', index_brk + 1);
+			string id_esp_str = line.substr(index_brk + 1, index - index_brk - 1);
+			int id_esp = stoi(id_esp_str);
+			string id_cli_str = line.substr(index + 1, line.find(':', index + 1) - index - 1);
+			int id_cli = stoi(id_cli_str);
+			index = line.find(':', index + 1);
+
+			string day_str = line.substr(index + 1, line.find('/', index + 1) - index - 1);
+			int day = stoi(day_str);
+			index = line.find('/', index + 1);
+			string month_str = line.substr(index + 1, line.find('/', index + 1) - index - 1);
+			int month = stoi(month_str);
+			index = line.find('/', index + 1);
+			string year_str = line.substr(index + 1, line.find('-', index + 1) - index - 1);
+			int year = stoi(year_str);
+			Date data_ini(day, month, year);
+
+			index = line.find('-', index + 1);
+			string day_str = line.substr(index + 1, line.find('/', index + 1) - index - 1);
+			int day = stoi(day_str);
+			index = line.find('/', index + 1);
+			string month_str = line.substr(index + 1, line.find('/', index + 1) - index - 1);
+			int month = stoi(month_str);
+			index = line.find('/', index + 1);
+			string year_str = line.substr(index + 1, line.find('-', index + 1) - index - 1);
+			int year = stoi(year_str);
+			Date data_fim(day, month, year);
+
+			bool encontrou = false;
+			for (size_t i = 0; i < clientesHotel.size(); i++) {
+				if (id_cli == clientesHotel.at(i)->getIDCliente()) {
+					encontrou = true;
+					efetuaReserva(clientesHotel.at(i), id_esp, data_ini, data_fim);
+				}
+			}
+			if (!encontrou) {
+				failedExtracts++;
+			}
+
+		}
+	}
+
+	if (failedExtracts) {
+		if (failedExtracts == 1)
+			cout << "Falhou a extracao de 1 reserva.\n";
+		else
+			cout << "Falhou a extracao de " << failedExtracts << " reservas.\n";
+	}
+
+	cout << "Reservas do hotel " << nomeHotel << " importadas com sucesso!\n\n";
+
+	return true;
+}
+
+bool Hotel::importInfoFuncionarios()
+{
+	ifstream ficheiroFun;
+
+	string nomeFicheiro = nomeHotel + "_funcionarios.txt";
+
+	ficheiroFun.open(nomeFicheiro);
+
+	cout << "\nConfirma que deseja importar a informacao dos clientes? (s/n): ";
+	string confirm;
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n")
+	{
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+
+	if (confirm == "n")
+	{
+		cout << "Operacao cancelada a seu pedido.\n";
+		return false;
+	}
+
+	if (!ficheiroFun.is_open())
+	{
+		cerr << "Nao foi possivel obter a informacao relativa aos funcionarios do hotel " << nomeHotel << "!\n";
+		return false;
+	}
+
+	cout << "A importar a informacao dos funcionarios . . .\n";
+	string line;
+	while (getline(ficheiroFun, line))
+	{
+		/*
+			OUTPUT FUNCIONÁRIO: idFunc;nomeFunc;supervisor(yes/no)
+			OUTPUT SUPERVISOR: out_func//out_espaco//out_espaco//(...)
+		*/
+		int index = line.find_first_of(';');
+		string nome = line.substr(index + 1, line.find(';', index + 1) - index - 1);
+		index = line.find(';', index + 1);
+		if (line.find('/', index + 1) == line.npos) {
+			Funcionario* func = new Funcionario(nome);
+			adicionaFuncionario(func);
+		}
+		else {
+			Funcionario* func = new Supervisor(nome);
+			index = line.find('/', index + 1) + 1;
+			while (index != line.npos) {
+				string idEsp_str = line.substr(index + 1, line.find(';', index + 1) - index - 1);
+				int idEsp = stoi(idEsp_str);
+				for (size_t i = 0; i < todosEspacos.size(); i++) {
+					if (idEsp == todosEspacos.at(i)->getNumID()) {
+						func->AcrescentaEspaco(todosEspacos.at(i));
+					}
+				}
+			}
+			adicionaFuncionario(func);
+		}
+	}
+	cout << "Funcionarios do hotel " << nomeHotel << " importados com sucesso!\n";
+
+	string confirm;
+	cout << "Deseja re-alocar os supervisores dos espaços? (s/n): ";
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n")
+	{
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+	if (confirm == "s")
+	{
+		alocaSupervisores();
+		cout << "Os supervisores foram re-alocados.\n";
+	}
+
+	cout << "A informacao dos funcionarios foi importada.\n";
+	
+	return true;
+}
+
+void Hotel::importAllInfo() {
+
+	if (!importInfoClientes()) {
+		cout << "A importacao da informacao dos clientes falhou.\n";
+		cout << "Impossivel importar a informacao das reservas sem a informacao dos clientes.\n";
+	}
+	else {
+		if (!importInfoReservas()) {
+			cout << "A importacao da informacao das reservas falhou.\n";
+		}
+	}
+
+	if (!importInfoFuncionarios()) {
+		cout << "A importacao da informacao dos funcionarios falhou.\n";
+	}
 }

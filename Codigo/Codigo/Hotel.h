@@ -150,7 +150,7 @@ public:
 	*	Se for maior de idade e o espaco pretendido pertencer ao hotel, verifica a disponibilidade do espaço pretendido nas datas pretendidas.
 	*	Se o espaco estiver disponivel nas datas pretendidas efetua a reserva, caso contrário lança a exceção EspacoNaoDisponivel.
 	*/
-	void efetuaReserva(Cliente * cliente, size_t idEspaco, Date inicio, Date fim);
+	void efetuaReserva(Cliente* cliente, size_t idEspaco, Date inicio, Date fim);
 
 	/**
 	*	Efetua reserva de espaco; É utilizada na pela função efutuaReserva; Não faz verificações de disponibilidade;
@@ -161,8 +161,6 @@ public:
 	*	Distribui os supervisores pelos espaços do hotel
 	*/
 	void alocaSupervisores();
-
-	// void atendeCliente();
 
 	/**
 	*	Exporta toda a informação relativa aos clientes do hotel para um ficheiro de texto
@@ -184,4 +182,26 @@ public:
 	*/
 	void exportInfoFuncionarios();
 
+	/**
+	*	Importa de um ficheiro de texto um conjunto de Clientes, que são adicionados ao Hotel
+	*	Se conseguir, retorna TRUE. Se não, retorna FALSE.
+	*/
+	bool importInfoClientes();
+
+	/**
+	*	Importa de um ficheiro de texto um conjunto de Reservas, que são colocadas nos Espaços do Hotel
+	*	Se conseguir, retorna TRUE. Se não, retorna FALSE.
+	*/
+	bool importInfoReservas();
+
+	/**
+	*	Importa de um ficheiro de texto um conjunto de Funcionários, que são distribuídos pelos Espaços do Hotel
+	*	Se conseguir, retorna TRUE. Se não, retorna FALSE.
+	*/
+	bool importInfoFuncionarios();
+
+	/**
+	*	Importa toda a informação relativa ao hotel, chamando as outras funções de importação.
+	*/
+	void importAllInfo();
 };
