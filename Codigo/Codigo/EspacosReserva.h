@@ -28,6 +28,8 @@ public:
 	bool operator == (Date date2);
 	bool validDate ();
 	bool bissexto();
+	bool isWeekend();
+	bool isEpocaAlta();
 };
 
 
@@ -47,7 +49,7 @@ public:
 	/**
 	*	Retorna PrecoReservaDiario = 0€ (Alterado nas classes derivadas)
 	*/
-	virtual double getPrecoReservaDiario() const = 0;
+	virtual double getPrecoReservaDiario(Date data) const = 0;
 
 	virtual string getOutputString();
 
@@ -77,8 +79,10 @@ public:
 	*	Preço normal (por dia): 40€
 	*	Se for quarto duplo: Duplica o preço normal
 	*	Se for quarto voltado para o lado da frente do hotel: Acrescimo de 30% ao custo diario
+	*   Se a reserva for durante a época alta (Maio a Setembro) o valor do custo sobe 20%
+	*   Se a reserva for durante o fim de semana o valor do custo aumenta 5%
 	*/
-	double getPrecoReservaDiario() const;
+	double getPrecoReservaDiario(Date data) const;
 
 	/**
 	*	Retorna se o quarto é duplo ou não
@@ -126,8 +130,10 @@ public:
 	*	Se capacidade > 500 preco diario (base) = 480€
 	*	Se tiver equipamento de video, o custo é aumentado em 20%
 	*	Se tiver equipamento de audio, o custo é aumentado em 10%
+	*   Se a reserva for durante a época alta (Maio a Setembro) o valor do custo sobe 20%
+	*   Se a reserva for durante o fim de semana o valor do custo aumenta 5%
 	*/
-	double getPrecoReservaDiario() const;
+	double getPrecoReservaDiario(Date data) const;
 
 	/**
 	*	Retorna a capacidade da sala de reunioes
