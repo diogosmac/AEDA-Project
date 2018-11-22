@@ -13,21 +13,91 @@ class Date
 	size_t year;
 
 public:
+
+	/**
+	*	Construtor da class Date
+	*/
 	Date();
+
+	/**
+	*	Construtor da class Date
+	*/
 	Date(size_t d, size_t m, size_t y);
+
+	/**
+	*	Construtor da class Date
+	*/
 	Date(string yearMonthDay);
+
+	/**
+	*	Retorna o dia
+	*/
 	size_t getDay() const { return day; }
+
+	/**
+	*	Retorna o mes
+	*/
 	size_t getMonth() const { return month; }
+
+	/**
+	*	Retorna o ano
+	*/
 	size_t getYear() const { return year; }
+
+	/**
+	*	Retorna a data numa string no formato dd/mm/aaaa
+	*/
 	string getDate() const;
+
+	/**
+	*	Aumenta um dia à data
+	*/
 	void increaseDay();
+
+	/**
+	*	Retorna o numero de dias do mes
+	*/
 	size_t numDaysOfMonth();
+
+	/**
+	*	Retorna o dia da semana sendo 0-Sabado, 1-Domingo, 2-Segunda, 3-Terca, 4-Quarta, 5-Quinta, 6-Sexta
+	*/
 	size_t dayOfWeek();
+
+	/**
+	*	Retorna se uma data é anterior a outra
+	*/
 	bool operator < (Date date2);
+
+	/**
+	*	Retorna se uma data é posterior a outra
+	*/
 	bool operator > (Date date2);
+
+	/**
+	*	Retorna se as datas sao iguais
+	*/
 	bool operator == (Date date2);
+
+	/**
+	*	Retorna se a data é valida
+	*/
 	bool validDate ();
+
+	/**
+	*	Retorna se o ano da data é bissexto
+	*/
 	bool bissexto();
+
+	/**
+	*	Retorna se a data calha num fim de semana
+	*/
+	bool isWeekend();
+
+	/**
+	*	Retorna se a data esta entre Março e Setembro
+	*/
+	bool isEpocaAlta();
 };
 
 
@@ -47,7 +117,7 @@ public:
 	/**
 	*	Retorna PrecoReservaDiario = 0€ (Alterado nas classes derivadas)
 	*/
-	virtual double getPrecoReservaDiario() const = 0;
+	virtual double getPrecoReservaDiario(Date data) const = 0;
 
 	virtual string getOutputString();
 
@@ -77,8 +147,10 @@ public:
 	*	Preço normal (por dia): 40€
 	*	Se for quarto duplo: Duplica o preço normal
 	*	Se for quarto voltado para o lado da frente do hotel: Acrescimo de 30% ao custo diario
+	*   Se a reserva for durante a época alta (Maio a Setembro) o valor do custo sobe 20%
+	*   Se a reserva for durante o fim de semana o valor do custo aumenta 5%
 	*/
-	double getPrecoReservaDiario() const;
+	double getPrecoReservaDiario(Date data) const;
 
 	/**
 	*	Retorna se o quarto é duplo ou não
@@ -126,8 +198,10 @@ public:
 	*	Se capacidade > 500 preco diario (base) = 480€
 	*	Se tiver equipamento de video, o custo é aumentado em 20%
 	*	Se tiver equipamento de audio, o custo é aumentado em 10%
+	*   Se a reserva for durante a época alta (Maio a Setembro) o valor do custo sobe 20%
+	*   Se a reserva for durante o fim de semana o valor do custo aumenta 5%
 	*/
-	double getPrecoReservaDiario() const;
+	double getPrecoReservaDiario(Date data) const;
 
 	/**
 	*	Retorna a capacidade da sala de reunioes

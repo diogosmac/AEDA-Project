@@ -95,6 +95,14 @@ bool Date::validDate (){
 	return false;
 }
 
+bool Date::isWeekend() {
+	return(this->dayOfWeek() == 0 || this->dayOfWeek() == 1);
+}
+
+bool Date::isEpocaAlta() {
+	return(this->getMonth() >= 5 || this->getMonth() <= 9);
+}
+
 size_t Date::numDaysOfMonth()
 {
 	switch (month)
@@ -179,7 +187,7 @@ Quarto::Quarto(bool duplo, bool frente) : Espaco()
 	this->frente = frente;
 }
 
-double Quarto::getPrecoReservaDiario() const 
+double Quarto::getPrecoReservaDiario(Date data) const
 {
 	double precoDiario = 50;
 
@@ -191,6 +199,16 @@ double Quarto::getPrecoReservaDiario() const
 	if (frente)
 	{
 		precoDiario = precoDiario + (precoDiario * 0.30);
+	}
+
+	if (data.isWeekend())
+	{
+		precoDiario *= 1.05;
+	}
+
+	if (data.isEpocaAlta())
+	{
+		precoDiario *= 1.2;
 	}
 
 	return precoDiario;
@@ -230,7 +248,7 @@ SalaDeReunioes::SalaDeReunioes(int capacidade, bool equipamentoVideo, bool equip
 }
 
 
-double SalaDeReunioes::getPrecoReservaDiario() const 
+double SalaDeReunioes::getPrecoReservaDiario(Date data) const
 {
 	double precoDiario = 0;
 	
@@ -272,6 +290,16 @@ double SalaDeReunioes::getPrecoReservaDiario() const
 	if (equipamentoAudio)
 	{
 		precoDiario = precoDiario + (precoDiario * 0.1);
+	}
+
+	if(data.isWeekend())
+	{
+		precoDiario *= 1.05;
+	}
+
+	if(data.isEpocaAlta())
+	{
+		precoDiario *= 1.2;
 	}
 
 	return precoDiario;
