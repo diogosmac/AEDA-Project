@@ -235,7 +235,7 @@ void Hotel::efetuaReserva(Cliente* cliente, size_t idEspaco, Date inicio, Date f
 {
 	try {
 		if (cliente->getIdade() < 18) {
-			throw ClienteDemasiadoNovoReserva(cliente);
+			throw ClienteDemasiadoNovoReserva(cliente->getNome());
 		}
 
 		bool espacoExiste = false;
@@ -260,9 +260,15 @@ void Hotel::efetuaReserva(Cliente* cliente, size_t idEspaco, Date inicio, Date f
 			reservaEspaco(idEspaco, res);
 		}
 	}
-	catch (EspacoNaoPertenceHotel e1) {}
-	catch (ClienteDemasiadoNovoReserva e2) {}
-	catch (EspacoNaoDisponivel e3) {}
+	catch (EspacoNaoPertenceHotel e1) {
+		cerr << "Espaco de ID:" << e1.getNumID() << " nao pertence ao hotel!" << endl;
+	}
+	catch (ClienteDemasiadoNovoReserva e2) {
+		cerr << "O Cliente de nome " << e2.getNome() << " e demasiado novo para efetuar uma reserva!" << endl;	
+	}
+	catch (EspacoNaoDisponivel e3) {
+		cerr << "O espaco de id = " << e3.getNumID() << " nao esta disponivel!" << endl;
+	}
 }
 
 void Hotel::reservaEspaco(size_t idEspaco, Reserva res)
@@ -600,14 +606,14 @@ bool Hotel::importInfoReservas()
 			Date data_ini(day, month, year);
 
 			index = line.find('-', index + 1);
-			string day_str = line.substr(index + 1, line.find('/', index + 1) - index - 1);
-			int day = stoi(day_str);
+			day_str = line.substr(index + 1, line.find('/', index + 1) - index - 1);
+			day = stoi(day_str);
 			index = line.find('/', index + 1);
-			string month_str = line.substr(index + 1, line.find('/', index + 1) - index - 1);
-			int month = stoi(month_str);
+			month_str = line.substr(index + 1, line.find('/', index + 1) - index - 1);
+			month = stoi(month_str);
 			index = line.find('/', index + 1);
-			string year_str = line.substr(index + 1, line.find('-', index + 1) - index - 1);
-			int year = stoi(year_str);
+			year_str = line.substr(index + 1, line.find('-', index + 1) - index - 1);
+			year = stoi(year_str);
 			Date data_fim(day, month, year);
 
 			bool encontrou = false;
@@ -699,7 +705,6 @@ bool Hotel::importInfoFuncionarios()
 	}
 	cout << "Funcionarios do hotel " << nomeHotel << " importados com sucesso!\n";
 
-	string confirm;
 	cout << "Deseja re-alocar os supervisores dos espaços? (s/n): ";
 	cin >> confirm;
 	cin.ignore(1000, '\n');
@@ -720,7 +725,16 @@ bool Hotel::importInfoFuncionarios()
 	return true;
 }
 
-void Hotel::importAllInfo() {
+void Hotel::exportAllInfo()
+{
+	exportInfoEspacos();
+	exportInfoClientes();
+	exportInfoReservas();
+	exportInfoFuncionarios();
+}
+
+void Hotel::importAllInfo()
+{
 
 	if (!importInfoClientes()) {
 		cout << "A importacao da informacao dos clientes falhou.\n";

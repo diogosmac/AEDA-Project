@@ -203,7 +203,7 @@ void Reservas::showMonth(size_t numId, size_t month, size_t year) {
 
 	for (int i = 1; i <= numSpaceBlocks; i++)
 		cout << "    ";
-	for (int i = 1; i <= d1.numDaysOfMonth(); i++)
+	for (size_t i = 1; i <= d1.numDaysOfMonth(); i++)
 	{
 		if (i == d1.numDaysOfMonth())
 		{
@@ -231,9 +231,9 @@ void Reservas::showMonth(size_t numId, size_t month, size_t year) {
 			if (ds == 0) {
 				cout << endl;
 				if (d1.getDay() == 1) {
-					for (size_t j = 1; j <= numSpaceBlocks; j++)
+					for (int j = 1; j <= numSpaceBlocks; j++)
 						cout << "    ";
-					for (size_t j = 0; j < 7 - numSpaceBlocks; j++)
+					for (int j = 0; j < 7 - numSpaceBlocks; j++)
 					{
 						if (this->verificaEspaco(numId, d1))
 						{

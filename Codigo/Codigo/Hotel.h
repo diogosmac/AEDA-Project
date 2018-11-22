@@ -205,6 +205,11 @@ public:
 	bool importInfoFuncionarios();
 
 	/**
+	*	Exporta toda a informação relativa ao hotel, chamando as outras funções de exportação.
+	*/
+	void exportAllInfo();
+
+	/**
 	*	Importa toda a informação relativa ao hotel, chamando as outras funções de importação.
 	*/
 	void importAllInfo();

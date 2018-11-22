@@ -218,24 +218,23 @@ public:
 class ClienteDemasiadoNovoReserva
 {
 	/**
-	*	Objeto da class Cliente que é demasiado novo para efetuar a reserva
+	*	Nome do cliente que é demasiado novo para efetuar uma reserva
 	*/
-	Cliente * cliente;
+	string nome;
 
 public:
 
 	/**
 	*	Contrutor da exceção
 	*/
-	ClienteDemasiadoNovoReserva(Cliente * cli) {
-		cliente = cli;
-		cerr << "O Cliente de nome " << this->cliente->getNome() << " e demasiado novo para efetuar uma reserva!" << endl;
+	ClienteDemasiadoNovoReserva(string nom) {
+		nome = nom;
 	}
 
 	/**
 	*	Retorna o nome do cliente que é demasiado novo para efetuar a reserva
 	*/
-	string getCliente() const { return cliente->getNome(); }
+	string getNome() const { return nome; }
 };
 
 class EspacoNaoDisponivel
@@ -252,12 +251,11 @@ public:
 	*/
 	EspacoNaoDisponivel(size_t id) {
 		numID = id;
-		cerr << "O espaco de id = " << this->numID << " nao esta disponivel!" << endl;
 	}
 	/**
 	*	Retorna o numID do espaço que não se encontra disponível
 	*/
-	size_t getNum_ID() const { return numID; }
+	size_t getNumID() const { return numID; }
 };
 
 class ReservasCoincidem
