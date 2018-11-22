@@ -203,24 +203,76 @@ void Reservas::showMonth(size_t numId, size_t month, size_t year) {
 
 	for (int i = 1; i <= numSpaceBlocks; i++)
 		cout << "    ";
-	for (size_t i = 1; i <= d1.numDaysOfMonth(); i++)
+	for (int i = 1; i <= d1.numDaysOfMonth(); i++)
 	{
-		cout << setw(3) << i << " ";
-		d1.increaseDay();
-		if (ds == 0)
+		if (i == d1.numDaysOfMonth())
 		{
+			cout << setw(3) << i << " ";
 			cout << endl;
-			for (size_t i = 0; i < 7; i++)
+			while (d1.getDay() <= d1.numDaysOfMonth())
 			{
 				if (this->verificaEspaco(numId, d1))
+				{
 					cout << setw(3) << "X" << " ";
+					d1.increaseDay();
+				}
+
 				else
-					cout << setw(3) << " " << " ";
+				{
+					cout << setw(3) << "O" << " ";
+					d1.increaseDay();
+				}
+			}
+
+		}
+
+		else {
+			cout << setw(3) << i << " ";
+			if (ds == 0) {
+				cout << endl;
+				if (d1.getDay() == 1) {
+					for (size_t j = 1; j <= numSpaceBlocks; j++)
+						cout << "    ";
+					for (size_t j = 0; j < 7 - numSpaceBlocks; j++)
+					{
+						if (this->verificaEspaco(numId, d1))
+						{
+							cout << setw(3) << "X" << " ";
+							d1.increaseDay();
+						}
+
+						else
+						{
+							cout << setw(3) << "O" << " ";
+							d1.increaseDay();
+						}
+					}
+
+				}
+
+				else {
+					for (size_t j = 0; j < 7; j++)
+					{
+						if (this->verificaEspaco(numId, d1))
+						{
+							cout << setw(3) << "X" << " ";
+							d1.increaseDay();
+						}
+
+						else
+						{
+							cout << setw(3) << "O" << " ";
+							d1.increaseDay();
+						}
+					}
+				}
+				cout << endl;
 			}
 
 			ds = (ds + 1) % 7;
 		}
 	}
-	cout << endl << endl;
+		cout << endl << endl;
 
+		
 }
