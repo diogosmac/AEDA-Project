@@ -13,22 +13,90 @@ class Date
 	size_t year;
 
 public:
+
+	/**
+	*	Construtor da class Date
+	*/
 	Date();
+
+	/**
+	*	Construtor da class Date
+	*/
 	Date(size_t d, size_t m, size_t y);
+
+	/**
+	*	Construtor da class Date
+	*/
 	Date(string yearMonthDay);
+
+	/**
+	*	Retorna o dia
+	*/
 	size_t getDay() const { return day; }
+
+	/**
+	*	Retorna o mes
+	*/
 	size_t getMonth() const { return month; }
+
+	/**
+	*	Retorna o ano
+	*/
 	size_t getYear() const { return year; }
+
+	/**
+	*	Retorna a data numa string no formato dd/mm/aaaa
+	*/
 	string getDate() const;
+
+	/**
+	*	Aumenta um dia à data
+	*/
 	void increaseDay();
+
+	/**
+	*	Retorna o numero de dias do mes
+	*/
 	size_t numDaysOfMonth();
+
+	/**
+	*	Retorna o dia da semana sendo 0-Sabado, 1-Domingo, 2-Segunda, 3-Terca, 4-Quarta, 5-Quinta, 6-Sexta
+	*/
 	size_t dayOfWeek();
+
+	/**
+	*	Retorna se uma data é anterior a outra
+	*/
 	bool operator < (Date date2);
+
+	/**
+	*	Retorna se uma data é posterior a outra
+	*/
 	bool operator > (Date date2);
+
+	/**
+	*	Retorna se as datas sao iguais
+	*/
 	bool operator == (Date date2);
+
+	/**
+	*	Retorna se a data é valida
+	*/
 	bool validDate ();
+
+	/**
+	*	Retorna se o ano da data é bissexto
+	*/
 	bool bissexto();
+
+	/**
+	*	Retorna se a data calha num fim de semana
+	*/
 	bool isWeekend();
+
+	/**
+	*	Retorna se a data esta entre Março e Setembro
+	*/
 	bool isEpocaAlta();
 };
 
