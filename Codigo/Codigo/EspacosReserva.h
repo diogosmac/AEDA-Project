@@ -49,11 +49,13 @@ public:
 	*/
 	virtual double getPrecoReservaDiario() const = 0;
 
+	virtual string getOutputString();
+
 	/**
 	*	Usado para exportar toda a informação do espaco para ficheiros
 	*	Objeto >> ostream
 	*/
-	virtual ostream& operator >> (ostream& ofs);
+	friend ostream& operator << (ostream& ofs, Espaco* espaco);
 
 private:
 	static size_t nextSpaceID;
@@ -92,7 +94,7 @@ public:
 	*	Usado para exportar toda a informação do quarto para ficheiros
 	*	Objeto >> ostream
 	*/
-	ostream& operator >> (ostream& ofs);
+	string getOutputString();
 
 };
 
@@ -146,6 +148,6 @@ public:
 	*	Usado para exportar toda a informação da sala de reunioes para ficheiros
 	*	Objeto >> ostream
 	*/
-	ostream& operator >> (ostream& ofs);
+	string getOutputString();
 
 };

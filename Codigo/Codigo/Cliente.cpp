@@ -1,6 +1,6 @@
 #include "Cliente.h"
 
-int Cliente::nextClientID = 0;
+int Cliente::nextClientID = 1;
 
 //teste
 
@@ -33,6 +33,6 @@ int Cliente::getIDCliente() const
 
 ostream& operator << (ostream& ofs, const Cliente *cliente)
 {
-	ofs << "*" << cliente->nome << ';' << cliente->idade << ';' << cliente->idCliente << ";" << endl;
+	ofs << cliente->getIDCliente() << ";" << cliente->getNome() << ";" << cliente->getIdade();
 	return ofs;
 }

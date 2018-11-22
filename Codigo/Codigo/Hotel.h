@@ -13,10 +13,11 @@ using namespace std;
 
 class Hotel
 {
+	string nomeHotel;
 	vector<Espaco *> todosEspacos; // Contem todos os espacos que pertencem ao hotel
 	//vector<Espaco *> espacosDisponiveis; // Contem todos os espacos que se encontram disponiveis
 	vector<Funcionario *> funcionarios; // Contem todos os funcionarios do hotel
-	vector<Funcionario *> supervisores; // Contem todos os supervisores do hotel
+	//vector<Funcionario *> supervisores; // Contem todos os supervisores do hotel
 	vector<Cliente *> clientesHotel; // Contem todos os clientes do hotel
 	Reservas todasReservas;
 
@@ -24,8 +25,11 @@ public:
 
 	/**
 	*	Construtor da classe Hotel
+	*	Retira a informação necessária à inicialização do objeto de um ficheiro
+	*	@param nome nome que vai ser dado ao hotel
+	*	@param ficheiro ficheiro de onde é retirada a informação
 	*/
-	Hotel(istream &ficheiro);
+	Hotel(string nome, istream &ficheiro);
 
 	/**
 	*	Retorna o número de espaços que pertencem ao hotel
@@ -140,7 +144,23 @@ public:
 	// void atendeCliente();
 
 	/**
-	*	Exporta a toda a informação do hotel para um ficheiro de texto
+	*	Exporta toda a informação relativa aos clientes do hotel para um ficheiro de texto
 	*/
-	void exportInfo();
+	void exportInfoClientes();
+
+	/**
+	*	Exporta toda a informação relativa aos espaços do hotel para um ficheiro de texto
+	*/
+	void exportInfoEspacos();
+
+	/**
+	*	Exporta toda a informação relativa as reservas do hotel para um ficheiro de texto
+	*/
+	void exportInfoReservas();
+
+	/**
+	*	Exporta toda a informação relativa aos funcionarios do hotel para um ficheiro de texto
+	*/
+	void exportInfoFuncionarios();
+
 };

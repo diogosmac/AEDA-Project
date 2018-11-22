@@ -47,20 +47,26 @@ public:
 	bool isSupervisor() const;
 
 	/**
-	*	Adiciona um espaco ao vetor de espacos de que o funcionario está responsavel
+	*	Tentativa de remover os espaços de um funcionário.
+	*	Falha se aplicada a um funcionário que não seja supervisor.
 	*/
-	virtual void AcrescentaEspaco(Espaco* espaco) = 0;	// temporary solutions
-	
-	
+	virtual void RemoveEspacos();
+
 	/**
-	*	Remove todos os espacos do vetor de espacos de que o funcionario está responsavel
+	*	Tentativa de adicionar um espaço a um funcionário.
+	*	Falha se aplicada a um funcionário que não seja supervisor.
 	*/
-	virtual void RemoveEspacos() = 0;	
+	virtual void AcrescentaEspaco(Espaco* espaco);
+
+	/**
+	*	Obtem a string a ser exportada para um dado funcionario
+	*/
+	virtual string getOutputString();
 
 	/**
 	*	Usado para exportar informação relativa ao objeto para ficheiros
 	*/
-	virtual ostream& operator >> (ostream& ofs);
+	friend ostream& operator << (ostream& ofs, Funcionario* func);
 
 private:
 	static size_t nextWorkerID;
@@ -83,7 +89,6 @@ public:
 	*	Adiciona um espaco ao vetor de espacos de que o funcionario está responsavel
 	*/
     void AcrescentaEspaco(Espaco* espaco);
-    // void RemoveEspaco(size_t idEspaco);
 
 	/**
 	*	Remove todos os espacos do vetor de espacos de que o funcionario está responsavel
@@ -95,10 +100,7 @@ public:
 	*/
 	vector<Espaco *> getLocaisResponsavel() const;
 
-	/**
-	*	Usado para exportar informação relativa ao objeto para ficheiros
-	*/
-	ostream& operator >> (ostream& ofs);
+	string getOutputString();
 	
 
 };

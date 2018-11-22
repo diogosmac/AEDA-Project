@@ -21,7 +21,7 @@ Date Reserva::returnFim() const {
 	return fim;
 }
 
-int Reserva::returnidCliente() {
+int Reserva::returnidCliente() const {
 	return idCliente;
 }
 
@@ -38,7 +38,7 @@ bool Reserva::operator == (Reserva& reserva2) {
 }
 
 ostream & operator << (ostream & out, const Reserva & r1) {
-	out << "Data de inicio: " << r1.returnInicio().getDate() << "\tData de fim: " << r1.returnFim().getDate();
+	out << r1.returnidCliente() << ':' << r1.returnInicio().getDate() << '-' << r1.returnFim().getDate();
 	return out;
 }
 

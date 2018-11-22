@@ -1,6 +1,6 @@
 #include "Funcionarios.h"
 
-size_t Funcionario::nextWorkerID = 0;
+size_t Funcionario::nextWorkerID = 1;
 
 //---------------------------------------------------------Funcionario--------------------------------------------------------//
 
@@ -30,9 +30,24 @@ bool Funcionario::isSupervisor() const
 	return supervisor_status;
 }
 
-ostream& Funcionario::operator >> (ostream& ofs)
+void Funcionario::RemoveEspacos() {
+	cerr << "Impossivel remover espacos deste funcionario, pois ele nao e supervisor!\n";
+}
+
+void Funcionario::AcrescentaEspaco(Espaco* espaco) {
+	cerr << "Impossivel colocar o espaco #" << espaco->getNumID() << " a cargo deste funcionario, pois ele nao e supervisor!\n";
+}
+
+string Funcionario::getOutputString()
 {
-	ofs << "#" << this->getNome() << ";" << this->getID_Code() << ";" << this->isSupervisor() << ";" << endl;
+	ostringstream ofs;
+	ofs << this->getID_Code() << ";" << this->getNome() << ";" << "no";
+	return ofs.str();
+}
+
+ostream& operator << (ostream& ofs, Funcionario* func)
+{
+	ofs << func->getOutputString();
 	return ofs;
 }
 
@@ -49,18 +64,6 @@ void Supervisor::AcrescentaEspaco(Espaco* espaco)
 	Espacos.push_back(espaco);
 }
 
-/*
-void Supervisor::RemoveEspaco(size_t idEspaco) 
-{
-	for (size_t i = 0; i < this->Espacos.size(); i++) {
-		if (this->Espacos.at(i)->getNumID() == idEspaco) {
-			this->Espacos.erase(this->Espacos.begin() + i);
-		}
-	}
-	throw EspacoInexistente(idEspaco);
-}
-*/
-
 void Supervisor::RemoveEspacos() 
 {
 	this->Espacos.clear();
@@ -71,14 +74,17 @@ vector <Espaco *> Supervisor::getLocaisResponsavel() const
 	return this->Espacos;
 }
 
-ostream& Supervisor::operator >> (ostream& ofs)
+string Supervisor::getOutputString()
 {
-	ofs << "$" << this->getNome() << ";" << this->getID_Code() << ";" << this->isSupervisor() << ";" << endl;
+	ostringstream ofs;
+	ofs << this->getID_Code() << ";" << this->getNome() << ";" << "yes" << "//";
 
-	for (size_t i = 0; i < this->getLocaisResponsavel().size(); i++)
+	for (size_t i = 0; i < this->getLocaisResponsavel().size() - 1; i++)
 	{
-		*this->getLocaisResponsavel().at(i) >> ofs;
+		ofs << this->getLocaisResponsavel().at(i) << "//";
 	}
+	if (!this->getLocaisResponsavel().empty())
+		ofs << this->getLocaisResponsavel().at(this->getLocaisResponsavel().size() - 1);
 
-	return ofs;
+	return ofs.str();
 }

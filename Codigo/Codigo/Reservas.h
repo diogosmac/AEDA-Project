@@ -22,7 +22,7 @@ public:
 	Reserva(int idCliente, Date &inicio, Date &fim);
 	Date returnInicio() const;
 	Date returnFim() const;
-	int returnidCliente();
+	int returnidCliente() const;
 	bool operator - (Reserva& reserva2); // retorna true se as reservas forem incompativeis, nao puderem existir em simultaneo;
 	bool operator == (Reserva& reserva2);
 	friend ostream & operator << (ostream & out, const Reserva & r1);

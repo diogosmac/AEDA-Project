@@ -1,6 +1,8 @@
 ﻿#include "Hotel.h"
 
-Hotel::Hotel(istream &ficheiro) {
+Hotel::Hotel(string nome, istream &ficheiro)
+{
+	nomeHotel = nome;
 
 	cout << endl;
 
@@ -40,6 +42,8 @@ Hotel::Hotel(istream &ficheiro) {
 			cout << "Linha inválida, nenhum espaço foi adicionado.\n";
 		}
 	}
+	Reservas r1(todosEspacos);
+	todasReservas = r1;
 
 	cout << endl;
 }
@@ -103,8 +107,6 @@ void Hotel::adicionaEspaco(Espaco * espaco)
 void Hotel::adicionaFuncionario(Funcionario * func)
 {
 	this->funcionarios.push_back(func);
-	/*if (func->isSupervisor())
-		this->supervisores.push_back(func);*/
 }
 
 
@@ -191,7 +193,8 @@ bool Hotel::verificaCliente(string nome, size_t idade)
 	return false;
 }
 
-int Hotel::idCliente(string nome, size_t idade) {
+int Hotel::idCliente(string nome, size_t idade)
+{
 
 	for (size_t i = 0; i < this->clientesHotel.size(); i++)
 	{
@@ -213,7 +216,8 @@ void Hotel::adicionaCliente(string nome, size_t idade)
 	}
 }
 
-Cliente * Hotel::encontraCliente(string nome) {
+Cliente * Hotel::encontraCliente(string nome)
+{
 	for (size_t i = 0; i < clientesHotel.size(); i++) {
 		if (clientesHotel.at(i)->getNome() == nome) {
 			return clientesHotel.at(i);
@@ -222,35 +226,42 @@ Cliente * Hotel::encontraCliente(string nome) {
 	throw ClienteNaoEncontrado(nome);
 }
 
-void Hotel::efetuaReserva(Cliente* cliente, size_t idEspaco, Date inicio, Date fim) {
-	if (cliente->getIdade() < 18) {
-		throw ClienteDemasiadoNovoReserva(cliente);
-	}
+void Hotel::efetuaReserva(Cliente* cliente, size_t idEspaco, Date inicio, Date fim)
+{
+	try {
+		if (cliente->getIdade() < 18) {
+			throw ClienteDemasiadoNovoReserva(cliente);
+		}
 
-	bool espacoExiste = false;
-	for (size_t i = 0; i < todosEspacos.size(); i++) {
-		if (todosEspacos[i]->getNumID() == idEspaco)
-			espacoExiste = true;
-	}
-	if (!espacoExiste) {
-		throw EspacoNaoPertenceHotel(idEspaco);
-	}
+		bool espacoExiste = false;
+		for (size_t i = 0; i < todosEspacos.size(); i++) {
+			if (todosEspacos[i]->getNumID() == idEspaco)
+				espacoExiste = true;
+		}
+		if (!espacoExiste) {
+			throw EspacoNaoPertenceHotel(idEspaco);
+		}
 
-	bool espacoDisponivel = true;
-	Reserva res(cliente->getIDCliente(), inicio, fim);
-	for (size_t i = 0; i < todasReservas.returnReservas().at(idEspaco).size(); i++) {
-		if (res - todasReservas.returnReservas().at(idEspaco).at(i))
-			espacoDisponivel = false;
+		bool espacoDisponivel = true;
+		Reserva res(cliente->getIDCliente(), inicio, fim);
+		for (size_t i = 0; i < todasReservas.returnReservas().at(idEspaco).size(); i++) {
+			if (res - todasReservas.returnReservas().at(idEspaco).at(i))
+				espacoDisponivel = false;
+		}
+		if (!espacoDisponivel) {
+			throw EspacoNaoDisponivel(idEspaco);
+		}
+		else {
+			reservaEspaco(idEspaco, res);
+		}
 	}
-	if (!espacoDisponivel) {
-		throw EspacoNaoDisponivel(idEspaco);
-	}
-	else {
-		reservaEspaco(idEspaco, res);
-	}
+	catch (EspacoNaoPertenceHotel e1) {}
+	catch (ClienteDemasiadoNovoReserva e2) {}
+	catch (EspacoNaoDisponivel e3) {}
 }
 
-void Hotel::reservaEspaco(size_t idEspaco, Reserva res) {
+void Hotel::reservaEspaco(size_t idEspaco, Reserva res)
+{
 	if (!todasReservas.adicionaReserva(idEspaco, res)) {
 		cout << "Algo correu mal. A reserva não pôde ser efetuada.\n";
 	}
@@ -260,7 +271,14 @@ void Hotel::reservaEspaco(size_t idEspaco, Reserva res) {
 	}
 }
 
-void Hotel::alocaSupervisores() {
+void Hotel::alocaSupervisores()
+{
+	vector<Funcionario *> supervisores;
+	for (size_t i = 0; i < funcionarios.size(); i++) {
+		if (funcionarios.at(i)->isSupervisor())
+			supervisores.push_back(funcionarios.at(i));
+	}
+
 	for (size_t i = 0; i < supervisores.size(); i++) {
 		supervisores.at(i)->RemoveEspacos();
 	}
@@ -273,46 +291,156 @@ void Hotel::alocaSupervisores() {
 	}
 }
 
-void Hotel::exportInfo()
+void Hotel::exportInfoClientes()
 {
-	ofstream ficheiro;
+	ofstream ficheiroCli;
 
-	string nomeFicheiro;
+	//string nomeFicheiro;
 
-	cout << "Escreva o nome do ficheiro de texto onde pretende guardar os dados" << endl;
-	cout << "Nota: Caso o ficheiro com nome inserido ja existir, o mesmo sera substituido pelo novo" << endl;
+	//cout << "Escreva o nome do ficheiro de texto onde pretende guardar os dados" << endl;
+	//cout << "Nota: Caso o ficheiro com nome inserido ja existir, o mesmo sera substituido pelo novo" << endl;
 
 
-	cin >> nomeFicheiro;
+	//cin >> nomeFicheiro;
 
-	if (nomeFicheiro.length() < 4 || nomeFicheiro.substr(nomeFicheiro.length() - 4, 4) != ".txt") {
-		nomeFicheiro += ".txt";
-	}
+	//if (nomeFicheiro.length() < 4 || nomeFicheiro.substr(nomeFicheiro.length() - 4, 4) != ".txt") {
+	//	nomeFicheiro += ".txt";
+	//}
 
-	ficheiro.open(nomeFicheiro);
+	string nomeFicheiro = nomeHotel + "_clientes.txt";
 
+	ficheiroCli.open(nomeFicheiro);
+
+	cout << "\nPrima ENTER para guardar a informacao relativa aos clientes . . .";
 	cin.ignore(9999999, '\n');
 	cin.clear();
 
-	if (!ficheiro.is_open())
+	if (!ficheiroCli.is_open())
 	{
-		cerr << "Erro opening file!" << endl;
+		cerr << "Error opening file!" << endl;
 		return;
 	}
 
+	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
 	//Escreve todos os clientes
 	for (size_t i = 0; i < this->clientesHotel.size(); i++)
 	{
 		if (i == this->clientesHotel.size() - 1)
 		{
-			ficheiro << clientesHotel.at(i);
-			ficheiro << '\n';
+			ficheiroCli << clientesHotel.at(i) << '\n';
 			cout << "Toda a informacao relativa aos clientes foi guardada com sucesso!" << endl;
 		}
 		else
 		{
-			ficheiro << clientesHotel.at(i);
+			ficheiroCli << clientesHotel.at(i) << '\n';
 		}
 	}
 
+	ficheiroCli.close();
+
+}
+
+void Hotel::exportInfoEspacos() 
+{
+	ofstream ficheiroEsp;
+
+	string nomeFicheiro = nomeHotel + "_espacos.txt";
+
+	ficheiroEsp.open(nomeFicheiro);
+
+	cout << "\nPrima ENTER para guardas a informacao relativa aos espacos . . .";
+	cin.ignore(9999999, '\n');
+	cin.clear();
+
+	if (!ficheiroEsp.is_open())
+	{
+		cerr << "Error opening file!" << endl;
+		return;
+	}
+
+	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
+	//Escreve todos os espaços
+	for (size_t i = 0; i < this->todosEspacos.size(); i++)
+	{
+		ficheiroEsp << todosEspacos.at(i) << '\n';
+		if (i == this->todosEspacos.size() - 1) {
+			ficheiroEsp << '\n';
+			cout << "Toda a informacao relativa aos espacos foi guardada com sucesso!" << endl;
+		}
+	}
+
+	ficheiroEsp.close();
+
+}
+
+void Hotel::exportInfoReservas()
+{
+	ofstream ficheiroRes;
+
+	string nomeFicheiro = nomeHotel + "_reservas.txt";
+
+	ficheiroRes.open(nomeFicheiro);
+
+	cout << "\nPrima ENTER para guardar a informacao relativa as reservas . . .";
+	cin.ignore(9999999, '\n');
+	cin.clear();
+
+	if (!ficheiroRes.is_open())
+	{
+		cerr << "Error opening file!" << endl;
+		return;
+	}
+
+	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
+	//Escreve todas as reservas
+	for (size_t i = 0; i < todosEspacos.size(); i++)
+	{
+		size_t id = todosEspacos.at(i)->getNumID();
+		if (todasReservas.temReservas(id)) {
+			ficheiroRes << id << ';';
+			for (size_t i = 0; i < todasReservas.returnReservas()[id].size(); i++) {
+				ficheiroRes << todasReservas.returnReservas()[id].at(i) << ';';
+			}
+			ficheiroRes << '\n';
+		}
+		else {
+			ficheiroRes << id << ":SemReservas\n";
+		}
+		if (i == this->todosEspacos.size() - 1) {
+			ficheiroRes << '\n';
+			cout << "Toda a informacao relativa as reservas foi guardada com sucesso!" << endl;
+		}
+	}
+
+	ficheiroRes.close();
+}
+
+void Hotel::exportInfoFuncionarios()
+{
+	ofstream ficheiroFun;
+
+	string nomeFicheiro = nomeHotel + "_funcionarios.txt";
+
+	ficheiroFun.open(nomeFicheiro);
+
+	cout << "\nPrima ENTER para guardar a informacao relativa aos funcionarios . . .";
+	cin.ignore(9999999, '\n');
+	cin.clear();
+
+	if (!ficheiroFun.is_open())
+	{
+		cerr << "Error opening file!" << endl;
+		return;
+	}
+	
+	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
+	//Escreve todas as reservas
+	for (size_t i = 0; i < funcionarios.size(); i++) {
+		ficheiroFun << funcionarios.at(i) << '\n';
+		if (i == funcionarios.size() - 1) {
+			cout << "Toda a informacao relativa aos funcionarios foi guardada com sucesso!\n";
+		}
+	}
+
+	ficheiroFun.close();
 }

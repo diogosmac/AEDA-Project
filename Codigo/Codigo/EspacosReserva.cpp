@@ -158,11 +158,18 @@ size_t Espaco::getNumID() const
 	return numID;
 }
 
-ostream& Espaco::operator >> (ostream& ofs)
+string Espaco::getOutputString() {
+	ostringstream ofs;
+	ofs << numID;
+	return ofs.str();
+}
+
+ostream& operator << (ostream& ofs, Espaco* espaco)
 {
-	ofs << "^" << this->getNumID() << ";" << endl;
+	ofs << espaco->getOutputString();
 	return ofs;
 }
+
 //-----------------------------------------------------------Quarto------------------------------------------------------------//
 
 
@@ -199,10 +206,17 @@ bool Quarto::isFrente() const
 	return this->frente;
 }
 
-ostream& Quarto::operator >> (ostream& ofs)
+string Quarto::getOutputString() 
 {
-	ofs << "%" << this->getNumID() << ";" << this->isDuplo() << ";" << this->isFrente() << ";" << endl;
-	return ofs;
+	ostringstream ofs;
+	ofs << getNumID() << ";" << "Quarto;";
+	if (!duplo)
+		ofs << '-';
+	ofs << "duplo;";
+	if (!frente)
+		ofs << '-';
+	ofs << "frente";
+	return ofs.str();
 }
 
 //---------------------------------------------------------Sala Reunioes-------------------------------------------------------//
@@ -278,8 +292,15 @@ bool SalaDeReunioes::getEquipamentoAudio() const
 	return this->equipamentoAudio;
 }
 
-ostream& SalaDeReunioes::operator >> (ostream& ofs)
+string SalaDeReunioes::getOutputString()
 {
-	ofs << "@" << this->getNumID() << ";" << this->getCapacidade() << ";" << this->getEquipamentoVideo() << ";" << this->getEquipamentoAudio() << ";" << endl;
-	return ofs;
+	ostringstream ofs;
+	ofs << getNumID() << ";" << "SalaDeReunioes;" << capacidade << ";";
+	if (!equipamentoVideo)
+		ofs << '-';
+	ofs << "video;";
+	if (!equipamentoAudio)
+		ofs << '-';
+	ofs << "audio";
+	return ofs.str();
 }

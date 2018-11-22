@@ -1,0 +1,9 @@
+1;Quarto;duplo;frente
+2;SalaDeReunioes;200;video;audio
+3;SalaDeReunioes;100;video;audio
+4;SalaDeReunioes;12;video;audio
+5;SalaDeReunioes;6;video;audio
+6;Quarto;-duplo;-frente
+7;Quarto;duplo;frente
+8;Quarto;-duplo;-frente
+
