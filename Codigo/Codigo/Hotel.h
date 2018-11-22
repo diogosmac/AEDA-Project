@@ -13,12 +13,33 @@ using namespace std;
 
 class Hotel
 {
+	/**
+	*	Contem o nome do hotel
+	*/
 	string nomeHotel;
-	vector<Espaco *> todosEspacos; // Contem todos os espacos que pertencem ao hotel
+
+	/**
+	*	Contem todos os espacos que pertencem ao hotel
+	*/
+	vector<Espaco *> todosEspacos;
+
 	//vector<Espaco *> espacosDisponiveis; // Contem todos os espacos que se encontram disponiveis
-	vector<Funcionario *> funcionarios; // Contem todos os funcionarios do hotel
+	
+	/**
+	*	Contem todos os funcionarios do hotel
+	*/
+	vector<Funcionario *> funcionarios;
+	
 	//vector<Funcionario *> supervisores; // Contem todos os supervisores do hotel
+
+	/**
+	*	Contem todos os clientes do hotel
+	*/
 	vector<Cliente *> clientesHotel; // Contem todos os clientes do hotel
+	
+	/**
+	*	Contem todas as reservas realizadas
+	*/
 	Reservas todasReservas;
 
 public:
@@ -132,7 +153,7 @@ public:
 	void efetuaReserva(Cliente * cliente, size_t idEspaco, Date inicio, Date fim);
 
 	/**
-	*	TODO
+	*	Efetua reserva de espaco; É utilizada na pela função efutuaReserva; Não faz verificações de disponibilidade;
 	*/
 	void reservaEspaco(size_t idEspaco, Reserva r1);
 
