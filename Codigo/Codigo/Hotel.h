@@ -226,5 +226,5 @@ public:
 	/**
 	*	Importa toda a informação relativa ao hotel, chamando as outras funções de importação.
 	*/
-	void importAllInfo();
+	bool importAllInfo();
 };

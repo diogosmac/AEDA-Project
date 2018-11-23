@@ -3,50 +3,6 @@
 Hotel::Hotel(string nome)
 {
 	nomeHotel = nome;
-
-	importInfoEspacos();
-
-	//string line;
-	//while (getline(ficheiro, line) && !line.empty()) {
-	//	size_t index = line.find_first_of(';');
-	//	string tipoEspaco = line.substr(index + 1, line.find(';', index + 1) - index - 1);
-	//	index = line.find(';', index + 1);
-	//	string dado1 = line.substr(index + 1, line.find(';', index + 1) - index - 1);
-	//	index = line.find(';', index + 1);
-
-	//	if (tipoEspaco == "Quarto") {
-	//		string dado2 = line.substr(index + 1);
-
-	//		bool duplo = true;
-	//		bool frente = true;
-	//		if (dado1.at(0) == '-') duplo = false;
-	//		if (dado2.at(0) == '-') frente = false;
-	//		Espaco* e = new Quarto(duplo, frente);
-	//		todosEspacos.push_back(e);
-	//		cout << "Quarto (numero " << e->getNumID() << ") adicionado.\n";
-	//	}
-	//	else if (tipoEspaco == "SalaDeReunioes") {
-	//		string dado2 = line.substr(index + 1, line.find(';', index + 1) - index - 1);
-	//		index = line.find(';', index + 1) - index - 1;
-	//		string dado3 = line.substr(index + 1);
-
-	//		bool video = true;
-	//		bool audio = true;
-	//		int cap = stoi(dado1);
-	//		if (dado2.at(0) == '-') video = false;
-	//		if (dado3.at(0) == '-') audio = false;
-	//		Espaco* e = new SalaDeReunioes(cap, video, audio);
-	//		todosEspacos.push_back(e);
-	//		cout << "Sala de Reunioes (numero " << e->getNumID() << ") adicionada.\n";
-	//	}
-	//	else {
-	//		cout << "Linha invalida, nenhum espaco foi adicionado.\n";
-	//	}
-	//}
-	//Reservas r1(todosEspacos);
-	//todasReservas = r1;
-
-	cout << endl;
 }
 
 size_t Hotel::nEspacos() const {
@@ -285,16 +241,16 @@ void Hotel::reservaEspaco(size_t idEspaco, Reserva res)
 	if (!todasReservas.adicionaReserva(idEspaco, res)) {
 		cout << "Algo correu mal. A reserva nao pode ser efetuada.\n";
 	}
-	else {
-		cout << "Reserva efetuada com sucesso!\n";
-		cout << "Espaco reservado: " << idEspaco << '\t';
-		for (size_t i = 0; i < clientesHotel.size(); i++) {
-			if (clientesHotel.at(i)->getIDCliente() == res.returnidCliente()) {
-				cout << "Reserva em nome de " << clientesHotel.at(i)->getNome() << " : ID do Cliente - " << res << '\n';
-				break;
-			}
-		}
-	}
+	//else {
+	//	cout << "Reserva efetuada com sucesso!\n";
+	//	cout << "Espaco reservado: " << idEspaco << '\t';
+	//	for (size_t i = 0; i < clientesHotel.size(); i++) {
+	//		if (clientesHotel.at(i)->getIDCliente() == res.returnidCliente()) {
+	//			cout << "Reserva em nome de " << clientesHotel.at(i)->getNome() << " : ID do Cliente - " << res << '\n';
+	//			break;
+	//		}
+	//	}
+	//}
 }
 
 size_t Hotel::nReservas()
@@ -565,7 +521,7 @@ bool Hotel::importInfoClientes()
 		int idade = stoi(idade_str);
 		adicionaCliente(nome, idade);
 	}
-	cout << "Clientes do hotel " << nomeHotel << " importados com sucesso!\n\n";
+	cout << "Clientes do hotel " << nomeHotel << " importados com sucesso!\n";
 
 	return true;
 }
@@ -603,6 +559,7 @@ bool Hotel::importInfoReservas()
 
 	cout << "A importar a informacao das reservas . . .\n";
 	string line;
+	int counter = 0;
 	int failedExtracts = 0;
 	while (getline(ficheiroRes, line) && !line.empty())
 	{
@@ -647,6 +604,7 @@ bool Hotel::importInfoReservas()
 				Date data_ini(di, mi, yi);
 				Date data_fim(df, mf, yf);
 
+				counter++;
 				bool encontrou = false;
 				for (size_t i = 0; i < clientesHotel.size(); i++) {
 					if (clientesHotel.at(i)->getIDCliente() == idCli) {
@@ -671,7 +629,7 @@ bool Hotel::importInfoReservas()
 			cout << "Por erro nos dados, falhou a extracao de " << failedExtracts << " reservas.\n";
 	}
 
-	cout << "Reservas do hotel " << nomeHotel << " importadas com sucesso!\n\n";
+	cout << (counter - failedExtracts) << " reservas do hotel " << nomeHotel << " importadas com sucesso!\n";
 
 	return true;
 }
@@ -709,6 +667,7 @@ bool Hotel::importInfoFuncionarios()
 
 	cout << "A importar a informacao dos funcionarios . . .\n";
 	string line;
+	int counter = 0;
 	while (getline(ficheiroFun, line))
 	{
 		/*
@@ -720,10 +679,12 @@ bool Hotel::importInfoFuncionarios()
 		index = line.find('-', index) + 2;
 		string status = line.substr(index, line.find('-', index) - index - 1);
 		if (status == "Funcionario") {
+			counter++;
 			Funcionario* func = new Funcionario(nome);
 			adicionaFuncionario(func);
 		}
 		else if (status == "Supervisor") {
+			counter++;
 			Funcionario* sup = new Supervisor(nome);
 			index = line.find(':') + 1;
 			while (index != line.npos) {
@@ -743,30 +704,8 @@ bool Hotel::importInfoFuncionarios()
 			cout << "Linha invalida, nenhum funcionario foi adicionado.\n";
 		}
 	}
-	cout << "Funcionarios do hotel " << nomeHotel << " importados com sucesso!\n";
+	cout << counter << " funcionarios do hotel " << nomeHotel << " importados com sucesso!\n";
 
-	cout << "Deseja re-alocar os supervisores dos espacos? (s/n): ";
-	cin >> confirm;
-	cin.ignore(1000, '\n');
-	while (confirm != "s" && confirm != "n")
-	{
-		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
-		cin >> confirm;
-		cin.ignore(1000, '\n');
-	}
-	if (confirm == "s")
-	{
-		try {
-			alocaSupervisores();
-			cout << "Os supervisores foram re-alocados.\n";
-		}
-		catch (NaoHaSupervisores e1) {
-			cout << "O hotel " << e1.getNomeHotel() << " nao tem qualquer supervisor.\n";
-		}
-	}
-
-	cout << "A informacao dos funcionarios foi importada.\n";
-	
 	return true;
 }
 
@@ -803,6 +742,7 @@ bool Hotel::importInfoEspacos()
 
 	cout << "A importar a informacao dos espacos . . .\n";
 	string line;
+	int counter = 0;
 	while (getline(ficheiroEsp, line) && !line.empty())
 	{
 		size_t index = line.find_first_of(';') + 2;
@@ -823,7 +763,7 @@ bool Hotel::importInfoEspacos()
 			if (valido) {
 				Espaco* esp = new Quarto(duplo, frente);
 				adicionaEspaco(esp);
-				cout << "Quarto (numero " << esp->getNumID() << ") adicionado.\n";
+				counter++;
 			}
 		}
 		else if (tipoEspaco == "Sala de Reunioes") {
@@ -843,7 +783,7 @@ bool Hotel::importInfoEspacos()
 			if (valido) {
 				Espaco* esp = new SalaDeReunioes(pax, video, audio);
 				adicionaEspaco(esp);
-				cout << "Sala de Reunioes (numero " << esp->getNumID() << ") adicionada.\n";
+				counter++;
 			}
 		}
 		else {
@@ -853,7 +793,7 @@ bool Hotel::importInfoEspacos()
 	Reservas r1(todosEspacos);
 	todasReservas = r1;
 
-	cout << "Espacos do hotel " << nomeHotel << " importados com sucesso!\n";
+	cout << counter << " espacos do hotel " << nomeHotel << " importados com sucesso!\n";
 
 	return true;
 }
@@ -866,16 +806,22 @@ void Hotel::exportAllInfo()
 	exportInfoFuncionarios();
 }
 
-void Hotel::importAllInfo()
+bool Hotel::importAllInfo()
 {
-	bool importouClientes, importouEspacos;
-	if (!(importouClientes = importInfoClientes()))
+	bool importouClientes = false;
+	bool importouEspacos = false;
+	bool importouReservas = false;
+	bool importouFuncionarios = false;
+
+	importouClientes = importInfoClientes();
+	if (!importouClientes)
 	{
 		cout << "A importacao da informacao dos clientes falhou.\n";
 		cout << "Nota: sera impossivel importar a informacao das reservas sem a informacao dos clientes.\n";
 	}
 	
-	if (!(importouEspacos = importInfoEspacos()))
+	importouEspacos = importInfoEspacos();
+	if (!importouEspacos)
 	{
 		cout << "A importacao da informacao dos espacos falhou.\n";
 		cout << "Nota: sera impossivel importar a informacao das reservas sem a informacao dos clientes.\n";
@@ -883,12 +829,16 @@ void Hotel::importAllInfo()
 	
 	if (importouClientes && importouEspacos)
 	{
-		if (!importInfoReservas()) {
+		importouReservas = importInfoReservas();
+		if (!importouReservas) {
 			cout << "A importacao da informacao das reservas falhou.\n";
 		}
 	}
 
-	if (!importInfoFuncionarios()) {
+	importouFuncionarios = importInfoFuncionarios();
+	if (!importouFuncionarios) {
 		cout << "A importacao da informacao dos funcionarios falhou.\n";
 	}
+
+	return (importouClientes && importouEspacos && importouReservas && importouFuncionarios);
 }
