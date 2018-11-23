@@ -23,8 +23,6 @@ class Hotel
 	*/
 	vector<Espaco *> todosEspacos;
 
-	//vector<Espaco *> espacosDisponiveis; // Contem todos os espacos que se encontram disponiveis
-	
 	/**
 	*	Contem todos os funcionarios do hotel
 	*/
@@ -48,13 +46,10 @@ public:
 	*/
 	Hotel(string nome);
 
-	///**
-	//*	Construtor da classe Hotel
-	//*	Retira a informação necessária à inicialização do objeto de um ficheiro
-	//*	@param nome nome que vai ser dado ao hotel
-	//*	@param ficheiro ficheiro de onde é retirada a informação
-	//*/
-	//Hotel(string nome, istream &ficheiro);
+	/**
+	*	Retorna o nome do Hotel.
+	*/
+	string getNomeHotel() const;
 
 	/**
 	*	Retorna o número de espaços que pertencem ao hotel
@@ -70,6 +65,12 @@ public:
 	*	Retorna um vetor com todos os espaços disponiveis para a data passada como argumento
 	*/
 	vector<Espaco *> getEspacosDisponiveis(Date data) const;
+
+	/**
+	*	Retorna um vetor com todos os espaços disponiveis para o intervalo entre as datas passadas como argumento
+	*/
+	vector<Espaco *> getEspacosDisponiveis(Date data1, Date data2) const;
+
 
 	/**
 	*	Retorna um vetor com todos os clientes do hotel

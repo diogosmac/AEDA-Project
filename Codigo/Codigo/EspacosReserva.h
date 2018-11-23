@@ -80,6 +80,12 @@ public:
 	bool operator == (Date date2);
 
 	/**
+	*	Incrementa a data, pelo numero de dias especificado.
+	*	Tem em conta mudancas de mes e de ano.
+	*/
+	Date operator + (int offset);
+
+	/**
 	*	Retorna se a data é valida
 	*/
 	bool validDate ();
@@ -119,6 +125,9 @@ public:
 	*/
 	virtual double getPrecoReservaDiario(Date data) const = 0;
 
+	/**
+	*	Obtém a string para exportar os dados de um Espaco.
+	*/
 	virtual string getOutputString();
 
 	/**
@@ -223,5 +232,41 @@ public:
 	*	Objeto >> ostream
 	*/
 	string getOutputString();
+
+};
+
+
+class CriaDataInvalida
+{
+	/**
+	*	Contem o dia com que se tentou criar uma data invalida.
+	*/
+	int day;
+
+	/**
+	*	Contem o mes com que se tentou criar uma data invalida.
+	*/
+	int month;
+
+	/**
+	*	Contem o ano com que se tentou criar uma data invalida.
+	*/
+	int year;
+
+public:
+
+	CriaDataInvalida(int d, int m, int y)
+	{
+		day = d;
+		month = m;
+		year = y;
+	}
+
+	string getDados()
+	{
+		ostringstream oss;
+		oss << "dia " << day << ", do mes " << month << ", do ano " << year;
+		return oss.str();
+	}
 
 };

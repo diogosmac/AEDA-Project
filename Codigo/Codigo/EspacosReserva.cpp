@@ -5,6 +5,8 @@ Date::Date() {
 }
 
 Date::Date(size_t d, size_t m, size_t y): year(y), month(m), day(d){
+	if (!this->validDate())
+		throw CriaDataInvalida(d, m, y);
 }
 
 Date::Date(string yearMonthDay)
@@ -151,6 +153,26 @@ bool Date::operator== (Date date2) {
 
 bool Date::operator> (Date date2) {
 	return !(*this < date2 || *this == date2);
+}
+
+Date Date::operator+ (int offset) {
+	Date d1;
+	for (int i = 0; i < offset; i++) {
+		Date aux1(day + 1, month, year);
+		if (aux1.validDate())
+			d1 = aux1;
+		else {
+			Date aux2(1, month + 1, year);
+			if (aux2.validDate())
+				d1 = aux2;
+			else {
+				Date aux3(1, 1, year + 1);
+				d1 = aux3;
+			}
+		}
+	}
+
+	return d1;
 }
 
 // ----------------------------------------------------------------------------------------------------------------------------//

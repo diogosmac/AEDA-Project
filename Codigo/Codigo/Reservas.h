@@ -127,13 +127,13 @@ public:
 
 	/**
 	*	Verifica se o espaço de id numID tem alguma reserva.
-	*	Retorna true se tiver, caso contrário, retorna false.
+	*	Retorna true se estiver, caso contrário, retorna false.
 	*/
 	bool temReservas(size_t numID);
 
 	/**
-	*	Verifica se o espaço de id numID está disponível na data d1.
-	*	Retorna true se tiver, caso contrário, retorna false.
+	*	Verifica se o espaço de id numID está ocupado na data d1.
+	*	Retorna true se estiver, caso contrário, retorna false.
 	*/
 	bool verificaEspaco(size_t numID, Date d1) const;
 

@@ -183,8 +183,8 @@ bool Reservas::verificaEspaco(size_t numID, Date d1) const {
 	{
 		if (reservas[i].returnInicio() < d1 && d1 < reservas[i].returnFim())
 			return true;
-		if (reservas[i].returnInicio() == d1 || reservas[i].returnFim() == d1)
-			return true;
+		//if (reservas[i].returnInicio() == d1 || reservas[i].returnFim() == d1)
+		//	return true;
 	}
 	return false;
 }

@@ -5,7 +5,13 @@ Hotel::Hotel(string nome)
 	nomeHotel = nome;
 }
 
-size_t Hotel::nEspacos() const {
+string Hotel::getNomeHotel() const
+{
+	return nomeHotel;
+}
+
+size_t Hotel::nEspacos() const
+{
 	return this->todosEspacos.size();
 }
 
@@ -14,7 +20,8 @@ vector<Espaco *> Hotel::getTodosEspacos() const
 	return this->todosEspacos;
 }
 
-vector<Cliente *> Hotel::getClientes() const {
+vector<Cliente *> Hotel::getClientes() const
+{
 	return this->clientesHotel;
 }
 
@@ -25,6 +32,26 @@ vector<Espaco *> Hotel::getEspacosDisponiveis(Date data) const
 		if (!(this->todasReservas.verificaEspaco(todosEspacos[i]->getNumID(), data)))
 			disp.push_back(todosEspacos[i]);
 	}
+	return disp;
+}
+
+vector<Espaco *> Hotel::getEspacosDisponiveis(Date data1, Date data2) const
+{
+	vector<Espaco *> disp;
+
+	for (size_t i = 0; i < todosEspacos.size(); i++) {
+		bool disponivel = true;
+		Date data_aux = data1;
+		while (!(data_aux > data2)) {
+			if (this->todasReservas.verificaEspaco(todosEspacos[i]->getNumID(), data_aux))
+				disponivel = false;
+			data_aux = data_aux + 1;
+		}
+		if (disponivel) {
+			disp.push_back(todosEspacos[i]);
+		}
+	}
+
 	return disp;
 }
 
