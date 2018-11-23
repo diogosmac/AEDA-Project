@@ -95,7 +95,14 @@ void Hotel::adicionaEspaco(Espaco * espaco)
 void Hotel::adicionaFuncionario(Funcionario * func)
 {
 	this->funcionarios.push_back(func);
-	alocaSupervisores();
+	try
+	{
+		alocaSupervisores();
+	}
+	catch (NaoHaSupervisores e)
+	{
+		cerr << "Impossivel alocar os supervisores no hotel " << e.getNomeHotel() << ".\n";
+	}
 }
 
 
@@ -270,16 +277,16 @@ void Hotel::reservaEspaco(size_t idEspaco, Reserva res)
 	if (!todasReservas.adicionaReserva(idEspaco, res)) {
 		cout << "Algo correu mal. A reserva nao pode ser efetuada.\n";
 	}
-	//else {
-	//	cout << "Reserva efetuada com sucesso!\n";
-	//	cout << "Espaco reservado: " << idEspaco << '\t';
-	//	for (size_t i = 0; i < clientesHotel.size(); i++) {
-	//		if (clientesHotel.at(i)->getIDCliente() == res.returnidCliente()) {
-	//			cout << "Reserva em nome de " << clientesHotel.at(i)->getNome() << " : ID do Cliente - " << res << '\n';
-	//			break;
-	//		}
-	//	}
-	//}
+	// else {
+	// 	cout << "Reserva efetuada com sucesso!\n";
+	// 	cout << "Espaco reservado: " << idEspaco << '\t';
+	// 	for (size_t i = 0; i < clientesHotel.size(); i++) {
+	// 		if (clientesHotel.at(i)->getIDCliente() == res.returnidCliente()) {
+	// 			cout << "Reserva em nome de " << clientesHotel.at(i)->getNome() << " : ID do Cliente - " << res << '\n';
+	// 			break;
+	// 		}
+	// 	}
+	// }
 }
 
 size_t Hotel::nReservas()
@@ -368,7 +375,7 @@ void Hotel::exportInfoClientes()
 	}
 
 	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
-	//Escreve todos os clientes
+	// Escreve todos os clientes
 	for (size_t i = 0; i < this->clientesHotel.size(); i++)
 	{
 		if (i == this->clientesHotel.size() - 1)
@@ -416,7 +423,7 @@ void Hotel::exportInfoEspacos()
 	}
 
 	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
-	//Escreve todos os espaços
+	// Escreve todos os espaços
 	for (size_t i = 0; i < this->todosEspacos.size(); i++)
 	{
 		ficheiroEsp << todosEspacos.at(i) << '\n';
@@ -460,7 +467,7 @@ void Hotel::exportInfoReservas()
 	}
 
 	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
-	//Escreve todas as reservas
+	// Escreve todas as reservas
 	for (size_t i = 0; i < todosEspacos.size(); i++)
 	{
 		size_t id = todosEspacos.at(i)->getNumID();
@@ -516,7 +523,7 @@ void Hotel::exportInfoFuncionarios()
 	}
 
 	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
-	//Escreve todas as reservas
+	// Escreve todos os funcionarios
 	for (size_t i = 0; i < funcionarios.size(); i++) {
 		ficheiroFun << funcionarios.at(i) << '\n';
 		if (i == funcionarios.size() - 1) {
@@ -527,24 +534,49 @@ void Hotel::exportInfoFuncionarios()
 	ficheiroFun.close();
 }
 
-void showInfoClientes()
+void Hotel::showInfoClientes()
 {
-
+	for (size_t i = 0; i < this->clientesHotel.size(); i++)
+	{
+		cout << clientesHotel.at(i) << '\n';
+	}
+	cout << endl;
 }
 
-void showInfoEspacos()
+void Hotel::showInfoEspacos()
 {
-
+	for (size_t i = 0; i < this->todosEspacos.size(); i++)
+	{
+		cout << todosEspacos.at(i) << '\n';
+	}
+	cout << endl;
 }
 
-void showInfoReservas()
+void Hotel::showInfoReservas()
 {
-
+	for (size_t i = 0; i < todosEspacos.size(); i++)
+	{
+		size_t id = todosEspacos.at(i)->getNumID();
+		if (todasReservas.temReservas(id)) {
+			cout << id << "; ";
+			for (size_t i = 0; i < todasReservas.returnReservas()[id].size(); i++) {
+				cout << todasReservas.returnReservas()[id].at(i) << "; ";
+			}
+			cout << '\n';
+		}
+		else {
+			cout << id << "; SemReservas\n";
+		}
+	}
+	cout << endl;
 }
 
-void showInfoFuncionarios()
+void Hotel::showInfoFuncionarios()
 {
-
+	for (size_t i = 0; i < funcionarios.size(); i++) {
+		cout << funcionarios.at(i) << '\n';
+	}
+	cout << endl;
 }
 
 bool Hotel::importInfoClientes()
@@ -642,7 +674,7 @@ bool Hotel::importInfoReservas()
 		int idEsp = stoi(idEsp_str);
 		if (line.substr(index + 1) != " Sem Reservas")
 		{
-			//index = line.find(';', index + 1);
+			// index = line.find(';', index + 1);
 			while (line.find(';', index + 1) != line.npos) {
 				int index_break = line.find(';', index + 1);
 
@@ -741,7 +773,7 @@ bool Hotel::importInfoFuncionarios()
 	{
 		/*
 			OUTPUT FUNCIONÁRIO: idFunc;nomeFunc;supervisor(yes/no)
-			OUTPUT SUPERVISOR: out_func//idEsp,idEsp(...)
+			OUTPUT SUPERVISOR: out_func// idEsp,idEsp(...)
 		*/
 		int index = line.find_first_of(';') + 2;
 		string nome = line.substr(index, line.find('-', index) - index - 1);

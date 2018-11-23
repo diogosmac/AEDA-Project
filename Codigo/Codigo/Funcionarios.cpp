@@ -77,7 +77,7 @@ vector <Espaco *> Supervisor::getLocaisResponsavel() const
 string Supervisor::getOutputString()
 {
 	ostringstream ofs;
-	ofs << this->getID_Code() << "; " << this->getNome() << " - " << "Supervisor - Responsavel pelos espaços: ";
+	ofs << this->getID_Code() << "; " << this->getNome() << " - " << "Supervisor - Responsavel pelos espacos: ";
 
 	for (size_t i = 0; i < this->getLocaisResponsavel().size() - 1; i++)
 	{
