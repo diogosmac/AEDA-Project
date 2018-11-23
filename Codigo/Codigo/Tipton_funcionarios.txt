@@ -1,3 +1,3 @@
-1;Omar Salgado;no
-2;Jacinto Leite;yes//1,3,5,7,9,11,13,15
-3;Adolfo Dias;yes//2,4,6,8,10,12,14,16
+1; Omar Salgado - Funcionario
+2; Jacinto Leite - Supervisor - Responsavel pelos espaços: 1 3 5 7 9 11 13 15
+3; Adolfo Dias - Supervisor - Responsavel pelos espaços: 2 4 6 8 10 12 14 16

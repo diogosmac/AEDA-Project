@@ -1,3 +1,3 @@
-1;Pedro;19
-2;Diogo Machado;19
-3;Margarida;19
+1; Pedro; 19 anos
+2; Diogo Machado; 19 anos
+3; Margarida; 19 anos

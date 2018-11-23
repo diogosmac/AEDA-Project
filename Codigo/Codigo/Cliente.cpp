@@ -33,6 +33,6 @@ int Cliente::getIDCliente() const
 
 ostream& operator << (ostream& ofs, const Cliente *cliente)
 {
-	ofs << cliente->getIDCliente() << ";" << cliente->getNome() << ";" << cliente->getIdade();
+	ofs << cliente->getIDCliente() << "; " << cliente->getNome() << "; " << cliente->getIdade() << " anos";
 	return ofs;
 }

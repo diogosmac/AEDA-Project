@@ -107,7 +107,6 @@ void Hotel::adicionaEspaco(Espaco * espaco)
 {
 	this->todosEspacos.push_back(espaco);
 	todasReservas.updateReservas(espaco);
-
 }
 
 void Hotel::adicionaFuncionario(Funcionario * func)
@@ -560,9 +559,9 @@ bool Hotel::importInfoClientes()
 			OUTPUT CLIENTE: idCliente;nomeCliente;idadeCliente
 		*/
 		int index = line.find_first_of(';');
-		string nome = line.substr(index + 1, line.find(';', index + 1) - index - 1);
-		index = line.find(';', index + 1) + 1;
-		string idade_str = line.substr(index);
+		string nome = line.substr(index + 2, line.find(';', index + 1) - index - 2);
+		index = line.find(';', index + 1) + 2;
+		string idade_str = line.substr(index, line.find('a', index) - index);
 		int idade = stoi(idade_str);
 		adicionaCliente(nome, idade);
 	}
@@ -716,27 +715,32 @@ bool Hotel::importInfoFuncionarios()
 			OUTPUT FUNCIONÁRIO: idFunc;nomeFunc;supervisor(yes/no)
 			OUTPUT SUPERVISOR: out_func//idEsp,idEsp(...)
 		*/
-		int index = line.find_first_of(';');
-		string nome = line.substr(index + 1, line.find(';', index + 1) - index - 1);
-		index = line.find(';', index + 1);
-		if (line.find('/', index + 1) == line.npos) {
+		int index = line.find_first_of(';') + 2;
+		string nome = line.substr(index, line.find('-', index) - index - 1);
+		index = line.find('-', index) + 2;
+		string status = line.substr(index, line.find('-', index) - index - 1);
+		if (status == "Funcionario") {
 			Funcionario* func = new Funcionario(nome);
 			adicionaFuncionario(func);
 		}
-		else {
-			Funcionario* func = new Supervisor(nome);
-			index = line.find('/', index + 1) + 1;
+		else if (status == "Supervisor") {
+			Funcionario* sup = new Supervisor(nome);
+			index = line.find(':') + 1;
 			while (index != line.npos) {
-				string idEsp_str = line.substr(index + 1, line.find(',', index + 1) - index - 1);
+				index += 1;
+				string idEsp_str = line.substr(index, line.find(' ', index) - index);
 				int idEsp = stoi(idEsp_str);
 				for (size_t i = 0; i < todosEspacos.size(); i++) {
 					if (idEsp == todosEspacos.at(i)->getNumID()) {
-						func->AcrescentaEspaco(todosEspacos.at(i));
+						sup->AcrescentaEspaco(todosEspacos.at(i));
 					}
 				}
-				index = line.find(',', index + 1);
+				index = line.find(' ', index);
 			}
-			adicionaFuncionario(func);
+			adicionaFuncionario(sup);
+		}
+		else {
+			cout << "Linha invalida, nenhum funcionario foi adicionado.\n";
 		}
 	}
 	cout << "Funcionarios do hotel " << nomeHotel << " importados com sucesso!\n";
@@ -801,36 +805,46 @@ bool Hotel::importInfoEspacos()
 	string line;
 	while (getline(ficheiroEsp, line) && !line.empty())
 	{
-		size_t index = line.find_first_of(';');
-		string tipoEspaco = line.substr(index + 1, line.find(';', index + 1) - index - 1);
-		index = line.find(';', index + 1);
-		string dado1 = line.substr(index + 1, line.find(';', index + 1) - index - 1);
-		index = line.find(';', index + 1);
-
+		size_t index = line.find_first_of(';') + 2;
+		string tipoEspaco = line.substr(index, line.find('-', index + 1) - index - 1);
+		
+		bool valido = true;
 		if (tipoEspaco == "Quarto") {
-			string dado2 = line.substr(index + 1);
-
-			bool duplo = true;
-			bool frente = true;
-			if (dado1.at(0) == '-') duplo = false;
-			if (dado2.at(0) == '-') frente = false;
-			Espaco* e = new Quarto(duplo, frente);
-			todosEspacos.push_back(e);
-			cout << "Quarto (numero " << e->getNumID() << ") adicionado.\n";
+			index = line.find_first_of('-') + 2;
+			string dup = line.substr(index, line.find(',', index) - index);
+			index = line.find(',', index) + 2;
+			string fre = line.substr(index);
+			bool duplo = (dup == "Duplo");
+			bool frente = (fre == "Frente");
+			if (!duplo && dup != "Single")
+				valido = false;
+			if (!frente && fre != "Traseiras")
+				valido = false;
+			if (valido) {
+				Espaco* esp = new Quarto(duplo, frente);
+				adicionaEspaco(esp);
+				cout << "Quarto (numero " << esp->getNumID() << ") adicionado.\n";
+			}
 		}
-		else if (tipoEspaco == "SalaDeReunioes") {
-			string dado2 = line.substr(index + 1, line.find(';', index + 1) - index - 1);
-			index = line.find(';', index + 1) - index - 1;
-			string dado3 = line.substr(index + 1);
-
-			bool video = true;
-			bool audio = true;
-			int cap = stoi(dado1);
-			if (dado2.at(0) == '-') video = false;
-			if (dado3.at(0) == '-') audio = false;
-			Espaco* e = new SalaDeReunioes(cap, video, audio);
-			todosEspacos.push_back(e);
-			cout << "Sala de Reunioes (numero " << e->getNumID() << ") adicionada.\n";
+		else if (tipoEspaco == "Sala de Reunioes") {
+			index = line.find_first_of('-') + 2;
+			string pax_str = line.substr(index, line.find(' ', index) - index);
+			int pax = stoi(pax_str);
+			index = line.find_first_of(',') + 2;
+			string vid_stat = line.substr(index, 3);
+			index = line.find(',', index) + 2;
+			string aud_stat = line.substr(index, 3);
+			bool video = (vid_stat == "Com");
+			bool audio = (aud_stat == "Com");
+			if (!video && vid_stat != "Sem")
+				valido = false;
+			if (!audio && aud_stat != "Sem")
+				valido = false;
+			if (valido) {
+				Espaco* esp = new SalaDeReunioes(pax, video, audio);
+				adicionaEspaco(esp);
+				cout << "Sala de Reunioes (numero " << esp->getNumID() << ") adicionada.\n";
+			}
 		}
 		else {
 			cout << "Linha invalida, nenhum espaco foi adicionado.\n";

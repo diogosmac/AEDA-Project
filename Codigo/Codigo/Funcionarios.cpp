@@ -41,7 +41,7 @@ void Funcionario::AcrescentaEspaco(Espaco* espaco) {
 string Funcionario::getOutputString()
 {
 	ostringstream ofs;
-	ofs << this->getID_Code() << ";" << this->getNome() << ";" << "no";
+	ofs << this->getID_Code() << "; " << this->getNome() << " - " << "Funcionario";
 	return ofs.str();
 }
 
@@ -77,11 +77,11 @@ vector <Espaco *> Supervisor::getLocaisResponsavel() const
 string Supervisor::getOutputString()
 {
 	ostringstream ofs;
-	ofs << this->getID_Code() << ";" << this->getNome() << ";" << "yes" << "//";
+	ofs << this->getID_Code() << "; " << this->getNome() << " - " << "Supervisor - Responsavel pelos espaços: ";
 
 	for (size_t i = 0; i < this->getLocaisResponsavel().size() - 1; i++)
 	{
-		ofs << this->getLocaisResponsavel().at(i)->getNumID() << ",";
+		ofs << this->getLocaisResponsavel().at(i)->getNumID() << " ";
 	}
 	if (!this->getLocaisResponsavel().empty())
 		ofs << this->getLocaisResponsavel().at(this->getLocaisResponsavel().size() - 1)->getNumID();

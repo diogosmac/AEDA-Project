@@ -227,13 +227,16 @@ bool Quarto::isFrente() const
 string Quarto::getOutputString() 
 {
 	ostringstream ofs;
-	ofs << getNumID() << ";" << "Quarto;";
+	ofs << getNumID() << "; " << "Quarto - ";
 	if (!duplo)
-		ofs << '-';
-	ofs << "duplo;";
+		ofs << "Single, ";
+	else
+		ofs << "Duplo, ";
 	if (!frente)
-		ofs << '-';
-	ofs << "frente";
+		ofs << "Traseiras";
+	else
+		ofs << "Frente";
+
 	return ofs.str();
 }
 
@@ -323,12 +326,21 @@ bool SalaDeReunioes::getEquipamentoAudio() const
 string SalaDeReunioes::getOutputString()
 {
 	ostringstream ofs;
-	ofs << getNumID() << ";" << "SalaDeReunioes;" << capacidade << ";";
-	if (!equipamentoVideo)
-		ofs << '-';
-	ofs << "video;";
-	if (!equipamentoAudio)
-		ofs << '-';
-	ofs << "audio";
+	ofs << getNumID() << ";" << " Sala de Reunioes - " << capacidade << " pessoas, ";
+	
+	if (equipamentoVideo)
+		ofs << "Com ";
+	else
+		ofs << "Sem ";
+
+	ofs << "Video, ";
+	
+	if (equipamentoAudio)
+		ofs << "Com ";
+	else
+		ofs << "Sem ";
+	
+	ofs << "Audio";
+	
 	return ofs.str();
 }
