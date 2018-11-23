@@ -12,7 +12,7 @@ class Cliente {
 	int idCliente;
 	string nome;
 	int idade;
-	vector<Espaco *> espacosReservados;
+	int freqReserva;
 
 public:
 
@@ -32,14 +32,19 @@ public:
 	int getIdade() const;
 
 	/**
-	*	Adiciona um apontador para um espaco ao vetor espacosReservados
-	*/
-	void adicionaEspacoReservado(Espaco * espaco);
-
-	/**
 	*	Retorna o id do cliente
 	*/
 	int getIDCliente() const;
+
+	/**
+	*	Retorna o numero de reservas colocadas pelo cliente
+	*/
+	int getFreqReserva() const;
+
+	/**
+	*	Incrementa o dado com o numero de reservas feitas pelo cliente
+	*/
+	void registaReserva();
 
 	/**
 	*	Usado para exportar informação relativa ao objeto para ficheiros

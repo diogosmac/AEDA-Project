@@ -153,7 +153,7 @@ public:
 	Quarto(bool QuartoDuplo, bool frente);
 
 	/**
-	*	Preço normal (por dia): 40€
+	*	Preço normal (por dia): 50€
 	*	Se for quarto duplo: Duplica o preço normal
 	*	Se for quarto voltado para o lado da frente do hotel: Acrescimo de 30% ao custo diario
 	*   Se a reserva for durante a época alta (Maio a Setembro) o valor do custo sobe 20%

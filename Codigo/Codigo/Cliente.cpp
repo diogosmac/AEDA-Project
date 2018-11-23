@@ -8,6 +8,7 @@ Cliente::Cliente(string nome, int idade) : idCliente(nextClientID++)
 {
 	this->nome = nome;
 	this->idade = idade;
+	freqReserva = 0;
 }
 
 string Cliente::getNome() const
@@ -20,19 +21,23 @@ int Cliente::getIdade() const
 	return this->idade;
 }
 
-void Cliente::adicionaEspacoReservado(Espaco * espaco)
-{
-	this->espacosReservados.push_back(espaco);
-}
-
-
 int Cliente::getIDCliente() const
 {
 	return this->idCliente;
 }
 
+int Cliente::getFreqReserva() const
+{
+	return this->freqReserva;
+}
+
+void Cliente::registaReserva()
+{
+	freqReserva++;
+}
+
 ostream& operator << (ostream& ofs, const Cliente *cliente)
 {
-	ofs << cliente->getIDCliente() << "; " << cliente->getNome() << "; " << cliente->getIdade() << " anos";
+	ofs << cliente->getIDCliente() << "; " << cliente->getNome() << "; " << cliente->getIdade() << " anos; " << cliente->getFreqReserva() << " reservas feitas";
 	return ofs;
 }

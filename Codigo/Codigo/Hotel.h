@@ -176,6 +176,11 @@ public:
 	void alocaSupervisores();
 
 	/**
+	*	Retorna o preco a pagar por uma dada reserva
+	*/
+	double getPrecoReserva(size_t idEspaco, Reserva res);
+
+	/**
 	*	Exporta toda a informação relativa aos clientes do hotel para um ficheiro de texto
 	*/
 	void exportInfoClientes();
@@ -194,6 +199,26 @@ public:
 	*	Exporta toda a informação relativa aos funcionarios do hotel para um ficheiro de texto
 	*/
 	void exportInfoFuncionarios();
+
+	/**
+	*	Mostra na consola toda a informação relativa aos clientes do hotel 
+	*/
+	void showInfoClientes();
+
+	/**
+	*	Mostra na consola toda a informação relativa aos espaços do hotel 
+	*/
+	void showInfoEspacos();
+
+	/**
+	*	Mostra na consola toda a informação relativa as reservas do hotel 
+	*/
+	void showInfoReservas();
+
+	/**
+	*	Mostra na consola toda a informação relativa aos funcionarios do hotel 
+	*/
+	void showInfoFuncionarios();
 
 	/**
 	*	Importa de um ficheiro de texto um conjunto de Clientes, que são adicionados ao Hotel
@@ -223,6 +248,11 @@ public:
 	*	Exporta toda a informação relativa ao hotel, chamando as outras funções de exportação.
 	*/
 	void exportAllInfo();
+
+	/**
+	*	Mostra na consola toda a informação relativa ao hotel, chamando as outras funções de consulta
+	*/
+	void showAllInfo();
 
 	/**
 	*	Importa toda a informação relativa ao hotel, chamando as outras funções de importação.

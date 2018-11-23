@@ -102,7 +102,7 @@ bool Date::isWeekend() {
 }
 
 bool Date::isEpocaAlta() {
-	return(this->getMonth() >= 5 || this->getMonth() <= 9);
+	return(this->getMonth() >= 5 && this->getMonth() <= 9);
 }
 
 size_t Date::numDaysOfMonth()
@@ -302,7 +302,7 @@ double SalaDeReunioes::getPrecoReservaDiario(Date data) const
 	{
 		precoDiario = 250;
 	}
-	else if (capacidade > 500)
+	else
 	{
 		precoDiario = 480;
 	}

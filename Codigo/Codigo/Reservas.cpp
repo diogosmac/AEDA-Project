@@ -272,7 +272,5 @@ void Reservas::showMonth(size_t numId, size_t month, size_t year) {
 			ds = (ds + 1) % 7;
 		}
 	}
-		cout << endl << endl;
-
-		
+	cout << endl << endl;
 }

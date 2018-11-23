@@ -1,3 +1,4 @@
-1; Pedro; 19 anos
-2; Diogo Machado; 19 anos
-3; Margarida; 19 anos
+1; Pedro; 19 anos; 0 reservas feitas
+2; Diogo Machado; 19 anos; 2 reservas feitas
+3; Margarida; 19 anos; 0 reservas feitas
+4; Leonor Faria; 19 anos; 0 reservas feitas

@@ -95,6 +95,7 @@ void Hotel::adicionaEspaco(Espaco * espaco)
 void Hotel::adicionaFuncionario(Funcionario * func)
 {
 	this->funcionarios.push_back(func);
+	alocaSupervisores();
 }
 
 
@@ -242,6 +243,7 @@ bool Hotel::efetuaReserva(Cliente* cliente, size_t idEspaco, Date inicio, Date f
 		}
 		else {
 			reservaEspaco(idEspaco, res);
+			cliente->registaReserva();
 		}
 
 		return true;
@@ -314,6 +316,26 @@ void Hotel::alocaSupervisores()
 		}
 		supervisores.at(j)->AcrescentaEspaco(todosEspacos.at(i));
 	}
+}
+
+double Hotel::getPrecoReserva(size_t idEspaco, Reserva res)
+{
+	int idRes;
+	map<size_t, vector<Reserva>> res_map = todasReservas.returnReservas();
+	for (size_t i = 0; i < res_map[idEspaco].size(); i++) {
+		if (res_map[idEspaco].at(i) == res)
+		{
+			idRes = i;
+			break;
+		}
+	}
+	double preco = 0;
+	Date aux = res_map[idEspaco].at(idRes).returnInicio();
+	while (!(aux > res_map[idEspaco].at(idRes).returnFim()))
+	{
+		preco += todosEspacos.at(idEspaco)->getPrecoReservaDiario(aux);
+	}
+	return preco;
 }
 
 void Hotel::exportInfoClientes()
@@ -503,6 +525,26 @@ void Hotel::exportInfoFuncionarios()
 	}
 
 	ficheiroFun.close();
+}
+
+void showInfoClientes()
+{
+
+}
+
+void showInfoEspacos()
+{
+
+}
+
+void showInfoReservas()
+{
+
+}
+
+void showInfoFuncionarios()
+{
+
 }
 
 bool Hotel::importInfoClientes()
@@ -831,6 +873,22 @@ void Hotel::exportAllInfo()
 	exportInfoClientes();
 	exportInfoReservas();
 	exportInfoFuncionarios();
+}
+
+void Hotel::showAllInfo()
+{
+	cout << "Prima ENTER para ver a informacao sobre os espacos . . .\n";
+	cin.ignore();
+	showInfoEspacos();
+	cout << "Prima ENTER para ver a informacao sobre os clientes . . .\n";
+	cin.ignore();
+	showInfoClientes();
+	cout << "Prima ENTER para ver a informacao sobre as reservas . . .\n";
+	cin.ignore();
+	showInfoReservas();
+	cout << "Prima ENTER para ver a informacao sobre os funcionarios . . .\n";
+	cin.ignore();
+	showInfoFuncionarios();
 }
 
 bool Hotel::importAllInfo()
