@@ -1,8 +1,0 @@
-Quarto;duplo;frente
-SalaDeReunioes;200;video;audio
-SalaDeReunioes;100;-video;audio
-SalaDeReunioes;12;-video;-audio
-SalaDeReunioes;6;video;-audio
-Quarto;-duplo;frente
-Quarto;duplo;-frente
-Quarto;-duplo;-frente
