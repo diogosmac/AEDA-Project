@@ -1,6 +1,6 @@
 ﻿#include "Hotel.h"
 
-Hotel::Hotel(string nome)
+Hotel::Hotel(string nome) : restaurantesProximosHotel(Restaurante("", "", 0))
 {
 	nomeHotel = nome;
 }
@@ -958,4 +958,51 @@ bool Hotel::importAllInfo()
 	}
 
 	return (importouClientes && importouEspacos && importouReservas && importouFuncionarios);
+}
+
+void Hotel::addRestaurant(Restaurante r)
+{
+	this->restaurantesProximosHotel.insert(r);
+}
+
+vector<Restaurante> Hotel::getRestaurantesDoTipo(string tipoCozinha)
+{
+	vector<Restaurante> resultadoPesquisa;
+	BSTItrIn<Restaurante> it(restaurantesProximosHotel);
+
+	while (!it.isAtEnd())
+	{
+		Restaurante temp = it.retrieve();
+
+		if (temp.getTipoCozinha() == tipoCozinha)
+		{
+			resultadoPesquisa.push_back(temp);
+		}
+
+		it.advance();
+	}
+
+	return resultadoPesquisa;
+}
+
+vector<Restaurante> Hotel::getRestaurantesNMetros(double n)
+{
+	vector<Restaurante> resultadoPesquisa;
+	BSTItrIn<Restaurante> it(restaurantesProximosHotel);
+
+	int roundedN = ceil(n);
+
+	while (!it.isAtEnd())
+	{
+		Restaurante temp = it.retrieve();
+
+		if (temp.getDistanciaHotel() <= roundedN)
+		{
+			resultadoPesquisa.push_back(temp);
+		}
+
+		it.advance();
+	}
+
+	return resultadoPesquisa;
 }

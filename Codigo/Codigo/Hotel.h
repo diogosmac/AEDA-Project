@@ -5,9 +5,12 @@
 #include "EspacosReserva.h"
 #include "Cliente.h"
 #include "Reservas.h"
+#include "Restaurante.h"
+#include "BST.h"
 #include <vector>
 #include <string>
 #include <fstream>
+
 
 using namespace std;
 
@@ -37,6 +40,11 @@ class Hotel
 	*	Contem todas as reservas realizadas
 	*/
 	Reservas todasReservas;
+
+	/**
+	*	Arvore binaria de pesquisa com todos os restaurante perto do hotel ordenados (alfabeticamente) pelo tipo de comida que servem e por distancia ao hotel
+	*/
+	BST<Restaurante> restaurantesProximosHotel;
 
 public:
 
@@ -258,4 +266,19 @@ public:
 	*	Importa toda a informação relativa ao hotel, chamando as outras funções de importação.
 	*/
 	bool importAllInfo();
+
+	/**
+	*	Adiciona um resturante a arvore binaria de restaurantes proximos do hotel
+	*/
+	void addRestaurant(Restaurante r);
+
+	/**
+	*	Retorna um vetor com todos os restaurantes proximos do hotel do tipo de cozinha pretendido
+	*/
+	vector<Restaurante> getRestaurantesDoTipo(string tipoCozinha);
+
+	/**
+	*	Retorna um vetor com todos os restaurantes proximos do hotel a cerca de n metros (argumento) ou menos
+	*/
+	vector<Restaurante> getRestaurantesNMetros(double n);
 };
