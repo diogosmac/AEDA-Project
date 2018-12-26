@@ -281,4 +281,15 @@ public:
 	*	Retorna um vetor com todos os restaurantes proximos do hotel a cerca de n metros (argumento) ou menos
 	*/
 	vector<Restaurante> getRestaurantesNMetros(double n);
+
+	/**
+	*	Exporta toda a informacao relativa aos restaurantes proximos do hotel
+	*/
+	void exportInfoRestaurantes();
+
+	/**
+	*	Importa toda a informacao relativa aos restaurantes proximos do hotel
+	*/
+	bool importInfoRestaurantes();
+	
 };

@@ -60,6 +60,21 @@
 		return this->distanciaHotel;
 	}
 
+	void Restaurante::setNome(string novoNome)
+	{
+		this->nome = novoNome;
+	}
+
+	void Restaurante::setTipoCozinha(string tipo)
+	{
+		this->tipoCozinha = tipo;
+	}
+
+	void Restaurante::setDistancia(double novaDistancia)
+	{
+		this->distanciaHotel = novaDistancia;
+	}
+
 	void Restaurante::setMenu(vector <Prato*> menu)
 	{
 		this->menu = menu;
@@ -79,4 +94,16 @@
 		
 		return this->getTipoCozinha() < rest.getTipoCozinha();
 		
+	}
+
+	ostream& operator << (ostream& ofs, Restaurante rest) 
+	{
+		ofs << rest.getNome() << "; " << rest.getTipoCozinha() << "; " << rest.getDistanciaHotel()<< ";" << '\n';
+
+		for (size_t i = 0; i < rest.getMenu().size(); i++)
+		{
+			ofs << " " << rest.getMenu().at(i)->getNome() << "; " << rest.getMenu().at(i)->getPreco() << ";\n";
+		}
+
+		return ofs;
 	}

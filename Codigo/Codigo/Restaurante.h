@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <sstream>
 #include <vector>
 
 using namespace std;
@@ -95,6 +96,21 @@ public:
 	double getDistanciaHotel() const;
 
 	/**
+	*	Altera o nome do restaurante para o novo nome passado por parametro
+	*/
+	void setNome(string novoNome);
+
+	/**
+	*	Altera o tipo de restaurante para o tipo passado por parametro
+	*/
+	void setTipoCozinha(string tipo);
+
+	/**
+	*	Altera a distancia ao restaurante para a nova passada por parametro
+	*/
+	void setDistancia(double novaDistancia);
+
+	/**
 	*	Altera o membro-dado menu para o vetor passado como argumento
 	*/
 	void setMenu(vector <Prato*> menu);
@@ -109,4 +125,8 @@ public:
 	*/
 	bool operator < (const Restaurante &rest) const;
 
+	/**
+	*	Operador usado para exportar informacao relativa ao restaurante
+	*/
+	friend ostream& operator << (ostream& ofs, Restaurante rest);
 };

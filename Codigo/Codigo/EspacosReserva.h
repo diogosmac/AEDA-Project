@@ -132,7 +132,6 @@ public:
 
 	/**
 	*	Usado para exportar toda a informação do espaco para ficheiros
-	*	Objeto >> ostream
 	*/
 	friend ostream& operator << (ostream& ofs, Espaco* espaco);
 

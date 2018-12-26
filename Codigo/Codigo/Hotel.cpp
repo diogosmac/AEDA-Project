@@ -1006,3 +1006,139 @@ vector<Restaurante> Hotel::getRestaurantesNMetros(double n)
 
 	return resultadoPesquisa;
 }
+
+void Hotel::exportInfoRestaurantes()
+{
+	cout << "\nConfirma que deseja exportar a informacao dos Restaurantes? (s/n): ";
+	string confirm;
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n") {
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+
+	if (confirm == "n") {
+		cout << "Operacao cancelada a seu pedido.\n";
+		return;
+	}
+
+	ofstream ficheiroRest;
+	string nomeFicheiro = nomeHotel + "_restaurantes.txt";
+
+	ficheiroRest.open(nomeFicheiro);
+
+	if (!ficheiroRest.is_open())
+	{
+		cerr << "Erro na abertura do ficheiro.\n" << endl;
+		return;
+	}
+
+	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
+
+
+	BSTItrIn<Restaurante> it(this->restaurantesProximosHotel);
+
+	// Escreve todos os restaurantes
+	while (!it.isAtEnd())
+	{
+		ficheiroRest << it.retrieve() << '\n';
+		it.advance();
+	}
+
+	ficheiroRest << '\n';
+	cout << "Toda a informacao relativa aos restaurantes foi guardada com sucesso!\n\n";
+
+	ficheiroRest.close();
+}
+
+bool Hotel::importInfoRestaurantes()
+{
+	ifstream ficheiroRest;
+
+	string nomeFicheiro = nomeHotel + "_restaurantes.txt";
+
+	cout << "\nConfirma que deseja importar a informacao dos restaurantes? (s/n): ";
+	string confirm;
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n")
+	{
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+
+	if (confirm == "n")
+	{
+		cout << "Operacao cancelada a seu pedido.\n";
+		return false;
+	}
+
+	ficheiroRest.open(nomeFicheiro);
+
+	if (!ficheiroRest.is_open())
+	{
+		cerr << "Nao foi possivel obter a informacao relativa aos restaurantes proximos do hotel " << nomeHotel << "!\n";
+		return false;
+	}
+
+	cout << "A importar a informacao dos restaurantes proximos do hotel . . .\n";
+
+	string line;
+	int counter = 0;
+	Restaurante restTemp("", "", 0);
+
+	while (getline(ficheiroRest, line))
+	{
+		if (line.at(0) == ' ')
+		{
+			string nomeTemp;
+			double precoTemp;
+
+			line = line.substr(1); // Deletes ' '
+
+			size_t tempIndex = line.find_first_of(';');
+			nomeTemp = line.substr(0, tempIndex);
+			line = line.substr(tempIndex + 1);
+
+			tempIndex = line.find_first_of(';');
+			string precoStr = line.substr(0, tempIndex);
+			precoTemp = stod(precoStr);
+
+			Prato *p1 = new Prato(nomeTemp, precoTemp);
+			restTemp.adicionaPrato(p1);
+		}
+		else
+		{
+			//Imports the last restaurant (before its modified)
+			restaurantesProximosHotel.insert(restTemp);
+
+			size_t tempIndex = line.find_first_of(';');
+			string nomeTemp = line.substr(0, tempIndex);
+			line = line.substr(tempIndex + 1);
+
+			tempIndex = line.find_first_of(';');
+			string tipoComidaTemp = line.substr(0, tempIndex);
+			line = line.substr(tempIndex + 1);
+
+			tempIndex = line.find_first_of(';');
+			string distStr = line.substr(0, tempIndex);
+			double distancia = stod(distStr);
+
+			restTemp.setNome(nomeTemp);
+			restTemp.setTipoCozinha(tipoComidaTemp);
+			restTemp.setDistancia(distancia);
+
+		}
+		
+	}
+
+	//Let's not forget the last one
+	restaurantesProximosHotel.insert(restTemp);
+	
+	cout << counter << " restaurantes do hotel " << nomeHotel << " importados com sucesso!\n";
+
+	return true;
+}
