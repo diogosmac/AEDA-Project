@@ -41,3 +41,15 @@ ostream& operator << (ostream& ofs, const Cliente *cliente)
 	ofs << cliente->getIDCliente() << "; " << cliente->getNome() << "; " << cliente->getIdade() << " anos; " << cliente->getFreqReserva() << " reservas feitas";
 	return ofs;
 }
+
+bool Cliente::operator==(const Cliente &c2) const
+{
+	if ((this->getNome() == c2.getNome()) && (this->getIDCliente() == c2.getIDCliente()))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

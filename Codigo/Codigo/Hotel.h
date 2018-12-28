@@ -10,9 +10,25 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <unordered_set>
 
 
 using namespace std;
+
+struct clientesHotelHash
+{
+	int operator()(const Cliente &c1) const
+	{
+		return c1.getNome().at(0);
+	}
+
+	bool operator() (const Cliente &c1, const Cliente &c2) const
+	{
+		return c1 == c2;
+	}
+};
+
+typedef unordered_set<Cliente, clientesHotelHash, clientesHotelHash> tabHClientes;
 
 class Hotel
 {
@@ -34,7 +50,8 @@ class Hotel
 	/**
 	*	Contem todos os clientes do hotel
 	*/
-	vector<Cliente *> clientesHotel; // Contem todos os clientes do hotel
+	//vector<Cliente *> clientesHotel;
+	tabHClientes clientesHotel;
 	
 	/**
 	*	Contem todas as reservas realizadas
@@ -81,9 +98,9 @@ public:
 
 
 	/**
-	*	Retorna um vetor com todos os clientes do hotel
+	*	Retorna um set com todos os clientes do hotel
 	*/
-	vector<Cliente *> getClientes() const;
+	tabHClientes getClientes() const;
 
 	/**
 	*	Retorna um vetor com todos os funcionarios (e supervisores) do hotel
@@ -158,6 +175,12 @@ public:
 	*	Se nao encontrar dá erro, lança a exceção ClienteNaoEncontrado
 	*/
 	Cliente * encontraCliente(string nome);
+
+	/**
+	*	Retorna o apontador para o objeto cliente com o id que foi passado por parametro.
+	*	Se nao encontrar dá erro, lança a exceção ClienteNaoEncontrado
+	*/
+	Cliente * encontraCliente(size_t id);
 
 	/**
 	*	Verifica a idade do cliente. Caso este seja menor de 18 anos, lança a exceção ClienteDemasiadoNovoReserva.

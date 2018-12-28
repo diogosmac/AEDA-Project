@@ -7,7 +7,8 @@
 
 using namespace std;
 
-class Cliente {
+class Cliente 
+{
 
 	int idCliente;
 	string nome;
@@ -50,6 +51,11 @@ public:
 	*	Usado para exportar informação relativa ao objeto para ficheiros
 	*/
 	friend ostream& operator << (ostream& ofs, const Cliente *cliente);
+
+	/**
+	*	Usado para verificar igualdade (principalmente utilizado na class Hotel)
+	*/
+	bool operator==(const Cliente &c2) const;
 
 private:
 	static int nextClientID;

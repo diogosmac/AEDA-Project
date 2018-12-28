@@ -20,7 +20,7 @@ vector<Espaco *> Hotel::getTodosEspacos() const
 	return this->todosEspacos;
 }
 
-vector<Cliente *> Hotel::getClientes() const
+tabHClientes Hotel::getClientes() const
 {
 	return this->clientesHotel;
 }
@@ -161,6 +161,7 @@ void Hotel::removeCliente(string nome, size_t idCliente)
 {
 	bool encontrado = false;
 
+	/* Old stuff
 	for (size_t i = 0; i < this->clientesHotel.size(); i++)
 	{
 		if ((this->clientesHotel.at(i)->getNome() == nome) && (this->clientesHotel.at(i)->getIDCliente() == idCliente))
@@ -169,6 +170,17 @@ void Hotel::removeCliente(string nome, size_t idCliente)
 			this->clientesHotel.erase(this->clientesHotel.begin() + i);
 		}
 	}
+	*/
+
+	for (tabHClientes::const_iterator it = this->clientesHotel.begin(); it != clientesHotel.end(); it++)
+	{
+		if (((*it).getNome() == nome) && ((*it).getIDCliente() == idCliente))
+		{
+			encontrado = true;
+			it = clientesHotel.erase(it);
+		}
+	}
+	
 
 	if (!encontrado)
 	{
@@ -178,6 +190,7 @@ void Hotel::removeCliente(string nome, size_t idCliente)
 
 bool Hotel::verificaCliente(string nome, size_t idade)
 {
+	/*Old Stuff
 	for (size_t i = 0; i < this->clientesHotel.size(); i++)
 	{
 		if (this->clientesHotel.at(i)->getNome() == nome && this->clientesHotel.at(i)->getIdade() == idade)
@@ -187,11 +200,24 @@ bool Hotel::verificaCliente(string nome, size_t idade)
 	}
 
 	return false;
+	*/
+
+	for (tabHClientes::const_iterator it = this->clientesHotel.begin(); it != clientesHotel.end(); it++)
+	{
+		if (((*it).getNome() == nome) && ((*it).getIdade() == idade))
+		{
+			return true;
+		}
+	}
+
+	return false;
+
 }
+
 
 int Hotel::idCliente(string nome, size_t idade)
 {
-
+	/*Old Stuff
 	for (size_t i = 0; i < this->clientesHotel.size(); i++)
 	{
 		if (this->clientesHotel.at(i)->getNome() == nome && this->clientesHotel.at(i)->getIdade() == idade)
@@ -201,26 +227,78 @@ int Hotel::idCliente(string nome, size_t idade)
 	}
 
 	return -1;
+	*/
+
+	for (tabHClientes::const_iterator it = this->clientesHotel.begin(); it != clientesHotel.end(); it++)
+	{
+		if (((*it).getNome() == nome) && ((*it).getIdade() == idade))
+		{
+			return (*it).getIDCliente();
+		}
+	}
+
+	return -1;
+
 }
+
 
 void Hotel::adicionaCliente(string nome, size_t idade)
 {
+	/*Old Stuff
 	if (!verificaCliente(nome, idade))
 	{
 		Cliente *c1 = new Cliente(nome, idade);
 		this->clientesHotel.push_back(c1);
 	}
+	*/
+
+	if (!verificaCliente(nome, idade))
+	{
+		Cliente c1(nome, idade);
+		this->clientesHotel.insert(c1);
+	}
+
 }
 
 Cliente * Hotel::encontraCliente(string nome)
 {
+	/*Old Stuff
 	for (size_t i = 0; i < clientesHotel.size(); i++) {
 		if (clientesHotel.at(i)->getNome() == nome) {
 			return clientesHotel.at(i);
 		}
 	}
 	throw ClienteNaoEncontrado(nome);
+	*/
+
+	for (tabHClientes::const_iterator it = this->clientesHotel.begin(); it != clientesHotel.end(); it++)
+	{
+		if ((*it).getNome() == nome)
+		{
+			Cliente temp = (*it);
+			return &temp;
+		}
+	}
+
+	throw ClienteNaoEncontrado(nome);
+
 }
+
+//Added (utility)
+Cliente * Hotel::encontraCliente(size_t id)
+{
+
+	for (tabHClientes::const_iterator it = clientesHotel.begin(); it != clientesHotel.end(); it++)
+	{
+		if ((*it).getIDCliente() == id)
+		{
+			Cliente temp = (*it);
+			return &temp;
+		}
+	}
+
+}
+//Trouble maker ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 bool Hotel::efetuaReserva(Cliente* cliente, size_t idEspaco, Date inicio, Date fim)
 {
@@ -374,8 +452,12 @@ void Hotel::exportInfoClientes()
 		return;
 	}
 
+
 	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
+
 	// Escreve todos os clientes
+
+	/*Old Stuff
 	for (size_t i = 0; i < this->clientesHotel.size(); i++)
 	{
 		if (i == this->clientesHotel.size() - 1)
@@ -388,6 +470,16 @@ void Hotel::exportInfoClientes()
 			ficheiroCli << clientesHotel.at(i) << '\n';
 		}
 	}
+	*/
+	for (tabHClientes::iterator it = clientesHotel.begin(); it != clientesHotel.end(); it++)
+	{
+		Cliente temp = (*it);
+		ficheiroCli << &temp << '\n';
+	}
+
+	cout << "Toda a informacao relativa aos clientes foi guardada com sucesso!\n\n";
+
+
 
 	ficheiroCli.close();
 
@@ -536,10 +628,20 @@ void Hotel::exportInfoFuncionarios()
 
 void Hotel::showInfoClientes()
 {
+	/*Old Stuff
 	for (size_t i = 0; i < this->clientesHotel.size(); i++)
 	{
 		cout << clientesHotel.at(i) << '\n';
 	}
+	cout << endl;
+	*/
+
+	for (tabHClientes::const_iterator it = clientesHotel.begin(); it != clientesHotel.end(); it++)
+	{
+		Cliente temp = (*it);
+		cout << &temp << endl;
+	}
+
 	cout << endl;
 }
 
@@ -707,14 +809,33 @@ bool Hotel::importInfoReservas()
 
 				counter++;
 				bool encontrou = false;
-				for (size_t i = 0; i < clientesHotel.size(); i++) {
-					if (clientesHotel.at(i)->getIDCliente() == idCli) {
+
+				/*Old Stuff
+				for (size_t i = 0; i < clientesHotel.size(); i++) 
+				{
+					if (clientesHotel.at(i)->getIDCliente() == idCli) 
+					{
 						encontrou = true;
 						if (!efetuaReserva(clientesHotel.at(i), idEsp, data_ini, data_fim))
 							failedExtracts++;
 					}
 				}
-				if (!encontrou) {
+				*/
+
+				for (tabHClientes::const_iterator it = clientesHotel.begin(); it != clientesHotel.end(); it++)
+				{
+					if ((*it).getIDCliente() == idCli)
+					{
+						encontrou = true;
+						Cliente temp = (*it);
+
+						if (!efetuaReserva(&temp, idEsp, data_ini, data_fim))
+							failedExtracts++;
+					}
+				}
+
+				if (!encontrou) 
+				{
 					failedExtracts++;
 				}
 
