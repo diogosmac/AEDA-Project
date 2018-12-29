@@ -172,7 +172,7 @@ void Hotel::removeCliente(string nome, size_t idCliente)
 	}
 	*/
 
-	for (tabHClientes::const_iterator it = this->clientesHotel.begin(); it != clientesHotel.end(); it++)
+	for (tabHClientes::const_iterator it = clientesHotel.begin(); it != clientesHotel.end(); it++)
 	{
 		if (((*it).getNome() == nome) && ((*it).getIDCliente() == idCliente))
 		{
@@ -202,7 +202,7 @@ bool Hotel::verificaCliente(string nome, size_t idade)
 	return false;
 	*/
 
-	for (tabHClientes::const_iterator it = this->clientesHotel.begin(); it != clientesHotel.end(); it++)
+	for (tabHClientes::const_iterator it = clientesHotel.begin(); it != clientesHotel.end(); it++)
 	{
 		if (((*it).getNome() == nome) && ((*it).getIdade() == idade))
 		{
@@ -229,7 +229,7 @@ int Hotel::idCliente(string nome, size_t idade)
 	return -1;
 	*/
 
-	for (tabHClientes::const_iterator it = this->clientesHotel.begin(); it != clientesHotel.end(); it++)
+	for (tabHClientes::const_iterator it = clientesHotel.begin(); it != clientesHotel.end(); it++)
 	{
 		if (((*it).getNome() == nome) && ((*it).getIdade() == idade))
 		{
@@ -271,7 +271,7 @@ Cliente * Hotel::encontraCliente(string nome)
 	throw ClienteNaoEncontrado(nome);
 	*/
 
-	for (tabHClientes::const_iterator it = this->clientesHotel.begin(); it != clientesHotel.end(); it++)
+	for (tabHClientes::const_iterator it = clientesHotel.begin(); it != clientesHotel.end(); it++)
 	{
 		if ((*it).getNome() == nome)
 		{
@@ -296,6 +296,8 @@ Cliente * Hotel::encontraCliente(size_t id)
 			return &temp;
 		}
 	}
+
+	throw ClienteNaoEncontrado(id);
 
 }
 //Trouble maker ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

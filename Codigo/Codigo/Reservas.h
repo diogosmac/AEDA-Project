@@ -198,21 +198,37 @@ class ClienteNaoEncontrado
 	*	Contém o nome do Cliente inserido e que não foi encontrado
 	*/
 	string nome;
+	size_t idd;
 
 public:
 
 	/**
 	*	Contrutor da exceção
 	*/
-	ClienteNaoEncontrado(string nom) {
+	ClienteNaoEncontrado(string nom) 
+	{
 		nome = nom;
 		cerr << "O cliente de nome " << this->nome << " nao consta da nossa lista de clientes!" << endl;
+	}
+
+	/**
+	*	Contrutor da exceção
+	*/
+	ClienteNaoEncontrado(size_t id)
+	{
+		idd = id;
+		cerr << "O cliente de id " << this->idd << " nao consta da nossa lista de clientes!" << endl;
 	}
 
 	/**
 	*	Retorna o nome do Cliente inserido e que não foi encontrado
 	*/
 	string getNome() const { return nome; }
+
+	/**
+	*	Retorna o id do Cliente inserido e que não foi encontrado
+	*/
+	size_t getID()const { return idd; }
 };
 
 class ClienteDemasiadoNovoReserva
