@@ -180,7 +180,7 @@ public:
 	*	Retorna o apontador para o objeto cliente com o id que foi passado por parametro.
 	*	Se nao encontrar dá erro, lança a exceção ClienteNaoEncontrado
 	*/
-	Cliente * encontraCliente(size_t id);
+	Cliente encontraCliente(size_t id);
 
 	/**
 	*	Verifica a idade do cliente. Caso este seja menor de 18 anos, lança a exceção ClienteDemasiadoNovoReserva.
@@ -200,6 +200,11 @@ public:
 	*	Retorna o numero de reservas efetuadas no Hotel.
 	*/
 	size_t nReservas();
+
+	/**
+	*	Remove reserva do espaco
+	*/
+	bool removeReserva(size_t idEspaco, Reserva res);
 
 	/**
 	*	Distribui os supervisores pelos espaços do hotel

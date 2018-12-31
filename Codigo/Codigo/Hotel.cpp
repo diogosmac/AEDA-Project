@@ -284,23 +284,20 @@ Cliente * Hotel::encontraCliente(string nome)
 
 }
 
-//Added (utility)
-Cliente * Hotel::encontraCliente(size_t id)
+Cliente Hotel::encontraCliente(size_t id)
 {
 
 	for (tabHClientes::const_iterator it = clientesHotel.begin(); it != clientesHotel.end(); it++)
 	{
 		if ((*it).getIDCliente() == id)
 		{
-			Cliente temp = (*it);
-			return &temp;
+			return (*it);
 		}
 	}
 
 	throw ClienteNaoEncontrado(id);
 
 }
-//Trouble maker ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 bool Hotel::efetuaReserva(Cliente* cliente, size_t idEspaco, Date inicio, Date fim)
 {
@@ -381,6 +378,14 @@ size_t Hotel::nReservas()
 	return ret;
 }
 
+bool Hotel::removeReserva(size_t idEspaco, Reserva res)
+{
+	if(	todasReservas.removeReserva(idEspaco, res) )
+		return true;
+
+	return false;
+}
+
 void Hotel::alocaSupervisores()
 {
 	vector<Funcionario *> supervisores;
@@ -421,6 +426,7 @@ double Hotel::getPrecoReserva(size_t idEspaco, Reserva res)
 	while (!(aux > res_map[idEspaco].at(idRes).returnFim()))
 	{
 		preco += todosEspacos.at(idEspaco)->getPrecoReservaDiario(aux);
+		aux.increaseDay();
 	}
 	return preco;
 }

@@ -1,8 +1,8 @@
 1; Pedro; 19 anos; 0 reservas feitas
-3; Leonor Faria; 19 anos; 0 reservas feitas
-2; Diogo Machado; 19 anos; 0 reservas feitas
+3; Diogo Machado; 19 anos; 0 reservas feitas
+2; Leonor Faria; 19 anos; 0 reservas feitas
 4; Margarida; 19 anos; 0 reservas feitas
-6; Rui Pedro; 25 anos; 0 reservas feitas
-5; Jose; 82 anos; 0 reservas feitas
+6; Jose; 82 anos; 0 reservas feitas
+5; Rui Pedro; 25 anos; 0 reservas feitas
 7; Catarina; 5 anos; 0 reservas feitas
 8; Arnaldo; 15 anos; 0 reservas feitas
