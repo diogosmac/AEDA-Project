@@ -130,15 +130,15 @@ bool Reservas::removeReserva(size_t numID, Reserva r1) {
 		throw EspacoNaoPertenceHotel(numID);
 	}
 
-	vector<Reserva> reservas = reservasHotel[numID];
-	size_t i = 0;
-	for (vector<Reserva>::iterator it = reservas.begin(); it != reservas.end(); it++, i++)
+	for (vector<Reserva>::iterator it = reservasHotel[numID].begin(); it != reservasHotel[numID].end(); it++)
 	{
-		if (reservas[i] == r1)
+	
+		if ((*it) == r1)
 		{
-			reservasHotel[numID].erase(it);
+			it = reservasHotel[numID].erase(it);
 			return true;
 		}
+
 	}
 	throw ReservaNaoExiste(numID);
 }
