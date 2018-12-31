@@ -58,8 +58,26 @@ string Date::getDate() const {
 	return oss.str();
 }
 
-void Date::increaseDay() {
-	day++;
+void Date::increaseDay() 
+{
+	if (this->day == this->numDaysOfMonth())
+	{
+		this->day = 1;
+
+		if (this->month == 12)
+		{
+			this->month = 1;
+			this->year++;
+		}
+		else
+		{
+			this->month++;
+		}
+	}
+	else
+	{
+		this->day++;
+	}	
 }
 
 bool Date::bissexto()
