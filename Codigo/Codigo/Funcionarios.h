@@ -68,6 +68,12 @@ public:
 	*/
 	friend ostream& operator << (ostream& ofs, Funcionario* func);
 
+	/**
+	*	Faz nextWorkerId = 1;
+	*/
+	static void resetWorkerID();
+
+
 private:
 	static size_t nextWorkerID;
 
@@ -100,8 +106,10 @@ public:
 	*/
 	vector<Espaco *> getLocaisResponsavel() const;
 
+	/**
+	*	Passa dados do objeto para string para ser depois exportado para um ficheiro de texto 
+	*/
 	string getOutputString();
-	
 
 };
 

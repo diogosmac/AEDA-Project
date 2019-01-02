@@ -206,6 +206,11 @@ size_t Espaco::getNumID() const
 	return numID;
 }
 
+void Espaco::resetNextSpaceID()
+{
+	nextSpaceID = 1;
+}
+
 string Espaco::getOutputString() {
 	ostringstream ofs;
 	ofs << numID;

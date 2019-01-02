@@ -135,6 +135,11 @@ public:
 	*/
 	friend ostream& operator << (ostream& ofs, Espaco* espaco);
 
+	/**
+	*	Faz nextSpaceID = 1
+	*/
+	static void resetNextSpaceID();
+
 private:
 	static size_t nextSpaceID;
 };

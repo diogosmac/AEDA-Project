@@ -53,3 +53,8 @@ bool Cliente::operator==(const Cliente &c2) const
 		return false;
 	}
 }
+
+void Cliente::resetNextClientID()
+{
+	nextClientID = 1;
+}

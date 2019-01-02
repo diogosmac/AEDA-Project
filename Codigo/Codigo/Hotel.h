@@ -19,7 +19,7 @@ struct clientesHotelHash
 {
 	int operator()(const Cliente &c1) const
 	{
-		return c1.getNome().at(0);
+		return c1.getIDCliente();
 	}
 
 	bool operator() (const Cliente &c1, const Cliente &c2) const

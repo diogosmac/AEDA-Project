@@ -51,6 +51,10 @@ ostream& operator << (ostream& ofs, Funcionario* func)
 	return ofs;
 }
 
+void Funcionario::resetWorkerID()
+{
+	nextWorkerID = 1;
+}
 
 //----------------------------------------------------------Supervisor--------------------------------------------------------//
 

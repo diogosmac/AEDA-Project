@@ -57,6 +57,11 @@ public:
 	*/
 	bool operator==(const Cliente &c2) const;
 
+	/**
+	*	Faz nextClientID = 1
+	*/
+	static void resetNextClientID();
+
 private:
 	static int nextClientID;
 };

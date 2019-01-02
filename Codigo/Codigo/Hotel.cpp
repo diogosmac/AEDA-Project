@@ -416,7 +416,7 @@ void Hotel::alocaSupervisores()
 
 double Hotel::getPrecoReserva(size_t idEspaco, Reserva res)
 {
-	int idRes;
+	int idRes = 0;
 	map<size_t, vector<Reserva>> res_map = todasReservas.returnReservas();
 	for (size_t i = 0; i < res_map[idEspaco].size(); i++) {
 		if (res_map[idEspaco].at(i) == res)
@@ -727,7 +727,7 @@ bool Hotel::importInfoClientes()
 	while (getline(ficheiroCli, line))
 	{
 		/*
-			OUTPUT CLIENTE: idCliente;nomeCliente;idadeCliente
+			OUTPUT CLIENTE: idCliente; nomeCliente; idadeCliente
 		*/
 		int index = line.find_first_of(';');
 		string nome = line.substr(index + 2, line.find(';', index + 1) - index - 2);
@@ -1035,9 +1035,16 @@ bool Hotel::importInfoEspacos()
 void Hotel::exportAllInfo()
 {
 	exportInfoEspacos();
+	Espaco::resetNextSpaceID();
+
 	exportInfoClientes();
+	Cliente::resetNextClientID();
+
 	exportInfoReservas();
+
+
 	exportInfoFuncionarios();
+	Funcionario::resetWorkerID();
 }
 
 void Hotel::showAllInfo()
