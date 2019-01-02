@@ -152,17 +152,24 @@ size_t Date::dayOfWeek()
 
 }
 
-bool Date::operator< (Date date2) {
-	if (this->getYear() < date2.getYear()) {
+bool Date::operator< (Date date2) 
+{
+	if (this->getYear() < date2.getYear()) 
+	{
 		return true;
 	}
-	else if (this->getYear() == date2.getYear() && this->getMonth() < date2.getMonth()) {
+	else if (this->getYear() == date2.getYear() && this->getMonth() < date2.getMonth()) 
+	{
 		return true;
 	}
-	else if (this->getYear() == date2.getYear() && this->getMonth() == date2.getMonth() && this->getDay() < date2.getDay()) {
+	else if (this->getYear() == date2.getYear() && this->getMonth() == date2.getMonth() && this->getDay() < date2.getDay()) 
+	{
 		return true;
 	}
-	else return false;
+	else 
+	{
+		return false;
+	}
 }
 
 bool Date::operator== (Date date2) {

@@ -172,7 +172,8 @@ bool Reservas::temReservas(size_t numID) {
 
 }
 
-bool Reservas::verificaEspaco(size_t numID, Date d1) const {
+bool Reservas::verificaEspaco(size_t numID, Date d1) const 
+{
 	if (reservasHotel.find(numID) == reservasHotel.end())
 	{
 		throw EspacoNaoPertenceHotel(numID);
@@ -182,19 +183,25 @@ bool Reservas::verificaEspaco(size_t numID, Date d1) const {
 	for (size_t i = 0; i < reservas.size(); i++)
 	{
 		if (reservas[i].returnInicio() < d1 && d1 < reservas[i].returnFim())
+		{
 			return true;
-		//if (reservas[i].returnInicio() == d1 || reservas[i].returnFim() == d1)
-		//	return true;
+		}
+		else if ( (reservas[i].returnInicio() == d1) || (d1 == reservas[i].returnFim()) )
+		{
+			return true;
+		}
 	}
 	return false;
 }
 
-void Reservas::showMonth(size_t numId, size_t month, size_t year) {
+void Reservas::showMonth(size_t numId, size_t month, size_t year) 
+{
 
 	Date d1 = Date(1, month, year);
 	int numSpaceBlocks, ds;
 	string months[12] = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
+	cout << endl;
 	cout << months[month - 1] << endl;
 	cout << "Sun Mon Tue Wed Thu Fri Sat" << endl;
 
@@ -203,13 +210,16 @@ void Reservas::showMonth(size_t numId, size_t month, size_t year) {
 
 	for (int i = 1; i <= numSpaceBlocks; i++)
 		cout << "    ";
-	for (size_t i = 1; i <= d1.numDaysOfMonth(); i++)
+
+	size_t nDaysOfMonth = d1.numDaysOfMonth();
+
+	for (size_t i = 1; i <= nDaysOfMonth; i++)
 	{
-		if (i == d1.numDaysOfMonth())
+		if (i == nDaysOfMonth)
 		{
 			cout << setw(3) << i << " ";
 			cout << endl;
-			while (d1.getDay() <= d1.numDaysOfMonth())
+			while ((d1.getDay() <= nDaysOfMonth) && (d1.getMonth() == month))
 			{
 				if (this->verificaEspaco(numId, d1))
 				{
@@ -225,47 +235,57 @@ void Reservas::showMonth(size_t numId, size_t month, size_t year) {
 			}
 
 		}
-
-		else {
+		else 
+		{
 			cout << setw(3) << i << " ";
-			if (ds == 0) {
+			if (ds == 0) 
+			{
 				cout << endl;
-				if (d1.getDay() == 1) {
-					for (int j = 1; j <= numSpaceBlocks; j++)
-						cout << "    ";
-					for (int j = 0; j < 7 - numSpaceBlocks; j++)
+
+				if (d1.getMonth() == month)
+				{
+
+					if (d1.getDay() == 1)
 					{
-						if (this->verificaEspaco(numId, d1))
+						for (int j = 1; j <= numSpaceBlocks; j++)
+							cout << "    ";
+
+						for (int j = 0; j < 7 - numSpaceBlocks; j++)
 						{
-							cout << setw(3) << "X" << " ";
-							d1.increaseDay();
+							if (this->verificaEspaco(numId, d1))
+							{
+								cout << setw(3) << "X" << " ";
+								d1.increaseDay();
+							}
+
+							else
+							{
+								cout << setw(3) << "O" << " ";
+								d1.increaseDay();
+							}
 						}
 
-						else
+					}
+					else
+					{
+						for (size_t j = 0; j < 7; j++)
 						{
-							cout << setw(3) << "O" << " ";
-							d1.increaseDay();
+							if (this->verificaEspaco(numId, d1))
+							{
+								cout << setw(3) << "X" << " ";
+								d1.increaseDay();
+							}
+
+							else
+							{
+								cout << setw(3) << "O" << " ";
+								d1.increaseDay();
+							}
 						}
 					}
 
 				}
-
-				else {
-					for (size_t j = 0; j < 7; j++)
-					{
-						if (this->verificaEspaco(numId, d1))
-						{
-							cout << setw(3) << "X" << " ";
-							d1.increaseDay();
-						}
-
-						else
-						{
-							cout << setw(3) << "O" << " ";
-							d1.increaseDay();
-						}
-					}
-				}
+				
 				cout << endl;
 			}
 
