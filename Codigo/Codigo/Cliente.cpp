@@ -31,9 +31,19 @@ int Cliente::getFreqReserva() const
 	return this->freqReserva;
 }
 
+int Cliente::getNextClientID()
+{
+	return nextClientID;
+}
+
 void Cliente::registaReserva()
 {
 	freqReserva++;
+}
+
+void Cliente::decNReservas()
+{
+	freqReserva--;
 }
 
 ostream& operator << (ostream& ofs, const Cliente *cliente)
@@ -57,4 +67,14 @@ bool Cliente::operator==(const Cliente &c2) const
 void Cliente::resetNextClientID()
 {
 	nextClientID = 1;
+}
+
+void Cliente::setNextClientID(int novoID)
+{
+	nextClientID = novoID;
+}
+
+void Cliente::setID(size_t id)
+{
+	this->idCliente = id;
 }

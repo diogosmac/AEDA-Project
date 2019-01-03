@@ -48,6 +48,11 @@ public:
 	void registaReserva();
 
 	/**
+	*	Faz freqReserva--
+	*/
+	void decNReservas();
+
+	/**
 	*	Usado para exportar informação relativa ao objeto para ficheiros
 	*/
 	friend ostream& operator << (ostream& ofs, const Cliente *cliente);
@@ -61,6 +66,21 @@ public:
 	*	Faz nextClientID = 1
 	*/
 	static void resetNextClientID();
+
+	/**
+	*	Faz nextClientID = novoID
+	*/
+	static void setNextClientID(int novoID);
+
+	/**
+	*	Retorna nextClientID
+	*/
+	static int getNextClientID();
+
+	/**
+	*	Torna idCliente = a id
+	*/
+	void setID(size_t id);
 
 private:
 	static int nextClientID;

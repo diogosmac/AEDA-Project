@@ -1,17 +1,17 @@
-1; 12 : 6/1/2019 - 8/1/2019; 4 : 10/2/2019 - 12/2/2019; 6 : 1/1/2019 - 5/1/2019; 
-2; SemReservas
-3; SemReservas
+1; 2 : 3/3/2019 - 3/4/2019; 
+2; 2 : 3/3/2019 - 4/3/2019; 
+3; 9 : 6/9/2019 - 7/9/2019; 
 4; SemReservas
 5; SemReservas
-6; SemReservas
+6; 12 : 6/2/2019 - 16/2/2019; 
 7; SemReservas
 8; SemReservas
 9; SemReservas
-10; SemReservas
+10; 2 : 1/3/2019 - 3/3/2019; 
 11; SemReservas
 12; SemReservas
 13; SemReservas
 14; SemReservas
-15; SemReservas
+15; 12 : 6/2/2019 - 16/2/2019; 7 : 3/3/2019 - 4/3/2019; 13 : 3/7/2019 - 3/7/2020; 
 16; SemReservas
 

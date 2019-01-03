@@ -162,7 +162,7 @@ public:
 	/**
 	*	Adiciona um cliente de nome e idade passados em argumento, caso este não exista no vetor clientes
 	*/
-	void adicionaCliente(string nome, size_t idade);
+	void adicionaCliente(string nome, size_t idade, size_t id);
 
 	/**
 	*	Remove do vetor clientesHotel o cliente de nome e id passados por argumento.

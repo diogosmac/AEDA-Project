@@ -182,6 +182,7 @@ void Hotel::removeCliente(string nome, size_t idCliente)
 		{
 			encontrado = true;
 			it = clientesHotel.erase(it);
+			break;
 		}
 	}
 	
@@ -246,7 +247,7 @@ int Hotel::idCliente(string nome, size_t idade)
 }
 
 
-void Hotel::adicionaCliente(string nome, size_t idade)
+void Hotel::adicionaCliente(string nome, size_t idade, size_t id)
 {
 	/*Old Stuff
 	if (!verificaCliente(nome, idade))
@@ -259,6 +260,12 @@ void Hotel::adicionaCliente(string nome, size_t idade)
 	if (!verificaCliente(nome, idade))
 	{
 		Cliente c1(nome, idade);
+
+		if (id != 9001)
+		{
+			c1.setID(id);
+		}
+			
 		this->clientesHotel.insert(c1);
 	}
 
@@ -305,33 +312,53 @@ Cliente Hotel::encontraCliente(size_t id)
 
 bool Hotel::efetuaReserva(Cliente* cliente, size_t idEspaco, Date inicio, Date fim)
 {
-	try {
-		if (cliente->getIdade() < 18) {
+	try 
+	{
+		if (cliente->getIdade() < 18) 
+		{
 			throw ClienteDemasiadoNovoReserva(cliente->getNome());
 		}
 
 		bool espacoExiste = false;
-		for (size_t i = 0; i < todosEspacos.size(); i++) {
+
+		for (size_t i = 0; i < todosEspacos.size(); i++) 
+		{
 			if (todosEspacos[i]->getNumID() == idEspaco)
 				espacoExiste = true;
 		}
-		if (!espacoExiste) {
+
+		if (!espacoExiste) 
+		{
 			throw EspacoNaoPertenceHotel(idEspaco);
 		}
 
 		bool espacoDisponivel = true;
 
 		Reserva res(cliente->getIDCliente(), inicio, fim);
-		for (size_t i = 0; i < todasReservas.returnReservas().at(idEspaco).size(); i++) {
+
+		for (size_t i = 0; i < todasReservas.returnReservas().at(idEspaco).size(); i++) 
+		{
 			if (res - todasReservas.returnReservas().at(idEspaco).at(i))
 				espacoDisponivel = false;
 		}
-		if (!espacoDisponivel) {
+
+		if (!espacoDisponivel) 
+		{
 			throw EspacoNaoDisponivel(idEspaco);
 		}
-		else {
+		else 
+		{
 			reservaEspaco(idEspaco, res);
-			cliente->registaReserva();
+
+			int tempID = Cliente::getNextClientID();//Copia nextID, uma vez que vai ser criado um objeto temp da classe, que se pretende que nao incremente nextClientID
+
+			Cliente *temp = cliente;
+			this->removeCliente(cliente->getNome(), cliente->getIDCliente());
+			temp->registaReserva();
+
+			Cliente::setNextClientID(tempID);//Volta a repor o valor anterior, para que clientes novos tenham id's corretos
+
+			clientesHotel.insert(*temp);
 		}
 
 		return true;
@@ -384,8 +411,20 @@ size_t Hotel::nReservas()
 
 bool Hotel::removeReserva(size_t idEspaco, Reserva res)
 {
-	if(	todasReservas.removeReserva(idEspaco, res) )
+	if (todasReservas.removeReserva(idEspaco, res))
+	{
+		int tempID = Cliente::getNextClientID();//Copia nextID, uma vez que vai ser criado um objeto temp da classe, que se pretende que nao incremente nextClientID
+
+		Cliente temp = this->encontraCliente(res.returnidCliente());
+		this->removeCliente(temp.getNome(), temp.getIDCliente());
+		temp.decNReservas();
+
+		Cliente::setNextClientID(tempID);//Volta a repor o valor anterior, para que clientes novos tenham id's corretos
+
+		clientesHotel.insert(temp);
+
 		return true;
+	}
 
 	return false;
 }
@@ -729,12 +768,18 @@ bool Hotel::importInfoClientes()
 		/*
 			OUTPUT CLIENTE: idCliente; nomeCliente; idadeCliente
 		*/
+		size_t idCliente = 9999;
+
 		int index = line.find_first_of(';');
+
+		idCliente = stoi(line.substr(0, index));
+
 		string nome = line.substr(index + 2, line.find(';', index + 1) - index - 2);
 		index = line.find(';', index + 1) + 2;
 		string idade_str = line.substr(index, line.find('a', index) - index);
 		int idade = stoi(idade_str);
-		adicionaCliente(nome, idade);
+
+		adicionaCliente(nome, idade, idCliente);
 	}
 	cout << "Clientes do hotel " << nomeHotel << " importados com sucesso!\n";
 
@@ -789,7 +834,8 @@ bool Hotel::importInfoReservas()
 		if (line.substr(index + 1) != " Sem Reservas")
 		{
 			// index = line.find(';', index + 1);
-			while (line.find(';', index + 1) != line.npos) {
+			while (line.find(';', index + 1) != line.npos) 
+			{
 				int index_break = line.find(';', index + 1);
 
 				string idCli_str = line.substr(index + 2, line.find(':', index) - index - 2);
@@ -834,7 +880,7 @@ bool Hotel::importInfoReservas()
 				}
 				*/
 
-				for (tabHClientes::const_iterator it = clientesHotel.begin(); it != clientesHotel.end(); it++)
+				for (auto it = clientesHotel.begin(); it != clientesHotel.end(); it++)
 				{
 					if ((*it).getIDCliente() == idCli)
 					{
@@ -842,7 +888,14 @@ bool Hotel::importInfoReservas()
 						Cliente temp = (*it);
 
 						if (!efetuaReserva(&temp, idEsp, data_ini, data_fim))
+						{
 							failedExtracts++;
+						}
+						else
+						{
+							break;
+						}
+							
 					}
 				}
 
