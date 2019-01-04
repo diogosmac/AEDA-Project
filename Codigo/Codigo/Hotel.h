@@ -319,5 +319,10 @@ public:
 	*	Importa toda a informacao relativa aos restaurantes proximos do hotel
 	*/
 	bool importInfoRestaurantes();
+
+	/**
+	*	Mostra no ecra todos os restaurantes proximos do hotel, tipo de comida dos mesmos, e a respetiva distancia ao hotel.
+	*/
+	void showInfoRestaurantes();
 	
 };

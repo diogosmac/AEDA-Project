@@ -121,6 +121,11 @@ public:
 	void adicionaPrato(Prato * novoPrato);
 
 	/**
+	*	Apaga todos os pratos disponiveis no vetor menu
+	*/
+	void apagaMenu();
+
+	/**
 	*	Operador usado para ordenacao de objetos desta classe na arvore de pesquisa binaria (membro-dado da classe hotel)
 	*/
 	bool operator < (const Restaurante &rest) const;

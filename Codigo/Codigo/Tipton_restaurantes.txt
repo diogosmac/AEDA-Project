@@ -1,0 +1,5 @@
+Raza; Indiana; 1802.23;
+Ponto Pizza; Italiana; 1025.1;
+Sousa; Portuguesa; 6245.2;
+Lado B; Portuguesa; 35000.1;
+Quinze; Portuguesa; 123123;

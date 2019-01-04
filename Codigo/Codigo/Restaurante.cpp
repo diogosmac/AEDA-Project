@@ -85,6 +85,11 @@
 		this->menu.push_back(novoPrato);
 	}
 
+	void Restaurante::apagaMenu()
+	{
+		this->menu.clear();
+	}
+
 	bool Restaurante::operator < (const Restaurante &rest) const
 	{
 		if (this->getTipoCozinha() == rest.getTipoCozinha())
@@ -98,7 +103,15 @@
 
 	ostream& operator << (ostream& ofs, Restaurante rest) 
 	{
-		ofs << rest.getNome() << "; " << rest.getTipoCozinha() << "; " << rest.getDistanciaHotel()<< ";" << '\n';
+		if (rest.menu.size() != 0)
+		{
+			ofs << rest.getNome() << "; " << rest.getTipoCozinha() << "; " << rest.getDistanciaHotel() << ";" << '\n';
+		}
+		else
+		{
+			ofs << rest.getNome() << "; " << rest.getTipoCozinha() << "; " << rest.getDistanciaHotel() << ";";
+		}
+		
 
 		for (size_t i = 0; i < rest.getMenu().size(); i++)
 		{

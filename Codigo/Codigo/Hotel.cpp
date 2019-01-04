@@ -1095,9 +1095,10 @@ void Hotel::exportAllInfo()
 
 	exportInfoReservas();
 
-
 	exportInfoFuncionarios();
 	Funcionario::resetWorkerID();
+
+	exportInfoRestaurantes();
 }
 
 void Hotel::showAllInfo()
@@ -1114,6 +1115,9 @@ void Hotel::showAllInfo()
 	cout << "Prima ENTER para ver a informacao sobre os funcionarios . . .\n";
 	cin.ignore();
 	showInfoFuncionarios();
+	cout << "Prima ENTER para ver a informacao sobre os restaurantes proximos do hotel . . .\n";
+	cin.ignore();
+	showInfoRestaurantes();
 }
 
 bool Hotel::importAllInfo()
@@ -1122,6 +1126,7 @@ bool Hotel::importAllInfo()
 	bool importouEspacos = false;
 	bool importouReservas = false;
 	bool importouFuncionarios = false;
+	bool importouRestaurantes = false;
 
 	importouClientes = importInfoClientes();
 	if (!importouClientes)
@@ -1140,17 +1145,25 @@ bool Hotel::importAllInfo()
 	if (importouClientes && importouEspacos)
 	{
 		importouReservas = importInfoReservas();
-		if (!importouReservas) {
+		if (!importouReservas) 
+		{
 			cout << "A importacao da informacao das reservas falhou.\n";
 		}
 	}
 
 	importouFuncionarios = importInfoFuncionarios();
-	if (!importouFuncionarios) {
+	if (!importouFuncionarios) 
+	{
 		cout << "A importacao da informacao dos funcionarios falhou.\n";
 	}
 
-	return (importouClientes && importouEspacos && importouReservas && importouFuncionarios);
+	importouRestaurantes = importInfoRestaurantes();
+	if (!importouRestaurantes)
+	{
+		cout << "A importacao da informacao dos restaurantes falhou.\n";
+	}
+
+	return (importouClientes && importouEspacos && importouReservas && importouFuncionarios && importouRestaurantes);
 }
 
 void Hotel::addRestaurant(Restaurante r)
@@ -1233,6 +1246,7 @@ void Hotel::exportInfoRestaurantes()
 
 	BSTItrIn<Restaurante> it(this->restaurantesProximosHotel);
 
+
 	// Escreve todos os restaurantes
 	while (!it.isAtEnd())
 	{
@@ -1240,7 +1254,7 @@ void Hotel::exportInfoRestaurantes()
 		it.advance();
 	}
 
-	ficheiroRest << '\n';
+	//ficheiroRest << '\n';
 	cout << "Toda a informacao relativa aos restaurantes foi guardada com sucesso!\n\n";
 
 	ficheiroRest.close();
@@ -1283,7 +1297,7 @@ bool Hotel::importInfoRestaurantes()
 	int counter = 0;
 	Restaurante restTemp("", "", 0);
 
-	while (getline(ficheiroRest, line))
+	while (getline(ficheiroRest, line)) 
 	{
 		if (line.at(0) == ' ')
 		{
@@ -1306,14 +1320,28 @@ bool Hotel::importInfoRestaurantes()
 		else
 		{
 			//Imports the last restaurant (before its modified)
-			restaurantesProximosHotel.insert(restTemp);
+
+			if (restTemp.getMenu().size() != 0)
+			{
+				restaurantesProximosHotel.insert(restTemp);
+				restTemp.apagaMenu();
+				counter++;
+				continue;
+			}
+
+			if (restTemp.getNome() != "")
+			{
+				restaurantesProximosHotel.insert(restTemp);
+				counter++;
+			}
+				
 
 			size_t tempIndex = line.find_first_of(';');
 			string nomeTemp = line.substr(0, tempIndex);
 			line = line.substr(tempIndex + 1);
 
 			tempIndex = line.find_first_of(';');
-			string tipoComidaTemp = line.substr(0, tempIndex);
+			string tipoComidaTemp = line.substr(1, tempIndex - 1);
 			line = line.substr(tempIndex + 1);
 
 			tempIndex = line.find_first_of(';');
@@ -1330,8 +1358,21 @@ bool Hotel::importInfoRestaurantes()
 
 	//Let's not forget the last one
 	restaurantesProximosHotel.insert(restTemp);
+	counter++;
 	
 	cout << counter << " restaurantes do hotel " << nomeHotel << " importados com sucesso!\n";
 
 	return true;
+}
+
+void Hotel::showInfoRestaurantes()
+{
+	BSTItrIn<Restaurante> it(this->restaurantesProximosHotel);
+
+	// Escreve todos os restaurantes
+	while (!it.isAtEnd())
+	{
+		cout << it.retrieve() << '\n';
+		it.advance();
+	}
 }

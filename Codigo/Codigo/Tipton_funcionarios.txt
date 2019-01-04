@@ -1,3 +1,10 @@
 1; Omar Salgado - Funcionario
-2; Jacinto Leite - Supervisor - Responsavel pelos espacos: 1 3 5 7 9 11 13 15
-3; Adolfo Dias - Supervisor - Responsavel pelos espacos: 2 4 6 8 10 12 14 16
+2; Jacinto Leite - Supervisor - Responsavel pelos espacos: 1 7 13
+3; Adolfo Dias - Supervisor - Responsavel pelos espacos: 2 8 14
+4; Ary - Supervisor - Responsavel pelos espacos: 3 9 15
+5; Heitor - Funcionario
+6; Eurico - Funcionario
+7; Uriel - Supervisor - Responsavel pelos espacos: 4 10 16
+8; Tais - Supervisor - Responsavel pelos espacos: 5 11
+9; Maisa - Supervisor - Responsavel pelos espacos: 6 12
+10; Zamy - Funcionario
