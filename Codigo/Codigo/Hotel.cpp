@@ -109,7 +109,6 @@ void Hotel::adicionaFuncionario(Funcionario * func)
 	}
 }
 
-
 void Hotel::removeEspaco(size_t numID)
 {
 	bool encontrado = false;
@@ -219,7 +218,6 @@ bool Hotel::verificaCliente(string nome, size_t idade)
 
 }
 
-
 int Hotel::idCliente(string nome, size_t idade)
 {
 	/*Old Stuff
@@ -245,7 +243,6 @@ int Hotel::idCliente(string nome, size_t idade)
 	return -1;
 
 }
-
 
 void Hotel::adicionaCliente(string nome, size_t idade, size_t id)
 {
@@ -1099,6 +1096,8 @@ void Hotel::exportAllInfo()
 	Funcionario::resetWorkerID();
 
 	exportInfoRestaurantes();
+
+	exportInfoAutocarro();
 }
 
 void Hotel::showAllInfo()
@@ -1118,6 +1117,9 @@ void Hotel::showAllInfo()
 	cout << "Prima ENTER para ver a informacao sobre os restaurantes proximos do hotel . . .\n";
 	cin.ignore();
 	showInfoRestaurantes();
+	cout << "Prima ENTER para ver a informacao sobre os restautocarros do hotel . . .\n";
+	cin.ignore();
+	showInfoAutocarrosGestor();
 }
 
 bool Hotel::importAllInfo()
@@ -1127,6 +1129,7 @@ bool Hotel::importAllInfo()
 	bool importouReservas = false;
 	bool importouFuncionarios = false;
 	bool importouRestaurantes = false;
+	bool importouAutocarros = false;
 
 	importouClientes = importInfoClientes();
 	if (!importouClientes)
@@ -1163,7 +1166,13 @@ bool Hotel::importAllInfo()
 		cout << "A importacao da informacao dos restaurantes falhou.\n";
 	}
 
-	return (importouClientes && importouEspacos && importouReservas && importouFuncionarios && importouRestaurantes);
+	importouAutocarros = importInfoAutocarro();
+	if (!importouAutocarros)
+	{
+		cout << "A importacao da informacao dos autocarros falhou.\n";
+	}
+
+	return (importouClientes && importouEspacos && importouReservas && importouFuncionarios && importouRestaurantes && importouAutocarros);
 }
 
 void Hotel::addRestaurant(Restaurante r)
@@ -1375,4 +1384,348 @@ void Hotel::showInfoRestaurantes()
 		cout << it.retrieve() << '\n';
 		it.advance();
 	}
+}
+
+void Hotel::exportInfoAutocarro()
+{
+	cout << "\nConfirma que deseja exportar a informacao dos Autocarros? (s/n): ";
+	string confirm;
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n") {
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+
+	if (confirm == "n") {
+		cout << "Operacao cancelada a seu pedido.\n";
+		return;
+	}
+
+	ofstream ficheiroRest;
+	string nomeFicheiro = nomeHotel + "_autocarros.txt";
+	ficheiroRest.open(nomeFicheiro);
+
+
+	if (!ficheiroRest.is_open())
+	{
+		cerr << "Erro na abertura do ficheiro.\n" << endl;
+		return;
+	}
+
+	cout << "A guardar a informacao no ficheiro " << nomeFicheiro << " . . ." << endl;
+
+	priority_queue<Autocarro> buffer = this->autocarrosHotel;
+
+	// Escreve todos os restaurantes
+	while (!buffer.empty())
+	{
+		ficheiroRest << buffer.top();
+		buffer.pop();
+	}
+
+	//ficheiroRest << '\n';
+	cout << "Toda a informacao relativa aos autocarros do hotel foi exportada com sucesso!\n\n";
+
+	ficheiroRest.close();
+}
+
+bool Hotel::encontraIdAutocarro(size_t id)
+{
+	priority_queue <Autocarro> temp = this->autocarrosHotel;
+
+	while (!temp.empty())
+	{
+		if (temp.top().getID() == id)
+		{
+			return true;
+		}
+		else
+		{
+			temp.pop();
+		}
+	}
+
+	return false;
+
+}
+
+void Hotel::addAutocarro()
+{
+	int id;
+	string id_str;
+	bool valid = false;
+
+	cout << "Indique o id do autocarro que quer adicionar: ";
+	getline(cin, id_str);
+
+	while (!valid)
+	{
+		try
+		{
+			stoi(id_str);
+			valid = true;
+
+		}
+		catch (invalid_argument iArg)
+		{
+			cout << "O numero que tentou inserir nao e valido, tente outra vez: ";
+			getline(cin, id_str);
+		}
+		catch (out_of_range oRange)
+		{
+			cout << "O numero que tentou inserir nao e valido, tente outra vez: ";
+			getline(cin, id_str);
+		}
+
+		id = stoi(id_str);
+
+		if (id < 0)
+		{
+			cout << "O numero inserido tem de ser maior que 0... Insira um numero valido: ";
+			valid = false;
+			getline(cin, id_str);
+			continue;
+		}
+
+		if (encontraIdAutocarro(id))
+		{
+			cout << "O id inserido ja existe, como tal nao e valido. Por favor insira o correto: ";
+			valid = false;
+			getline(cin, id_str);
+			continue;
+		}
+
+	}
+
+	size_t capacidade;
+	string capacidade_str;
+	valid = false;
+
+	cout << "Indique a capacidade do novo autocarro: ";
+	getline(cin, capacidade_str);
+
+	while (!valid)
+	{
+		try
+		{
+			stoi(capacidade_str);
+			valid = true;
+
+		}
+		catch (invalid_argument iArg)
+		{
+			cout << "O numero que tentou inserir nao e valido, tente outra vez: ";
+			getline(cin, capacidade_str);
+		}
+		catch (out_of_range oRange)
+		{
+			cout << "O numero que tentou inserir nao e valido, tente outra vez: ";
+			getline(cin, capacidade_str);
+		}
+
+		capacidade = stoi(capacidade_str);
+
+		if (capacidade < 0)
+		{
+			cout << "O numero inserido tem de ser maior que 0... Insira um numero valido: ";
+			valid = false;
+			getline(cin, id_str);
+			continue;
+		}
+
+	}
+
+	Autocarro a1(id, capacidade);
+	this->autocarrosHotel.push(a1);
+	cout << "Autocarro adicionado com sucesso!\n";
+}
+
+bool Hotel::importInfoAutocarro()
+{
+	cout << "\nConfirma que deseja importar a informacao dos autocarros? (s/n): ";
+	string confirm;
+	cin >> confirm;
+	cin.ignore(1000, '\n');
+	while (confirm != "s" && confirm != "n") {
+		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+		cin >> confirm;
+		cin.ignore(1000, '\n');
+	}
+
+	if (confirm == "n") {
+		cout << "Operacao cancelada a seu pedido.\n";
+		return false;
+	}
+
+
+	ifstream ficheiroCli;
+	string nomeFicheiro = nomeHotel + "_autocarros.txt";
+
+	ficheiroCli.open(nomeFicheiro);
+
+	if (!ficheiroCli.is_open())
+	{
+		cerr << "Nao foi possivel obter a informacao relativa aos autocarros do hotel " << nomeHotel << "!\n";
+		return false;
+	}
+
+	cout << "A importar a informacao dos autocarros do hotel . . .\n";
+	string line;
+
+	size_t counter = 0;
+	Autocarro temp(9001, 1);
+
+	while (getline(ficheiroCli, line))
+	{
+
+		//OUTPUT autocarro:
+		/*
+			#1; 25;
+			1-Vazio;
+			2-Vazio;
+			3-Vazio;
+			4-Vazio;
+			5-Vazio;
+			6-Vazio;
+			7-Vazio;
+			8-Vazio;
+		*/
+
+		size_t idAutocarro = 9999;
+		size_t capacidade = 9999;
+
+		if (line.at(0) == '#')
+		{
+			int index = line.find_first_of(';');
+			idAutocarro = stoi(line.substr(1, index));
+			capacidade = stoi(line.substr(index + 1, line.find_last_of(';')));
+
+			temp.setId(idAutocarro);
+			temp.setNLugares(capacidade);
+		}
+		else if (line.at(0) == '-')
+		{
+			autocarrosHotel.push(temp);
+			counter++;
+		}
+		else
+		{
+			int idTraco = line.find_first_of('-');
+			int nLugar = stoi(line.substr(0, idTraco));
+			string nome = line.substr(idTraco + 1, line.find_first_of(';') - (idTraco + 1));
+
+			temp.setNameAt(nLugar, nome);
+		}
+
+	}
+
+	cout << counter << " autocarros do hotel " << nomeHotel << " foram importados com sucesso!\n";
+	return true;
+}
+
+void Hotel::showInfoAutocarrosGestor()
+{
+	cout << "Sera mostrada toda a informacao relativa aos autocarros dos hotel:" << endl << endl;
+	priority_queue <Autocarro> buffer = autocarrosHotel;
+
+	while (!buffer.empty())
+	{
+		Autocarro temp = buffer.top();
+		buffer.pop();
+		cout << temp << endl;
+	}
+
+}
+
+void Hotel::showInfoAutocarrosCliente()
+{
+	cout << endl;
+	cout << endl;
+	cout << "Informacao relativa aos autocarros do hotel:" << endl;
+	cout << endl;
+
+	priority_queue <Autocarro> buffer = autocarrosHotel;
+
+	while (!buffer.empty())
+	{
+		Autocarro temp = buffer.top();
+		buffer.pop();
+		cout << "Autocarro #" << temp.getID() << "; Capacidade: " << temp.getCapacidade() << "; Numero de lugares livres: " << temp.getNLugaresLivres() << ";"  << endl;
+	}
+
+	cout << endl;
+
+}
+
+void Hotel::reservaLugaresAutocarro()
+{
+	size_t nPessoas;
+	string nPessoas_str;
+	bool valid = false;
+
+	cout << "Indique o numero de pessoas para o qual deseja efetuar a reserva de lugar(s) no autocarro: ";
+	getline(cin, nPessoas_str);
+
+	while (!valid)
+	{
+		try
+		{
+			stoi(nPessoas_str);
+			valid = true;
+
+		}
+		catch (invalid_argument iArg)
+		{
+			cout << "O numero que tentou inserir nao e valido, tente outra vez: ";
+			getline(cin, nPessoas_str);
+		}
+		catch (out_of_range oRange)
+		{
+			cout << "O numero que tentou inserir nao e valido, tente outra vez: ";
+			getline(cin, nPessoas_str);
+		}
+
+		nPessoas = stoi(nPessoas_str);
+
+		if (nPessoas < 0)
+		{
+			cout << "O numero inserido tem de ser maior que 0... Insira um numero valido: ";
+			valid = false;
+			getline(cin, nPessoas_str);
+			continue;
+		}
+
+	}
+
+	priority_queue <Autocarro> temp;
+
+	while (!autocarrosHotel.empty())
+	{
+		Autocarro checkN = autocarrosHotel.top();
+		autocarrosHotel.pop();
+
+		if (!checkN.adicionaNPessoas(nPessoas))
+		{
+			temp.push(checkN);
+		}
+		else
+		{
+			autocarrosHotel.push(checkN);
+
+			while (!temp.empty())
+			{
+				Autocarro tempTop = temp.top();
+				autocarrosHotel.push(tempTop);
+				temp.pop();
+			}
+
+			cout << "Reserva efetuada com sucesso!" << endl;
+			return;
+		}
+	}
+
+	cout << "Pedimos desculpa, mas de momento nao existe nenhum autocarro com lugares disponiveis suficientes para levar todas essas pessoas." << endl;
+	autocarrosHotel = temp;
 }

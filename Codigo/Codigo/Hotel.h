@@ -7,6 +7,7 @@
 #include "Reservas.h"
 #include "Restaurante.h"
 #include "BST.h"
+#include "Autocarro.h"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -62,6 +63,11 @@ class Hotel
 	*	Arvore binaria de pesquisa com todos os restaurante perto do hotel ordenados (alfabeticamente) pelo tipo de comida que servem e por distancia ao hotel
 	*/
 	BST<Restaurante> restaurantesProximosHotel;
+
+	/**
+	*	Contem todos os autocarros que se encontram à disposicao do hotel para levar os clientes aos pontos turisticos da localidade
+	*/
+	priority_queue <Autocarro> autocarrosHotel;
 
 public:
 
@@ -325,4 +331,38 @@ public:
 	*/
 	void showInfoRestaurantes();
 	
+	/**
+	*	Exporta toda a infomacao relativa aos autocarros do hotel
+	*/
+	void exportInfoAutocarro();
+
+	/**
+	*	Importa toda a informacao guardada em ficheiros de textos relativa aos autocarros do hotel
+	*/
+	bool importInfoAutocarro();
+
+	/**
+	*	Mostra toda a informacao guardada na base de dados do hotel relativa aos autocarros e à sua ocupacao (detalhada, uma vez que é destinada a um gestor)
+	*/
+	void showInfoAutocarrosGestor();
+
+	/**
+	*	Mostra a informacao basica guardada na base de dados do hotel relativa aos autocarros (simplificada e sem revelar o nome dos ocupantes, uma vez que e destinada a clientes do hotel)
+	*/
+	void showInfoAutocarrosCliente();
+
+	/**
+	*	Adiciona um autocarro a fila de prioridade que contem os autocarros do hotel. Destinada apenas a um gestor.
+	*/
+	void addAutocarro();
+
+	/**
+	*	Retorna true se encontrar algum autocarro do hotel com o id de argumento
+	*/
+	bool encontraIdAutocarro(size_t id);
+
+	/**
+	*	Atende o cliente, ajudando-o a efetuar uma reserva dos lugares que pretender num autocarro
+	*/
+	void reservaLugaresAutocarro();
 };
