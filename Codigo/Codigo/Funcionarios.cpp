@@ -32,18 +32,8 @@ bool Funcionario::isSupervisor() const
 
 bool Funcionario::operator<(const Funcionario &f2) const
 {
-	return this->getNome() < f2.getNome();
+	return (this->getNome() < f2.getNome());
 }
-
-/*bool Funcionario::compA(const Funcionario &f2) const
-{
-	return this->getNome() > f2.getNome();
-}
-
-bool Funcionario::compId(const Funcionario &f2) const
-{
-	return this->getID_Code() < f2.getID_Code();
-}*/
 
 void Funcionario::RemoveEspacos() {
 	cerr << "Impossivel remover espacos deste funcionario, pois ele nao e supervisor!\n";

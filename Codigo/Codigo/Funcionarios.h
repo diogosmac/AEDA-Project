@@ -54,12 +54,12 @@ public:
 	/**
 	*	Usado para verificar se um funcionario é superior a outro alfabeticamente
 	*/
-	//bool compA(const Funcionario &f2) const;
+	//friend bool compA(const Funcionario &f2) const;
 
 	/**
 	*	Usado para verificar se o numero de id de umfuncionario é inferior ao de outro
 	*/
-	//bool compId(const Funcionario &f2) const;
+	//friend bool compId(const Funcionario &f2) const;
 
 	/**
 	*	Tentativa de remover os espaços de um funcionário.

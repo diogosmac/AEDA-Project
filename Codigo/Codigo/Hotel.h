@@ -261,9 +261,11 @@ public:
 	*/
 	void showInfoFuncionarios();
 
-	void sortFuncionariosId();
 	void sortFuncionariosA();
+
 	void sortFuncionariosAA();
+	
+	void sortFuncionariosID();
 
 	/**
 	*	Importa de um ficheiro de texto um conjunto de Clientes, que são adicionados ao Hotel
