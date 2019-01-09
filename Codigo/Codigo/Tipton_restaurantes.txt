@@ -1,5 +1,13 @@
 Raza; Indiana; 1802.23;
+ Kebab; 4.5;
 Ponto Pizza; Italiana; 1025.1;
+ Pizza; 8;
+ Salada; 5;
+ Lasanha; 8.5;
+Bife d'ouro; Portuguesa; 5165;
 Sousa; Portuguesa; 6245.2;
+ Rojoes; 6;
+ Bacalhau; 8;
 Lado B; Portuguesa; 35000.1;
+ Francesinha; 12;
 Quinze; Portuguesa; 123123;

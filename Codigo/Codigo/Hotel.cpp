@@ -1273,7 +1273,7 @@ void Hotel::exportInfoRestaurantes()
 	// Escreve todos os restaurantes
 	while (!it.isAtEnd())
 	{
-		ficheiroRest << it.retrieve() << '\n';
+		ficheiroRest << it.retrieve();
 		it.advance();
 	}
 
@@ -1349,10 +1349,8 @@ bool Hotel::importInfoRestaurantes()
 				restaurantesProximosHotel.insert(restTemp);
 				restTemp.apagaMenu();
 				counter++;
-				continue;
 			}
-
-			if (restTemp.getNome() != "")
+			else if (restTemp.getNome() != "")
 			{
 				restaurantesProximosHotel.insert(restTemp);
 				counter++;
@@ -1451,53 +1449,43 @@ void Hotel::addPratoRestaurante(string nomeRestaurante)
 
 	}
 
-	BSTItrIn<Restaurante> it(this->restaurantesProximosHotel);
+	
+	BST<Restaurante> arvoreTemp = this->restaurantesProximosHotel;
+	BSTItrIn<Restaurante> it(arvoreTemp);
+	bool encontrado = false;
 
 	while (!it.isAtEnd())
 	{
 		Restaurante temp = it.retrieve();
-		//Restaurante &temp = it.retrieve();
 
-		if (temp.getNome() == nomeRestaurante)
+		if (it.retrieve().getNome() == nomeRestaurante)
 		{
-			
-			restaurantesProximosHotel.remove(temp);
-
-			/*
-			Prato * prt = new Prato(nomePrato, precoPrato);
-			temp.adicionaPrato(prt);
-			*/
+			encontrado = true;
 
 			Prato prt(nomePrato, precoPrato);
 			temp.adicionaPrato(&prt);
 
-			restaurantesProximosHotel.insert(temp);
 
 			cout << "DEBUG: " << temp << endl;
 
-			cout << "Prato adicionado com sucesso!" << endl;
-			return;
-			
-
-			/*
-			Prato prt(nomePrato, precoPrato);
-			temp.adicionaPrato(&prt);
-			*/
-			//cout << "DEBUG: " << temp << endl;
-			
-			/*
-			cout << "Prato adicionado com sucesso!" << endl;
-			return;
-			*/
+			it.advance();
+			//cout << "Prato adicionado com sucesso!" << endl;
 		}
 		else
 		{
 			it.advance();
 		}
 
+		arvoreTemp.insert(temp);
 	}
 
-	cout << "Restaurante nao encontrado, verifique o nome inserido e tente novamente" << endl;
+	this->restaurantesProximosHotel = arvoreTemp;
+
+	if (!encontrado)
+	{
+		cout << "Restaurante nao encontrado, verifique o nome inserido e tente novamente" << endl;
+	}
+	
 }
 
 void Hotel::exportInfoAutocarro()

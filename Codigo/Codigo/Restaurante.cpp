@@ -103,7 +103,8 @@
 
 	ostream& operator << (ostream& ofs, Restaurante rest) 
 	{
-		if (rest.menu.size() != 0)
+		/*
+		if (rest.menu.size() > 0)
 		{
 			ofs << rest.getNome() << "; " << rest.getTipoCozinha() << "; " << rest.getDistanciaHotel() << ";" << '\n';
 		}
@@ -111,12 +112,19 @@
 		{
 			ofs << rest.getNome() << "; " << rest.getTipoCozinha() << "; " << rest.getDistanciaHotel() << ";";
 		}
-		
+		*/
 
-		for (size_t i = 0; i < rest.getMenu().size(); i++)
+		ofs << rest.getNome() << "; " << rest.getTipoCozinha() << "; " << rest.getDistanciaHotel() << ";";
+		
+		if (rest.menu.size() > 0)
 		{
-			ofs << " " << rest.getMenu().at(i)->getNome() << "; " << rest.getMenu().at(i)->getPreco() << ";\n";
+			for (size_t i = 0; i < rest.menu.size(); i++)
+			{
+				ofs << endl << " " << rest.menu.at(i)->getNome() << "; " << rest.menu.at(i)->getPreco() << ";";
+			}
 		}
+
+		ofs << endl;
 
 		return ofs;
 	}
