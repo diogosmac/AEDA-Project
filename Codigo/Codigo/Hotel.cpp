@@ -1140,7 +1140,7 @@ void Hotel::exportAllInfo()
 	exportInfoFuncionarios();
 	Funcionario::resetWorkerID();
 
-	exportInfoRestaurantes();
+	//exportInfoRestaurantes();
 
 	exportInfoAutocarro();
 }
@@ -1223,6 +1223,7 @@ bool Hotel::importAllInfo()
 void Hotel::addRestaurant(Restaurante r)
 {
 	this->restaurantesProximosHotel.insert(r);
+	this->exportInfoRestaurantes();
 }
 
 vector<Restaurante> Hotel::getRestaurantesDoTipo(string tipoCozinha)
@@ -1269,20 +1270,20 @@ vector<Restaurante> Hotel::getRestaurantesNMetros(double n)
 
 void Hotel::exportInfoRestaurantes()
 {
-	cout << "\nConfirma que deseja exportar a informacao dos Restaurantes? (s/n): ";
-	string confirm;
-	cin >> confirm;
-	cin.ignore(1000, '\n');
-	while (confirm != "s" && confirm != "n") {
-		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
-		cin >> confirm;
-		cin.ignore(1000, '\n');
-	}
+	//cout << "\nConfirma que deseja exportar a informacao dos Restaurantes? (s/n): ";
+	//string confirm;
+	//cin >> confirm;
+	//cin.ignore(1000, '\n');
+	//while (confirm != "s" && confirm != "n") {
+	//	cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
+	//	cin >> confirm;
+	//	cin.ignore(1000, '\n');
+	//}
 
-	if (confirm == "n") {
-		cout << "Operacao cancelada a seu pedido.\n";
-		return;
-	}
+	//if (confirm == "n") {
+	//	cout << "Operacao cancelada a seu pedido.\n";
+	//	return;
+	//}
 
 	ofstream ficheiroRest;
 	string nomeFicheiro = nomeHotel + "_restaurantes.txt";
@@ -1291,7 +1292,7 @@ void Hotel::exportInfoRestaurantes()
 
 	if (!ficheiroRest.is_open())
 	{
-		cerr << "Erro na abertura do ficheiro.\n" << endl;
+		cerr << "Erro ao guardar a informacao dos restaurantes.\n" << endl;
 		return;
 	}
 
@@ -1320,36 +1321,20 @@ bool Hotel::importInfoRestaurantes()
 
 	string nomeFicheiro = nomeHotel + "_restaurantes.txt";
 
-	cout << "\nConfirma que deseja importar a informacao dos restaurantes? (s/n): ";
-	string confirm;
-	cin >> confirm;
-	cin.ignore(1000, '\n');
-	while (confirm != "s" && confirm != "n")
-	{
-		cout << "Resposta invalida, por favor insira \"s\" ou \"n\" para responder: ";
-		cin >> confirm;
-		cin.ignore(1000, '\n');
-	}
-
-	if (confirm == "n")
-	{
-		cout << "Operacao cancelada a seu pedido.\n";
-		return false;
-	}
-
 	ficheiroRest.open(nomeFicheiro);
 
 	if (!ficheiroRest.is_open())
 	{
-		cerr << "Nao foi possivel obter a informacao relativa aos restaurantes proximos do hotel " << nomeHotel << "!\n";
+		cerr << "\nNao foi possivel obter a informacao relativa aos restaurantes proximos do hotel " << nomeHotel << "!\n";
 		return false;
 	}
 
-	cout << "A importar a informacao dos restaurantes proximos do hotel . . .\n";
+	cout << "\nA importar a informacao dos restaurantes proximos do hotel . . .\n";
 
 	string line;
 	int counter = 0;
 	Restaurante restTemp("", "", 0);
+	BST<Restaurante> placeholder(restTemp);
 
 	while (getline(ficheiroRest, line)) 
 	{
@@ -1374,16 +1359,20 @@ bool Hotel::importInfoRestaurantes()
 		else
 		{
 			//Imports the last restaurant (before its modified)
+			if (counter == 0) {
+				BST<Restaurante> nova(restTemp);
+				placeholder = nova;
+			}
 
 			if (restTemp.getMenu().size() != 0)
 			{
-				restaurantesProximosHotel.insert(restTemp);
+				placeholder.insert(restTemp);
 				restTemp.apagaMenu();
 				counter++;
 			}
 			else if (restTemp.getNome() != "")
 			{
-				restaurantesProximosHotel.insert(restTemp);
+				placeholder.insert(restTemp);
 				counter++;
 			}
 				
@@ -1409,8 +1398,10 @@ bool Hotel::importInfoRestaurantes()
 	}
 
 	//Let's not forget the last one
-	restaurantesProximosHotel.insert(restTemp);
+	placeholder.insert(restTemp);
 	counter++;
+
+	this->restaurantesProximosHotel = placeholder;
 	
 	cout << counter << " restaurantes do hotel " << nomeHotel << " importados com sucesso!\n";
 
@@ -1419,13 +1410,16 @@ bool Hotel::importInfoRestaurantes()
 
 void Hotel::showInfoRestaurantes()
 {
-	BSTItrIn<Restaurante> it(this->restaurantesProximosHotel);
+	if (this->importInfoRestaurantes()) {
+	
+		BSTItrIn<Restaurante> it(this->restaurantesProximosHotel);
 
-	// Escreve todos os restaurantes
-	while (!it.isAtEnd())
-	{
-		cout << it.retrieve() << '\n';
-		it.advance();
+		// Escreve todos os restaurantes
+		while (!it.isAtEnd())
+		{
+			cout << it.retrieve() << '\n';
+			it.advance();
+		}
 	}
 }
 
@@ -1492,12 +1486,15 @@ void Hotel::addPratoRestaurante(string nomeRestaurante)
 		if (it.retrieve().getNome() == nomeRestaurante)
 		{
 			this->restaurantesProximosHotel.remove(temp);
-			Prato prt(nomePrato, precoPrato);
-			temp.adicionaPrato(&prt);
+			Prato* prt = new Prato(nomePrato, precoPrato);
+			temp.adicionaPrato(prt);
 			this->restaurantesProximosHotel.insert(temp);
 
 			cout << "DEBUG: " << temp << endl;
 			cout << "Prato inserido com sucesso!" << endl;
+
+			this->exportInfoRestaurantes();
+
 			return;
 		}
 		else
@@ -1507,9 +1504,7 @@ void Hotel::addPratoRestaurante(string nomeRestaurante)
 
 	}
 	
-
 	cout << "Restaurante nao encontrado, verifique o nome inserido e tente novamente" << endl;
-
 	
 }
 

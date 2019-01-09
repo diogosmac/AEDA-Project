@@ -103,17 +103,6 @@
 
 	ostream& operator << (ostream& ofs, Restaurante rest) 
 	{
-		/*
-		if (rest.menu.size() > 0)
-		{
-			ofs << rest.getNome() << "; " << rest.getTipoCozinha() << "; " << rest.getDistanciaHotel() << ";" << '\n';
-		}
-		else
-		{
-			ofs << rest.getNome() << "; " << rest.getTipoCozinha() << "; " << rest.getDistanciaHotel() << ";";
-		}
-		*/
-
 		ofs << rest.getNome() << "; " << rest.getTipoCozinha() << "; " << rest.getDistanciaHotel() << ";";
 		
 		if (rest.menu.size() > 0)

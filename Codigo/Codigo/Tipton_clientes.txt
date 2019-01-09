@@ -1,10 +1,10 @@
 1; Alfredo; 32 anos; 0 reservas feitas
-3; Antonio; 41 anos; 0 reservas feitas
 11; Margarida; 19 anos; 0 reservas feitas
+3; Antonio; 41 anos; 0 reservas feitas
 4; Arnaldo; 15 anos; 0 reservas feitas
 5; Canideo; 58 anos; 0 reservas feitas
-14; Teresa; 58 anos; 0 reservas feitas
 6; Catarina; 5 anos; 0 reservas feitas
+14; Teresa; 58 anos; 0 reservas feitas
 8; Fernando Silva; 82 anos; 0 reservas feitas
 10; Leonor Faria; 19 anos; 0 reservas feitas
 15; Zacarias; 32 anos; 0 reservas feitas
