@@ -729,19 +729,50 @@ void Hotel::showInfoFuncionarios()
 	cout << endl;
 }
 
-void Hotel::sortFuncionariosId()
+
+// <customized sorting>
+
+struct comp_alfa
 {
-	sort(funcionarios.begin(), funcionarios.end());
-}
+	inline bool operator() (const Funcionario* func1, const Funcionario* func2)
+	{
+		return (func1->getNome() < func2->getNome());
+	}
+};
 
 void Hotel::sortFuncionariosA()
 {
-	//sort(funcionarios.begin(), funcionarios.end(), compA);
+	sort(funcionarios.begin(), funcionarios.end(), comp_alfa());
 }
+
+struct comp_alfa_inv
+{
+	inline bool operator() (const Funcionario* func1, const Funcionario* func2)
+	{
+		return (func2->getNome() < func1->getNome());
+	}
+};
+
 void Hotel::sortFuncionariosAA()
 {
-	//sort(funcionarios.begin(), funcionarios.end(), compId);
+	sort(funcionarios.begin(), funcionarios.end(), comp_alfa_inv());
 }
+
+struct comp_ID
+{
+	inline bool operator() (const Funcionario* func1, const Funcionario* func2)
+	{
+		return (func1->getID_Code() < func2->getID_Code());
+	}
+};
+
+void Hotel::sortFuncionariosID()
+{
+	sort(funcionarios.begin(), funcionarios.end(), comp_ID());
+}
+
+// </customized sorting>
+
 
 bool Hotel::importInfoClientes()
 {
@@ -1131,7 +1162,7 @@ void Hotel::showAllInfo()
 	cout << "Prima ENTER para ver a informacao sobre os restaurantes proximos do hotel . . .\n";
 	cin.ignore();
 	showInfoRestaurantes();
-	cout << "Prima ENTER para ver a informacao sobre os restautocarros do hotel . . .\n";
+	cout << "Prima ENTER para ver a informacao sobre os autocarros do hotel . . .\n";
 	cin.ignore();
 	showInfoAutocarrosGestor();
 }
