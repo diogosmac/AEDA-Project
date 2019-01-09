@@ -1481,9 +1481,9 @@ void Hotel::addPratoRestaurante(string nomeRestaurante)
 	}
 
 	
-	BST<Restaurante> arvoreTemp = this->restaurantesProximosHotel;
-	BSTItrIn<Restaurante> it(arvoreTemp);
-	bool encontrado = false;
+
+	BSTItrIn<Restaurante> it(this->restaurantesProximosHotel);
+	
 
 	while (!it.isAtEnd())
 	{
@@ -1491,31 +1491,25 @@ void Hotel::addPratoRestaurante(string nomeRestaurante)
 
 		if (it.retrieve().getNome() == nomeRestaurante)
 		{
-			encontrado = true;
-
+			this->restaurantesProximosHotel.remove(temp);
 			Prato prt(nomePrato, precoPrato);
 			temp.adicionaPrato(&prt);
-
+			this->restaurantesProximosHotel.insert(temp);
 
 			cout << "DEBUG: " << temp << endl;
-
-			it.advance();
-			//cout << "Prato adicionado com sucesso!" << endl;
+			cout << "Prato inserido com sucesso!" << endl;
+			return;
 		}
 		else
 		{
 			it.advance();
 		}
 
-		arvoreTemp.insert(temp);
 	}
+	
 
-	this->restaurantesProximosHotel = arvoreTemp;
+	cout << "Restaurante nao encontrado, verifique o nome inserido e tente novamente" << endl;
 
-	if (!encontrado)
-	{
-		cout << "Restaurante nao encontrado, verifique o nome inserido e tente novamente" << endl;
-	}
 	
 }
 
