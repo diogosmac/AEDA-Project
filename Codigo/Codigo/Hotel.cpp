@@ -1403,7 +1403,7 @@ void Hotel::showInfoRestaurantes()
 void Hotel::addPratoRestaurante(string nomeRestaurante)
 {
 	string nomePrato;
-	cout << "Qual é o nome do prato que pretende adicionar? ";
+	cout << "Qual e o nome do prato que pretende adicionar? ";
 	getline(cin, nomePrato);
 
 	while (!isalpha(nomePrato.at(0)))
@@ -1451,17 +1451,44 @@ void Hotel::addPratoRestaurante(string nomeRestaurante)
 
 	}
 
-	BSTItrIn<Restaurante> it(restaurantesProximosHotel);
+	BSTItrIn<Restaurante> it(this->restaurantesProximosHotel);
 
 	while (!it.isAtEnd())
 	{
-		Restaurante &temp = it.retrieve();
+		Restaurante temp = it.retrieve();
+		//Restaurante &temp = it.retrieve();
 
 		if (temp.getNome() == nomeRestaurante)
 		{
+			
+			restaurantesProximosHotel.remove(temp);
+
+			/*
 			Prato * prt = new Prato(nomePrato, precoPrato);
 			temp.adicionaPrato(prt);
+			*/
+
+			Prato prt(nomePrato, precoPrato);
+			temp.adicionaPrato(&prt);
+
+			restaurantesProximosHotel.insert(temp);
+
+			cout << "DEBUG: " << temp << endl;
+
+			cout << "Prato adicionado com sucesso!" << endl;
 			return;
+			
+
+			/*
+			Prato prt(nomePrato, precoPrato);
+			temp.adicionaPrato(&prt);
+			*/
+			//cout << "DEBUG: " << temp << endl;
+			
+			/*
+			cout << "Prato adicionado com sucesso!" << endl;
+			return;
+			*/
 		}
 		else
 		{

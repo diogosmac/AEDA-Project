@@ -9,13 +9,13 @@
 
 	string Prato::getNome() const
 	{
-		return this->getNome();
+		return this->nome;
 	}
 
 
 	double Prato::getPreco() const
 	{
-		return this->getPreco();
+		return this->preco;
 	}
 
 	void Prato::setPreco(double novoPreco)
