@@ -63,6 +63,36 @@ public:
 	bool operator==(const Cliente &c2) const;
 
 	/**
+	*	Usado para verificar se um cliente é inferior a outro alfabeticamente
+	*/
+	bool operator<(const Cliente &c2) const;
+
+	/**
+	*	Usado para verificar se um cliente é superior a outro alfabeticamente
+	*/
+	bool operator>(const Cliente &c2) const;
+
+	/**
+	*	Usado para verificar se um cliente é inferior a outro no que toca à sua frequencia de reservas
+	*/
+	bool compFreq(const Cliente &c2) const;
+
+	/**
+	*	Usado para verificar se um cliente é superior a outro no que toca à sua frequencia de reservas
+	*/
+	bool compFreq2(const Cliente &c2) const;
+
+	/**
+	*	Usado para verificar se um cliente é inferior a outro no que toca à sua idade
+	*/
+	bool compIdade(const Cliente &c2) const;
+
+	/**
+	*	Usado para verificar se um cliente é superior a outro no que toca à sua idade
+	*/
+	bool compIdade2(const Cliente &c2) const;
+
+	/**
 	*	Faz nextClientID = 1
 	*/
 	static void resetNextClientID();

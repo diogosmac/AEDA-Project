@@ -70,7 +70,6 @@ class Hotel
 	priority_queue <Autocarro> autocarrosHotel;
 
 public:
-
 	/**
 	*	Construtor da classe Hotel vazio
 	*	@param nome nome que vai ser dado ao hotel
@@ -262,6 +261,10 @@ public:
 	*/
 	void showInfoFuncionarios();
 
+	void sortFuncionariosId();
+	void sortFuncionariosA();
+	void sortFuncionariosAA();
+
 	/**
 	*	Importa de um ficheiro de texto um conjunto de Clientes, que são adicionados ao Hotel
 	*	Se conseguir, retorna TRUE. Se não, retorna FALSE.
@@ -330,10 +333,17 @@ public:
 	*	Mostra no ecra todos os restaurantes proximos do hotel, tipo de comida dos mesmos, e a respetiva distancia ao hotel.
 	*/
 	void showInfoRestaurantes();
+
+	/**
+	*	Adiciona um prato ao restaurante especificado nos parametros 
+	*/
+
+	void addPratoRestaurante(string nomeRestaurante);
 	
 	/**
 	*	Exporta toda a infomacao relativa aos autocarros do hotel
 	*/
+
 	void exportInfoAutocarro();
 
 	/**

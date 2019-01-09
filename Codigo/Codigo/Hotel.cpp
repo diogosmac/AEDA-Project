@@ -729,6 +729,20 @@ void Hotel::showInfoFuncionarios()
 	cout << endl;
 }
 
+void Hotel::sortFuncionariosId()
+{
+	sort(funcionarios.begin(), funcionarios.end());
+}
+
+void Hotel::sortFuncionariosA()
+{
+	//sort(funcionarios.begin(), funcionarios.end(), compA);
+}
+void Hotel::sortFuncionariosAA()
+{
+	//sort(funcionarios.begin(), funcionarios.end(), compId);
+}
+
 bool Hotel::importInfoClientes()
 {
 	cout << "\nConfirma que deseja importar a informacao dos clientes? (s/n): ";
@@ -1384,6 +1398,79 @@ void Hotel::showInfoRestaurantes()
 		cout << it.retrieve() << '\n';
 		it.advance();
 	}
+}
+
+void Hotel::addPratoRestaurante(string nomeRestaurante)
+{
+	string nomePrato;
+	cout << "Qual é o nome do prato que pretende adicionar? ";
+	getline(cin, nomePrato);
+
+	while (!isalpha(nomePrato.at(0)))
+	{
+		cout << "Nome invalido. Por favor insira devidamente o seu nome: ";
+		getline(cin, nomePrato);
+	}
+	cout << endl;
+
+	double precoPrato;
+	string precoPrato_str;
+	bool valid = false;
+
+	cout << "Indique o preco do novo prato: ";
+	getline(cin, precoPrato_str);
+
+	while (!valid)
+	{
+		try
+		{
+			stod(precoPrato_str);
+			valid = true;
+
+		}
+		catch (invalid_argument iArg)
+		{
+			cout << "O preco que inseriu nao e valido, tente outra vez: ";
+			getline(cin, precoPrato_str);
+		}
+		catch (out_of_range oRange)
+		{
+			cout << "O preco que inseriu nao e valido, tente outra vez: ";
+			getline(cin, precoPrato_str);
+		}
+
+		precoPrato = stod(precoPrato_str);
+
+		if (precoPrato < 0)
+		{
+			cout << "O numero inserido tem de ser maior ou igual a 0... Insira um numero valido: ";
+			valid = false;
+			getline(cin, precoPrato_str);
+			continue;
+		}
+
+	}
+
+	BSTItrIn<Restaurante> it(restaurantesProximosHotel);
+
+	while (!it.isAtEnd())
+	{
+		Restaurante &temp = it.retrieve();
+
+		if (temp.getNome() == nomeRestaurante)
+		{
+			Prato * prt = new Prato(nomePrato, precoPrato);
+			temp.adicionaPrato(prt);
+			return;
+		}
+		else
+		{
+			it.advance();
+		}
+
+	}
+
+	cout << "Restaurante nao encontrado, verifique o nome inserido e tente novamente" << endl;
 }
 
 void Hotel::exportInfoAutocarro()
