@@ -69,7 +69,7 @@ bool Cliente::operator<(const Cliente &c2) const
 	return this->getNome() < c2.getNome();
 }
 
-bool Cliente::operator>(const Cliente &c2) const
+/*bool Cliente::operator>(const Cliente &c2) const
 {
 	return this->getNome() > c2.getNome();
 }
@@ -98,7 +98,7 @@ bool Cliente::compIdade2(const Cliente &c2) const
 		return this->getNome() < c2.getNome();
 	else
 		return this->getIdade() > c2.getIdade();
-}
+}*/
 
 void Cliente::resetNextClientID()
 {

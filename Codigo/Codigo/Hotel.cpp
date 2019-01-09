@@ -1682,6 +1682,7 @@ bool Hotel::importInfoAutocarro()
 
 		size_t idAutocarro = 9999;
 		size_t capacidade = 9999;
+		
 
 		if (line.at(0) == '#')
 		{
